@@ -14,7 +14,7 @@
 
     // Rutas
 
-    define('BASE_URL', 'http://localhost/');
+    define('BASE_URL', 'http://localhost/TFG/');
 
     // Paginación
 

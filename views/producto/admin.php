@@ -32,55 +32,7 @@
 
 <?php else: ?>
 
-    <script>
-
-        document.addEventListener("DOMContentLoaded", () => {
-
-            document.querySelectorAll("img").forEach(img => {
-                
-                if (img.complete) {
-                    applyStyles(img);
-                } else {
-                    img.onload = () => applyStyles(img);
-                }
-
-            });
-
-            function applyStyles(img) {
-                
-                let aspectRatio = img.naturalWidth / img.naturalHeight;
-                console.log("Aspect Ratio:", aspectRatio);
-
-                if (aspectRatio > 2) {
-                    
-                    img.style.minHeight = "unset";
-                    img.style.maxHeight = "unset";
-
-                    img.style.width = img.naturalWidth / 2 + "px";
-                    img.style.height = img.naturalHeight / 2 + "px";
-
-                    if(img.width < 200) {
-                        img.style.width = "200px";
-                        img.style.height = "auto";
-                    }
-
-                    if(img.width > 300) {
-                        img.style.width = "300px";
-                        img.style.height = "auto";
-                    }
-                    
-                }
-
-                if(aspectRatio > 2.4) {
-                    img.style.width = "200px";
-                    img.style.height = "auto";
-                }
-
-            }
-
-        });
-
-    </script>
+    <script src="<?=BASE_URL?>js/ajusteImagenesAdminProductos.js"></script>
 
     <div class="paginacion" style="margin-top: 0px;">
 
@@ -236,20 +188,4 @@
 
 <?php endif; ?>
 
-<script>
-    document.addEventListener("DOMContentLoaded", function() {
-        document.querySelectorAll('.paginacion form').forEach(function(form) {
-            form.addEventListener('submit', function(event) {
-
-                event.preventDefault();
-
-                var pagina = form.querySelector('input[name="pag"]').value;
-                var currentUrl = window.location.href;
-
-                currentUrl = currentUrl.replace(/([&?])pag=\d+/, '');
-                window.location.href = currentUrl + '&pag=' + pagina;
-                
-            });
-        });
-    });
-</script>
+<script src="<?=BASE_URL?>js/actualizarPaginacion.js"></script>

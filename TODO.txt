@@ -1,9 +1,10 @@
 - Todo lo de pedidos
+- Si pones una imagen nueva en gestión o edición de usuario y la quitas, no vuelve la imagen anterior. En edición de productos sí funciona
 - Quitar atributo $baseDatos e instead instanciarlo cada vez que se llame a un método de consultas
 - Al iniciar sesión por el botón del carrito, redirigir al producto en el que estaba (a veces no va)
 - Poner un max-width a la columna de Cantidad en la vista del carrito
 - Poner anclas relativas upon errores y mensajes cualquiera, también en registro ($_SESSION['register'])
-- Botón de ver producto siempre abajo
+- Botón de ver producto siempre abajo (ajuste css)
 - Recomendar sólo productos que no estén agotados
 - Arreglar &pagina= -> &pag= en la paginación
 - Hacer que dé igual si metes la misma contraseña al editar/gestionar usuario (actualmente la $_SESSION['editar' / 'gestionar'] se queda en "complete")
@@ -17,6 +18,7 @@
 - Buscador de productos en el header
 - Añadir confirmaciones a todas las eliminaciones
 - Reducir botones del header a iconos sólamente con media queries y Responsiveness en general
+- Aumentar cost en hash de la contraseña
 - Footer con páginas "Política de Privacidad", "Condiciones de Uso" y "Sobre Nosotros", con © <año> abajo; y dichas páginas generadas con ChatGPT
 - Al eliminar un usuario siendo admin, me sale error: (y también al eliminar una categoría). El registro se elimina, pero el error sale
 
