@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   version="1.1"
+   id="Layer_1"
+   x="0px"
+   y="0px"
+   width="565"
+   height="565"
+   viewBox="-360.791 -360.781 565.00001 564.99999"
+   xml:space="preserve"
+   inkscape:version="0.47 r22583"
+   sodipodi:docname="Spain_traffic_signal_s7-10.svg"><metadata
+   id="metadata15"><rdf:RDF><cc:Work
+       rdf:about=""><dc:format>image/svg+xml</dc:format><dc:type
+         rdf:resource="http://purl.org/dc/dcmitype/StillImage" /><dc:title /></cc:Work></rdf:RDF></metadata><defs
+   id="defs13"><inkscape:perspective
+     sodipodi:type="inkscape:persp3d"
+     inkscape:vp_x="0 : 384.828 : 1"
+     inkscape:vp_y="0 : 1000 : 0"
+     inkscape:vp_z="769.68799 : 384.828 : 1"
+     inkscape:persp3d-origin="384.84399 : 256.552 : 1"
+     id="perspective17" /><inkscape:perspective
+     id="perspective2859"
+     inkscape:persp3d-origin="0.5 : 0.33333333 : 1"
+     inkscape:vp_z="1 : 0.5 : 1"
+     inkscape:vp_y="0 : 1000 : 0"
+     inkscape:vp_x="0 : 0.5 : 1"
+     sodipodi:type="inkscape:persp3d" /><inkscape:perspective
+     id="perspective2883"
+     inkscape:persp3d-origin="0.5 : 0.33333333 : 1"
+     inkscape:vp_z="1 : 0.5 : 1"
+     inkscape:vp_y="0 : 1000 : 0"
+     inkscape:vp_x="0 : 0.5 : 1"
+     sodipodi:type="inkscape:persp3d" /></defs><sodipodi:namedview
+   pagecolor="#ffffff"
+   bordercolor="#666666"
+   borderopacity="1"
+   objecttolerance="10"
+   gridtolerance="10"
+   guidetolerance="10"
+   inkscape:pageopacity="0"
+   inkscape:pageshadow="2"
+   inkscape:window-width="1920"
+   inkscape:window-height="1020"
+   id="namedview11"
+   showgrid="false"
+   inkscape:zoom="0.61326098"
+   inkscape:cx="618.9602"
+   inkscape:cy="154.80395"
+   inkscape:window-x="-4"
+   inkscape:window-y="-4"
+   inkscape:window-maximized="1"
+   inkscape:current-layer="Layer_1" />
+
+
+
+
+<g
+   id="g2825"><g
+     id="g2818"><path
+       style="fill:#ffffff"
+       id="path13"
+       d="m 203.1596,171.91171 c 0,17.26869 -13.9889,31.25785 -31.25728,31.25785 l -500.37078,0 c -17.2737,0 -31.2731,-13.99966 -31.2731,-31.25785 l 0,-500.35918 c 0,-17.26344 13.9994,-31.28409 31.2731,-31.28409 l 500.36028,0 c 17.26838,0 31.25728,14.02065 31.25728,31.28409 l 0,500.35918 0,0 z" /><path
+       style="fill:none;stroke:#1c1d20;stroke-width:2.09887981;stroke-miterlimit:3.86400008"
+       id="path15"
+       d="m 203.1596,171.91171 c 0,17.26869 -13.9889,31.25785 -31.25728,31.25785 l -500.37078,0 c -17.2737,0 -31.2731,-13.99966 -31.2731,-31.25785 l 0,-500.35918 c 0,-17.26344 13.9994,-31.28409 31.2731,-31.28409 l 500.36028,0 c 17.26838,0 31.25728,14.02065 31.25728,31.28409 l 0,500.35918 0,0 z"
+       stroke-miterlimit="3.864" /><path
+       style="fill:#19408b"
+       id="path17"
+       d="m 189.41469,-328.44747 c 0,-9.67592 -7.84974,-17.51531 -17.52549,-17.51531 l -500.35766,0 c -9.6784,0 -17.5045,7.83939 -17.5045,17.51531 l 0,500.36968 c 0,9.66542 7.8235,17.5258 17.5045,17.5258 l 500.36028,0 c 9.67575,0 17.52549,-7.86038 17.52549,-17.5258 l 0,-500.36968" /><path
+       d="m -214.23783,43.490076 55.61965,0 0,-237.464756 -49.37492,0 0,10.35594 c 0,12.37191 -12.43694,24.79756 -24.71425,24.79756 l -20.58365,0 0,47.41687 39.05317,0 0,154.894386"
+       id="path7"
+       style="fill:#ffffff;fill-rule:evenodd" /><path
+       d="M 90.30439,-129.63759 C 80.04565,-172.48613 39.1031,-203.281 -5.2768871,-203.281 c -42.7027399,0 -83.6463399,30.79487 -95.6211729,73.64341 -8.54055,30.792766 -8.54055,73.641296 0,102.753216 11.974833,42.80954 52.918433,73.60337 95.6211729,73.60337 44.3799871,0 85.3225371,-30.79383 95.5812771,-73.60337 8.5395,-29.11086 8.5395,-71.9594 0,-102.753216 z M 39.1031,-44.020624 c -3.43218,20.54116 -22.18841,35.9596804 -44.3799871,35.9596804 -20.4744199,0 -39.3083699,-15.4185204 -42.7027399,-35.9596804 -3.43218,-20.54432 -3.43218,-47.93534 0,-66.796706 3.39437,-22.26311 22.22832,-37.68163 42.7027399,-37.68163 22.1915771,0 40.9478071,15.41747 44.3799871,37.68163 3.38913,18.861366 3.38913,46.252386 0,66.796706 z"
+       id="path9"
+       style="fill:#ffffff;fill-rule:evenodd" /></g></g></svg>
