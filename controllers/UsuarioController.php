@@ -24,8 +24,6 @@
 
         public function guardar(): void {
 
-            Utils::isIdentity();
-
             if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
                 // Recoger datos con trim() para evitar espacios adicionales
@@ -68,6 +66,14 @@
 
                     if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
                         $_SESSION['register'] = "failed_email";
+                        header("Location:" . BASE_URL . "usuario/" . (isset($_SESSION['admin']) ? 'crear' : 'registrarse') . "#email");
+                        exit;
+                    }
+
+                    // Comprobar si el email ya existe en la base de datos
+                    $usuarioExistente = Usuario::getByEmail($email);
+                    if ($usuarioExistente) {
+                        $_SESSION['register'] = "failed_email_exists";
                         header("Location:" . BASE_URL . "usuario/" . (isset($_SESSION['admin']) ? 'crear' : 'registrarse') . "#email");
                         exit;
                     }
@@ -147,7 +153,7 @@
                         }
         
                     } else {
-                        
+                        echo "Aqui"; die;
                         $_SESSION['register'] = 'failed';
                         header("Location:" . BASE_URL . "usuario/" . (isset($_SESSION['admin']) ? 'crear' : 'registrarse') . "#failed");
                         exit;
@@ -155,14 +161,13 @@
                     }
         
                 } else {
-
+                    
                     $_SESSION['register'] = "failed";
                     header("Location:" . BASE_URL . "usuario/" . (isset($_SESSION['admin']) ? 'crear' : 'registrarse') . "#failed");
                     exit;
 
                 }
-
-        
+                
             } else {
                 
                 header("Location:" . BASE_URL);
@@ -389,6 +394,7 @@
                 $password = isset($_POST['password']) ? trim($_POST['password']) : null;
                 $rol = isset($_POST['rol']) ? $_POST['rol'] : $_SESSION['identity']['rol'];
                 $imagen = isset($_FILES['imagen']) ? $_FILES['imagen'] : false;
+                $color = isset($_POST['color']) ? $_POST['color'] : null;
         
                 $_SESSION['form_data'] = [
                     'nombre' => $nombre,
@@ -396,19 +402,24 @@
                     'email' => $email,
                     'password' => $password,
                     'rol' => $rol,
-                    'imagen' => $imagen
+                    'imagen' => $imagen,
+                    'color' => $color
                 ];
         
                 // Determinar si estamos editando otro usuario o el usuario actual
                 $id = isset($_GET['id']) ? $_GET['id'] : $_SESSION['identity']['id'];
                 $dummyUsuario = Usuario::getById($id);
+                $passwordAlmacenada = $dummyUsuario->getPassword();
+
+                $passwordNoModificada = (strlen($password) == 0 || password_verify($password, $passwordAlmacenada));
         
                 if ($nombre != $dummyUsuario->getNombre() || 
                     $apellidos != $dummyUsuario->getApellidos() || 
                     $email != $dummyUsuario->getEmail() || 
-                    strlen($password) > 0 || 
+                    !$passwordNoModificada || 
                     $rol != $dummyUsuario->getRol() ||
-                    ($imagen && $imagen['name'])
+                    ($imagen && $imagen['name']) ||
+                    $color != $dummyUsuario->getColor()
                 ) {
         
                     // Validaciones
@@ -428,6 +439,16 @@
                         $_SESSION['gestion'] = "failed_email";
                         header("Location:" . BASE_URL . "usuario/gestion" . (isset($_GET['id']) ? "&id=" . $_GET['id'] : "") . "#email");
                         exit;
+                    }
+
+                    // Comprobar si el email ya existe en la base de datos (excepto si es el mismo usuario)
+                    if ($email && $email != $dummyUsuario->getEmail()) {
+                        $usuarioExistente = Usuario::getByEmail($email);
+                        if ($usuarioExistente) {
+                            $_SESSION['gestion'] = "failed_email_exists";
+                            header("Location:" . BASE_URL . "usuario/gestion" . (isset($_GET['id']) ? "&id=" . $_GET['id'] : "") . "#email");
+                            exit;
+                        }
                     }
         
                     if (strlen($password) > 0 && !preg_match("/^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/", $password)) {
@@ -457,6 +478,7 @@
                     $usuario->setEmail($email);
                     $usuario->setPassword($password);
                     $usuario->setRol($rol);
+                    $usuario->setColor($color);
         
                     // Manejo de la imagen de perfil
                     if ($imagen && $imagen['name']) {
@@ -499,6 +521,7 @@
                             $_SESSION['identity']['email'] = $email;
                             $_SESSION['identity']['rol'] = $rol;
                             $_SESSION['identity']['imagen'] = $usuario->getImagen();
+                            $_SESSION['identity']['color'] = $color;
                         }
         
                         if (isset($_GET['id'])) {
@@ -533,7 +556,7 @@
     
                         }else {
                             
-                            header("Location:" . BASE_URL . "usuario/gestion&id=" . $id . $_SESSION['gestion']);
+                            header("Location:" . BASE_URL . "usuario/gestion&id=" . $id . "#" . $_SESSION['gestion']);
                             exit;
     
                         }

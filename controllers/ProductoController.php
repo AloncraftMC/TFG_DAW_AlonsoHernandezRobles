@@ -189,7 +189,7 @@
                         } else {
 
                             $_SESSION['create'] = 'failed';
-                            header("Location:" . BASE_URL . "producto/crear#error");
+                            header("Location:" . BASE_URL . "producto/crear#failed");
                             exit();
 
                         }
@@ -201,7 +201,7 @@
                     }else{
                         
                         $_SESSION['create'] = 'failed';
-                        header("Location:" . BASE_URL . "producto/crear#error");
+                        header("Location:" . BASE_URL . "producto/crear#failed");
                         exit;
 
                     }
@@ -209,7 +209,7 @@
                 } else {
                     
                     $_SESSION['create'] = 'failed';
-                    header("Location:" . BASE_URL . "producto/crear#error");
+                    header("Location:" . BASE_URL . "producto/crear#failed");
                     exit;
 
                 }
@@ -350,7 +350,7 @@
                         } else {
         
                             $_SESSION['gestion'] = 'failed';
-                            header("Location:" . BASE_URL . "producto/gestion&id=" . $id . "#error");
+                            header("Location:" . BASE_URL . "producto/gestion&id=" . $id . "#failed");
                             exit();
         
                         }
@@ -368,7 +368,7 @@
                     }else{
                         
                         $_SESSION['gestion'] = 'failed';
-                        header("Location:" . BASE_URL . "producto/gestion&id=" . $id . "#error");
+                        header("Location:" . BASE_URL . "producto/gestion&id=" . $id . "#failed");
                         exit;
 
                     }

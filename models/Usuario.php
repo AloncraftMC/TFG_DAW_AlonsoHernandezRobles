@@ -13,6 +13,7 @@
         private ?string $password;
         private ?string $rol;
         private ?string $imagen;
+        private string $color;
         
         public function __construct(){
         }
@@ -47,6 +48,10 @@
             return $this->imagen;
         }
 
+        public function getColor(): string{
+            return $this->color;
+        }
+
         public function setId(int $id): void{
             $this->id = $id;
         }
@@ -75,13 +80,17 @@
             $this->imagen = $imagen;
         }
 
+        public function setColor(string $color): void{
+            $this->color = $color;
+        }
+
         /* MÉTODOS DINÁMICOS */
 
         public function save(): bool{
 
             $baseDatos = new BaseDatos();
             
-            $baseDatos->ejecutar("INSERT INTO usuarios VALUES(null, :nombre, :apellidos, :email, :password, :rol, null)", [
+            $baseDatos->ejecutar("INSERT INTO usuarios VALUES(null, :nombre, :apellidos, :email, :password, :rol, null, null)", [
                 ':nombre' => $this->nombre,
                 ':apellidos' => $this->apellidos,
                 ':email' => $this->email,
@@ -153,7 +162,7 @@
                 // Si se ha introducido una nueva contraseña, se actualiza el campo 'password'
 
                 $query = "UPDATE usuarios 
-                          SET nombre = :nombre, apellidos = :apellidos, email = :email, password = :password, rol = :rol, imagen = :imagen
+                          SET nombre = :nombre, apellidos = :apellidos, email = :email, password = :password, rol = :rol, imagen = :imagen, color = :color
                           WHERE id = :id";
 
                 $params = [
@@ -163,7 +172,8 @@
                     ':password' => password_hash($this->password, PASSWORD_BCRYPT, ['cost' => 12]),
                     ':rol' => $this->rol,
                     ':imagen' => $this->imagen,
-                    ':id' => $this->id
+                    ':id' => $this->id,
+                    ':color' => $this->color
                 ];
 
             }else {
@@ -171,7 +181,7 @@
                 // Si no se ha introducido una nueva contraseña, se actualizan los demás campos sin tocar 'password'
 
                 $query = "UPDATE usuarios 
-                          SET nombre = :nombre, apellidos = :apellidos, email = :email, rol = :rol, imagen = :imagen
+                          SET nombre = :nombre, apellidos = :apellidos, email = :email, rol = :rol, imagen = :imagen, color = :color
                           WHERE id = :id";
 
                 $params = [
@@ -180,7 +190,8 @@
                     ':email' => $this->email,
                     ':rol' => $this->rol,
                     ':imagen' => $this->imagen,
-                    ':id' => $this->id
+                    ':color' => $this->color,
+                    ':id' => $this->id,
                 ];
 
             }
@@ -217,11 +228,9 @@
                 $nuevoMaxId = $baseDatos->getSiguienteRegistro();
                 $nuevoMaxId = $nuevoMaxId ? $nuevoMaxId['id'] : 0;
 
-                $nuevoAutoIncrement = $nuevoMaxId + 1; // Si la tabla está vacía, empieza en 1
+                $nuevoAutoIncrement = $nuevoMaxId + 1;
 
-                $baseDatos->ejecutar("ALTER TABLE usuarios AUTO_INCREMENT = :id", [
-                    ':id' => $nuevoAutoIncrement
-                ]);
+                $baseDatos->ejecutar("ALTER TABLE usuarios AUTO_INCREMENT = $nuevoAutoIncrement");
 
             }
 
@@ -251,8 +260,10 @@
                 $usuario->setNombre($registro['nombre']);
                 $usuario->setApellidos($registro['apellidos']);
                 $usuario->setEmail($registro['email']);
+                $usuario->setPassword($registro['password']);
                 $usuario->setRol($registro['rol']);
                 $usuario->setImagen($registro['imagen']);
+                $usuario->setColor($registro['color']);
 
                 $baseDatos->cerrarConexion();
 
@@ -286,6 +297,7 @@
                 $usuario->setEmail($registro['email']);
                 $usuario->setRol($registro['rol']);
                 $usuario->setImagen($registro['imagen']);
+                $usuario->setColor($registro['color']);
 
                 $baseDatos->cerrarConexion();
 
@@ -319,6 +331,7 @@
                 $usuario->setEmail($registro['email']);
                 $usuario->setRol($registro['rol']);
                 $usuario->setImagen($registro['imagen']);
+                $usuario->setColor($registro['color']);
         
                 $usuarios[] = $usuario;
                 

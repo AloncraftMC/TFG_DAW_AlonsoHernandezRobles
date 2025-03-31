@@ -62,7 +62,7 @@
                     if (!preg_match("/^[a-zA-ZáéíóúÁÉÍÓÚñÑ ]{2,}$/u", $nombre)) {
 
                         $_SESSION['create'] = "failed_nombre";
-                        header("Location:" . BASE_URL . "categoria/crear");
+                        header("Location:" . BASE_URL . "categoria/crear#nombre");
                         exit;
 
                     }
@@ -88,7 +88,7 @@
 
                 }else{
                     
-                    header("Location:" . BASE_URL . "categoria/crear");
+                    header("Location:" . BASE_URL . "categoria/crear#failed");
                     exit;
 
                 }
@@ -125,7 +125,7 @@
 
                     if ($nombre && !preg_match("/^[a-zA-ZáéíóúÁÉÍÓÚñÑ ]{2,}$/u", $nombre)) {
                         $_SESSION['gestion'] = "failed_nombre";
-                        header("Location:" . BASE_URL . "categoria/gestion&id=" . $id);
+                        header("Location:" . BASE_URL . "categoria/gestion&id=" . $id . "#nombre");
                         exit;
                     }
                     
@@ -142,19 +142,16 @@
                         header("Location:" . BASE_URL . "categoria/admin" . (isset($_SESSION['pag']) ? "&pag=" . $_SESSION['pag'] : "") . "#" . $categoria->getId()); // Redirigimos a la última página
                         exit;
 
-                    }else{
-
-                        $_SESSION['gestion'] = "failed";
-
                     }
-
-                }else{
-
-                    $_SESSION['gestion'] = "nothing";
+                    
+                    $_SESSION['gestion'] = "failed";
+                    header("Location:" . BASE_URL . "categoria/gestion&id=" . $id . "#failed");
+                    exit;
 
                 }
-
-                header("Location:" . BASE_URL . "categoria/gestion&id=" . $id);
+                
+                $_SESSION['gestion'] = "nothing";
+                header("Location:" . BASE_URL . "categoria/gestion&id=" . $id . "#nothing");
                 exit;
 
             }

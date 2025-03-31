@@ -35,7 +35,9 @@
                 'nombre' => $usuario->getNombre(),
                 'apellidos' => $usuario->getApellidos(),
                 'email' => $usuario->getEmail(),
-                'rol' => $usuario->getRol()
+                'rol' => $usuario->getRol(),
+                'imagen' => $usuario->getImagen(),
+                'color' => $usuario->getColor(),
             ];
 
         }
@@ -169,5 +171,22 @@
     // Requiero el footer
     
     require_once 'views/layout/footer.php';
+
+    // Actualizo colores de interfaz en base al campo "color" de la tabla "usuarios"
+
+    if (isset($_SESSION['identity']) && isset($_SESSION['identity']['color'])) {
+        
+        $color = $_SESSION['identity']['color']; // Color base del usuario
+        echo '
+        <style>
+            :root {
+                --color-1: ' . $color . ';
+            }
+        </style>
+        <script src="' . BASE_URL . 'js/generarPaletaColores.js"></script>
+        ';
+
+    }
+
 
 ?>

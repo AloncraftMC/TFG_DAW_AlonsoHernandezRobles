@@ -49,6 +49,11 @@
             <small class="error">Introduce un email válido.</small>
             <?php Utils::deleteSession('gestion'); ?>
 
+        <?php elseif(isset($_SESSION['gestion']) && $_SESSION['gestion'] == 'failed_email_exists'): ?>
+
+            <small class="error">Este email ya está registrado.</small>
+            <?php Utils::deleteSession('gestion'); ?>
+
         <?php endif; ?>
 
     </div>

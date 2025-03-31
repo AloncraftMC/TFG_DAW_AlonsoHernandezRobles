@@ -126,7 +126,7 @@
 
 <?php if(isset($_SESSION['create']) && $_SESSION['create'] == 'failed'): ?>
 
-    <strong class="red" id="error">Creación fallida, introduce bien los datos.</strong>
+    <strong class="red" id="failed">Creación fallida, introduce bien los datos.</strong>
 
 <?php endif; ?>
 

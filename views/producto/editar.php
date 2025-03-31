@@ -139,7 +139,7 @@
 
 <?php elseif(isset($_SESSION['gestion']) && $_SESSION['gestion'] == 'failed'): ?>
 
-    <strong class="red" id="error">Edición de datos fallida, introduce bien los datos.</strong>
+    <strong class="red" id="failed">Edición de datos fallida, introduce bien los datos.</strong>
 
 <?php endif; ?>
 

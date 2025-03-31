@@ -110,7 +110,7 @@
 
 <?php elseif(isset($_SESSION['carritoResultado']) && $_SESSION['carritoResultado'] == 'failed'): ?>
 
-    <strong class="red">Error al añadir el producto al carrito.</strong>
+    <strong class="red" id="failed">Error al añadir el producto al carrito.</strong>
 
 <?php endif; ?>
 

@@ -2,6 +2,8 @@
 
     namespace helpers;
 
+    use models\Producto;
+
     class Utils{
 
         // Método para eliminar sesiones
@@ -47,16 +49,21 @@
 
             $stats = array(
                 'count' => 0,
-                'totalCount' => 0
+                'totalCount' => 0,
+                'total' => 0
             );
 
             if(isset($_SESSION['carrito'])){
 
                 $stats['count'] = count($_SESSION['carrito']);
 
-                foreach($_SESSION['carrito'] as $producto){
+                foreach($_SESSION['carrito'] as $indice => $producto){
 
                     $stats['totalCount'] += $producto['unidades'];
+
+                    $prod = Producto::getById($producto['id_producto']); // Obtiene la información del producto
+                    $precioTotal = $prod->getPrecio() * (1 - $prod->getOferta() / 100) * $producto['unidades'];
+                    $stats['total'] += $precioTotal;
 
                 }
 

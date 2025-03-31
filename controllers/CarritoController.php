@@ -88,6 +88,7 @@
                         } else {
 
                             $_SESSION['carritoResultado'] = 'failed_stock';
+
                         }
 
 
@@ -198,7 +199,10 @@
 
                     }else{
 
+                        $_SESSION['idProductoNoMas'] = $producto_id;
                         $_SESSION['carritoResultado'] = 'failed_stock';
+                        header("Location: " . BASE_URL . 'carrito/gestion#failed_stock');
+                        exit;
 
                     }
 

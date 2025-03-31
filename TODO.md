@@ -4,12 +4,14 @@
 
 ## 0 - 15 minutos ⚡️
 
+- Paginación con números en admin.
+- Corregir color personalizado de botones del carrusel.
+
 <hr>
 
 ## 15 - 60 minutos ⏳
 
-- Hacer que dé igual si metes la misma contraseña al editar/gestionar usuario (actualmente la `$_SESSION['editar'` / `'gestionar']` se queda en `"complete"`).
-- Botón `"Mis pedidos"`, y que sólo se muestre si hay algún pedido hecho para ese usuario.
+- Botón `"Mis pedidos"`.
 
 <hr>
 

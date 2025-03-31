@@ -89,9 +89,7 @@
 
                 $nuevoAutoIncrement = $nuevoMaxId + 1; // Si la tabla está vacía, empieza en 1
         
-                $baseDatos->ejecutar("ALTER TABLE categorias AUTO_INCREMENT = :id", [
-                    ':id' => $nuevoAutoIncrement
-                ]);
+                $baseDatos->ejecutar("ALTER TABLE categorias AUTO_INCREMENT = $nuevoAutoIncrement");
 
             }
             

@@ -6,6 +6,12 @@
 
 <a href="<?=BASE_URL?>producto/recomendados">
     <button class="boton">
+        Ver pedido
+    </button>
+</a>
+
+<a href="<?=BASE_URL?>producto/recomendados">
+    <button class="boton">
         Seguir comprando
     </button>
 </a>

@@ -31,7 +31,7 @@ if (isset($_GET['categoria'])) {
     $categoria = Categoria::getById($_GET['categoria']);
     $modoCategoria = true;
 
-    echo "<h2 style='margin-top: 0px; color: rgb(0,79,173);;'>Por categoría: " . $categoria->getNombre() . "</h2>";
+    echo "<h2 style='margin-top: 0px; color: var(--color-10);'>Por categoría: " . $categoria->getNombre() . "</h2>";
 
     // Filtrar productos de la categoría indicada
 
@@ -118,7 +118,7 @@ if (isset($_GET['categoria'])) {
         <div id="carousel" class="carousel">
             <?php foreach ($categorias as $cat): ?>
                 <div class="carousel-item">
-                    <a href="<?= BASE_URL ?>producto/recomendados&categoria=<?= $cat->getId() ?>" class="boton" style="<?= ($modoCategoria && $cat->getId() == $categoria->getId()) ? 'background-color: rgb(0,79,173);' : '' ?>">
+                    <a href="<?= BASE_URL ?>producto/recomendados&categoria=<?= $cat->getId() ?>" class="boton" style="<?= ($modoCategoria && $cat->getId() == $categoria->getId()) ? 'background-color: var(--color-10);' : '' ?>">
                         <button style="<?= ($modoCategoria && $cat->getId() == $categoria->getId()) ? 'color: white;' : '' ?>">
                             <?= $cat->getNombre() ?>
                         </button>

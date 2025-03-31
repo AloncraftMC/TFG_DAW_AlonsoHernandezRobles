@@ -6,7 +6,7 @@
 
     <div class="form-group">
 
-        <label for="nombre">Nombre</label>
+        <label for="nombre" id="nombre">Nombre</label>
         <input type="text" name="nombre" required value="<?=isset($_SESSION['form_data']['nombre']) ? $_SESSION['form_data']['nombre'] : ''?>">
 
         <?php if(isset($_SESSION['create']) && $_SESSION['create'] == 'failed_nombre'): ?>
@@ -24,7 +24,7 @@
 
 <?php if(isset($_SESSION['create']) && $_SESSION['create'] == 'failed'): ?>
 
-    <strong class="red">Creación fallida, introduce bien los datos.</strong>
+    <strong class="red" id="failed">Creación fallida, introduce bien los datos.</strong>
 
 <?php endif; ?>
 

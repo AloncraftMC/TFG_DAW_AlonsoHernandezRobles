@@ -24,10 +24,10 @@ document.addEventListener("DOMContentLoaded", function() {
 
             start.classList.remove("disabled");
             start.style.pointerEvents = "auto";
-            start.style.backgroundColor = "rgb(24, 100, 175)";
+            start.style.backgroundColor = "var(--color-1)";
             prev.classList.remove("disabled");
             prev.style.pointerEvents = "auto";
-            prev.style.backgroundColor = "rgb(24, 100, 175)";
+            prev.style.backgroundColor = "var(--color-1)";
 
         }
 
@@ -46,10 +46,10 @@ document.addEventListener("DOMContentLoaded", function() {
 
             end.classList.remove("disabled");
             end.style.pointerEvents = "auto";
-            end.style.backgroundColor = "rgb(24, 100, 175)";
+            end.style.backgroundColor = "var(--color-1)";
             next.classList.remove("disabled");
             next.style.pointerEvents = "auto";
-            next.style.backgroundColor = "rgb(24, 100, 175)";
+            next.style.backgroundColor = "var(--color-1)";
 
         }
 

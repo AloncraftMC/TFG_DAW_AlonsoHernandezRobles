@@ -1,6 +1,7 @@
 <?php
 
 use helpers\Utils;
+use models\Pedido;
 
 if (isset($_SESSION['identity']) && $_SESSION['identity']['rol'] === 'admin' && !isset($_SESSION['admin_popup'])): ?>
 
@@ -74,11 +75,20 @@ if (isset($_SESSION['identity']) && $_SESSION['identity']['rol'] === 'admin' && 
                 <?php endif; ?>
 
                 <!-- Botón para gestionar datos personales (aparece para todos los usuarios) -->
-                <a href="<?=BASE_URL?>usuario/gestion">
-                    <button class="boton">
-                        <img src="<?=BASE_URL?>assets/images/usuario.svg"> <?= $_SESSION['identity']['nombre'] ?>
+                <a href="<?=BASE_URL?>usuario/gestion" style="background-color: unset; border-radius: unset; box-shadow: unset;">
+                    <button style="background-color: unset; padding: 0px;">
+                        <img src="<?=BASE_URL?>assets/images/uploads/usuarios/<?=$_SESSION['identity']['imagen']?>?t=0" style="width: 45px; height: 45px; margin: 0px; border-radius: 50%">
                     </button>
                 </a>
+
+                <!-- Botón "Mis pedidos" (aparece sólo si tienen al menos 1 pedido en la BD) -->
+                <?php if (count(Pedido::getByUsuario($_SESSION['identity']['id'])) > 0): ?>
+                    <a href="<?=BASE_URL?>pedido/misPedidos">
+                        <button class="boton">
+                            <img src="<?=BASE_URL?>assets/images/pedido.svg">Mis Pedidos
+                        </button>
+                    </a>
+                <?php endif; ?>
                 
                 <!-- Botón del carrito -->
                 <a href="<?=BASE_URL?>carrito/gestion">

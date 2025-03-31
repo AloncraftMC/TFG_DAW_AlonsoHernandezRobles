@@ -2,7 +2,7 @@
 
     # Activar el módulo mod_rewrite
     RewriteEngine On
-    ErrorDocument 404 http://localhost/DWES/Proyecto%20Final%20DWES/error/
+    ErrorDocument 404 http://localhost/TFG/error/
 
     # Redirigir todas las peticiones al archivo index.php
     RewriteCond %{SCRIPT_FILENAME} !-d

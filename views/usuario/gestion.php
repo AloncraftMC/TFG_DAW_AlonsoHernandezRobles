@@ -52,6 +52,11 @@
             <small class="error">Introduce un email válido.</small>
             <?php Utils::deleteSession('gestion'); ?>
 
+        <?php elseif(isset($_SESSION['gestion']) && $_SESSION['gestion'] == 'failed_email_exists'): ?>
+
+            <small class="error">Este email ya está registrado.</small>
+            <?php Utils::deleteSession('gestion'); ?>
+
         <?php endif; ?>
 
     </div>
@@ -64,6 +69,20 @@
         <?php if(isset($_SESSION['gestion']) && $_SESSION['gestion'] == 'failed_password'): ?>
 
             <small class="error">La contraseña debe tener mínimo 8 caracteres, una letra y un número.</small>
+            <?php Utils::deleteSession('gestion'); ?>
+
+        <?php endif; ?>
+
+    </div>
+
+    <div class="form-group">
+
+        <label for="color" id="color">Color</label>
+        <input type="color" name="color" value="<?= isset($_SESSION['form_data']['color']) ? $_SESSION['form_data']['color'] : $_SESSION['identity']['color'] ?>" style="width: 98.8%; height: 45px; padding: 7px; cursor: pointer;">
+
+        <?php if(isset($_SESSION['gestion']) && $_SESSION['gestion'] == 'failed_color'): ?>
+
+            <small class="error">Este color no es válido.</small>
             <?php Utils::deleteSession('gestion'); ?>
 
         <?php endif; ?>
@@ -87,7 +106,7 @@
         </div>
 
         <div style="margin-top: 30px; display: flex; flex-direction: column; justify-content: center; align-items: center; width: 100%;">
-            <img style="display: block; min-height: 100px; max-height: 100px; border-radius: 5px; margin-bottom: 15px; max-width: 500px;" id="imagen-preview" src="<?=BASE_URL?>assets/images/uploads/usuarios/<?=$usuario->getImagen()?>" alt="Vista previa de la imagen">
+            <img style="display: block; min-height: 100px; max-height: 100px; border-radius: 5px; margin-bottom: 15px; max-width: 500px;" id="imagen-preview" src="<?=BASE_URL?>assets/images/uploads/usuarios/<?=$usuario->getImagen()?>?t=0" alt="Vista previa de la imagen">
             <button id="eliminar-imagen" type="button" class="delete-image">
                 Eliminar imagen
             </button>

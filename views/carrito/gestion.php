@@ -100,10 +100,43 @@
 
 <?php if(isset($_SESSION['carritoResultado']) && $_SESSION['carritoResultado'] == 'failed_stock'): ?>
 
-    <strong class="red">No tenemos el stock solicitado para este producto.</strong>
+    <strong class="red" id="failed_stock">No tenemos el stock solicitado para este producto.</strong>
+
+    <strong class="red" style="font-size: 95%; margin-top: 10px;">Stock máximo disponible: <?=Producto::getById($_SESSION['idProductoNoMas'])->getStock()?> unidades.</strong>
+    <strong style="font-size: 95%; margin-top: 10px;">
+    
+        <?php
+
+        if (isset($_SESSION['carrito'])) {
+            $cantidadEnCarrito = 0;
+
+            foreach ($_SESSION['carrito'] as $indice => $elemento) {
+
+                $producto = Producto::getById($_SESSION['idProductoNoMas']);
+
+                if ($elemento['id_producto'] == $producto->getId()) {
+
+                    $cantidadEnCarrito = $elemento['unidades'];
+                    break;
+
+                }
+
+            }
+
+            // Si es 0 no mostramos nada, pero si es mayor que 0 mostramos la cantidad en el carrito
+            if ($cantidadEnCarrito > 0) {
+                echo " Cantidad en carrito: $cantidadEnCarrito unidades.";
+            }
+
+        }
+
+        ?>
+
+    </strong>
 
 <?php endif; ?>
 
 <?php Utils::deleteSession('carritoResultado'); ?>
+<?php Utils::deleteSession('productoNoMas'); ?>
 
 <script src="<?=BASE_URL?>js/ajusteImagenesAdminProductos.js"></script>
