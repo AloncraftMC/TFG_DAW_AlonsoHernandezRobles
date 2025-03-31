@@ -13,7 +13,7 @@
     
     <div class="form-group">
 
-        <label for="nombre">Nombre</label>
+        <label for="nombre" id="nombre">Nombre</label>
         <input type="text" name="nombre" value="<?= isset($_SESSION['form_data']['nombre']) ? $_SESSION['form_data']['nombre'] : $usuario->getNombre() ?>">
 
         <?php if(isset($_SESSION['gestion']) && $_SESSION['gestion'] == 'failed_nombre'): ?>
@@ -27,7 +27,7 @@
 
     <div class="form-group">
 
-        <label for="apellidos">Apellidos</label>
+        <label for="apellidos" id="apellidos">Apellidos</label>
         <input type="text" name="apellidos" value="<?= isset($_SESSION['form_data']['apellidos']) ? $_SESSION['form_data']['apellidos'] : $usuario->getApellidos() ?>">
 
         <?php if(isset($_SESSION['gestion']) && $_SESSION['gestion'] == 'failed_apellidos'): ?>
@@ -41,7 +41,7 @@
 
     <div class="form-group">
 
-        <label for="email">Email</label>
+        <label for="email" id="email">Email</label>
         <input type="email" name="email" value="<?= isset($_SESSION['form_data']['email']) ? $_SESSION['form_data']['email'] : $usuario->getEmail() ?>">
 
         <?php if(isset($_SESSION['gestion']) && $_SESSION['gestion'] == 'failed_email'): ?>
@@ -55,7 +55,7 @@
 
     <div class="form-group">
 
-        <label for="password">Contraseña</label>
+        <label for="password" id="password">Contraseña</label>
         <input type="password" name="password" value="<?= isset($_SESSION['form_data']['password']) ? $_SESSION['form_data']['password'] : '' ?>">
 
         <?php if(isset($_SESSION['gestion']) && $_SESSION['gestion'] == 'failed_password'): ?>
@@ -81,7 +81,7 @@
 
     <div class="form-group">
 
-        <label for="imagen">Imagen</label>
+        <label for="imagen" id="imagen">Imagen</label>
         <input type="file" name="imagen" style="cursor: pointer;">
 
         <?php if(isset($_SESSION['gestion']) && $_SESSION['gestion'] == 'failed_imagen'): ?>
@@ -112,11 +112,11 @@
 
 <?php if(isset($_SESSION['gestion']) && $_SESSION['gestion'] == 'nothing'): ?>
 
-    <strong class="yellow">No se ha modificado ningún dato.</strong>
+    <strong class="yellow" id="nothing">No se ha modificado ningún dato.</strong>
 
 <?php elseif(isset($_SESSION['gestion']) && $_SESSION['gestion'] == 'failed'): ?>
 
-    <strong class="red">Edición de datos fallida, introduce bien los datos.</strong>
+    <strong class="red" id="failed">Edición de datos fallida, introduce bien los datos.</strong>
 
 <?php endif; ?>
 

@@ -6,7 +6,7 @@
 
     <div class="form-group">
 
-        <label for="nombre">Nombre</label>
+        <label for="nombre" id="nombre">Nombre</label>
         <input type="text" name="nombre" required value="<?= isset($_SESSION['form_data']['nombre']) ? $_SESSION['form_data']['nombre'] : '' ?>">
 
         <?php if(isset($_SESSION['register']) && $_SESSION['register'] == 'failed_nombre'): ?>
@@ -18,10 +18,9 @@
 
     </div>
 
-
     <div class="form-group">
 
-        <label for="apellidos">Apellidos</label>
+        <label for="apellidos" id="apellidos">Apellidos</label>
         <input type="text" name="apellidos" required value="<?= isset($_SESSION['form_data']['apellidos']) ? $_SESSION['form_data']['apellidos'] : '' ?>">
 
         <?php if(isset($_SESSION['register']) && $_SESSION['register'] == 'failed_apellidos'): ?>
@@ -33,10 +32,9 @@
 
     </div>
 
-
     <div class="form-group">
 
-        <label for="email">Email</label>
+        <label for="email" id="email">Email</label>
         <input type="email" name="email" required value="<?= isset($_SESSION['form_data']['email']) ? $_SESSION['form_data']['email'] : '' ?>">
 
         <?php if(isset($_SESSION['register']) && $_SESSION['register'] == 'failed_email'): ?>
@@ -50,7 +48,7 @@
 
     <div class="form-group">
 
-        <label for="password">Contraseña</label>
+        <label for="password" id="password">Contraseña</label>
         <input type="password" name="password" required value="<?= isset($_SESSION['form_data']['password']) ? $_SESSION['form_data']['password'] : '' ?>">
 
         <?php if(isset($_SESSION['register']) && $_SESSION['register'] == 'failed_password'): ?>
@@ -64,7 +62,7 @@
 
     <div class="form-group">
         
-        <label for="imagen">Imagen</label>
+        <label for="imagen" id="imagen">Imagen</label>
         <input type="file" name="imagen" required style="cursor: pointer;">
 
         <?php if(isset($_SESSION['register']) && $_SESSION['register'] == 'failed_imagen'): ?>
@@ -96,11 +94,11 @@
 
 <?php if(isset($_SESSION['register']) && $_SESSION['register'] == 'complete'): ?>
 
-    <strong class="green">Registro completado correctamente.</strong>
+    <strong class="green" id="complete">Registro completado correctamente.</strong>
 
 <?php elseif(isset($_SESSION['register']) && $_SESSION['register'] == 'failed'): ?>
 
-    <strong class="red">Registro fallido, introduce bien los datos.</strong>
+    <strong class="red" id="failed">Registro fallido, introduce bien los datos.</strong>
 
 <?php endif; ?>
 

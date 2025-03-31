@@ -6,15 +6,16 @@
 
 <?php if(count(Categoria::getAll()) == 0): ?>
 
-    <a href="<?=BASE_URL?>producto/crear" title="Para crear productos, primero debes crear categorías." style="pointer-events: none;">
+    <a href="<?=BASE_URL?>producto/crear" title="Para crear productos, primero debes crear categorías." style="pointer-events: none; text-decoration: none; margin: 10px">
 
 <?php else: ?>
 
-    <a href="<?=BASE_URL?>producto/crear">
+    <a href="<?=BASE_URL?>producto/crear" style="text-decoration: none; margin: 10px">
 
 <?php endif; ?>
 
-    <button class="boton more-margin <?php if(count(Categoria::getAll()) == 0) echo 'disabled' ?>">
+    <button class="boton more-margin <?php if(count(Categoria::getAll()) == 0) echo 'disabled' ?> " style="display: flex; justify-content: center; align-items: center; margin: 0 auto;">
+        <img src="<?=BASE_URL?>assets/images/crear.svg" alt="Crear producto" style="margin-right: 4px">
         Crear Producto
     </button>
 

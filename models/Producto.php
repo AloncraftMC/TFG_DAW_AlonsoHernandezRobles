@@ -15,7 +15,6 @@
         private string $oferta;
         private string $fecha;
         private string $imagen;
-        private BaseDatos $baseDatos;
 
         public function __construct(){
         }
@@ -98,9 +97,9 @@
 
         public function save(): bool {
 
-            $this->baseDatos = new BaseDatos();
+            $baseDatos = new BaseDatos();
 
-            $this->baseDatos->ejecutar("INSERT INTO productos VALUES(null, :categoria_id, :nombre, :descripcion, :precio, :stock, :oferta, :fecha, null)", [
+            $baseDatos->ejecutar("INSERT INTO productos VALUES(null, :categoria_id, :nombre, :descripcion, :precio, :stock, :oferta, :fecha, null)", [
                 ':categoria_id' => $this->categoriaId,
                 ':nombre' => $this->nombre,
                 ':descripcion' => $this->descripcion,
@@ -110,11 +109,11 @@
                 ':fecha' => $this->fecha
             ]);
         
-            if ($this->baseDatos->getNumeroRegistros() == 1) $this->setId($this->baseDatos->getUltimoId());
+            if ($baseDatos->getNumeroRegistros() == 1) $this->setId($baseDatos->getUltimoId());
         
-            $output = $this->baseDatos->getNumeroRegistros() == 1;
+            $output = $baseDatos->getNumeroRegistros() == 1;
 
-            $this->baseDatos->cerrarConexion();
+            $baseDatos->cerrarConexion();
 
             return $output;
             
@@ -123,20 +122,20 @@
 
         public function update(): bool {
 
-            $this->baseDatos = new BaseDatos();
+            $baseDatos = new BaseDatos();
 
             if (!isset($this->imagen)) {
 
-                $this->baseDatos->ejecutar("SELECT imagen FROM productos WHERE id = :id", [
+                $baseDatos->ejecutar("SELECT imagen FROM productos WHERE id = :id", [
                     ':id' => $this->id
                 ]);
         
-                $registro = $this->baseDatos->getSiguienteRegistro();
+                $registro = $baseDatos->getSiguienteRegistro();
                 $this->imagen = $registro['imagen'];
 
             }
 
-            $this->baseDatos->ejecutar("UPDATE productos SET categoria_id = :categoria_id, nombre = :nombre, descripcion = :descripcion, precio = :precio, stock = :stock, oferta = :oferta, fecha = :fecha, imagen = :imagen WHERE id = :id", [
+            $baseDatos->ejecutar("UPDATE productos SET categoria_id = :categoria_id, nombre = :nombre, descripcion = :descripcion, precio = :precio, stock = :stock, oferta = :oferta, fecha = :fecha, imagen = :imagen WHERE id = :id", [
                 ':categoria_id' => $this->categoriaId,
                 ':nombre' => $this->nombre,
                 ':descripcion' => $this->descripcion,
@@ -148,9 +147,9 @@
                 ':id' => $this->id
             ]);
             
-            $output = $this->baseDatos->getNumeroRegistros() == 1;
+            $output = $baseDatos->getNumeroRegistros() == 1;
 
-            $this->baseDatos->cerrarConexion();
+            $baseDatos->cerrarConexion();
 
             return $output;
 
@@ -158,35 +157,35 @@
 
         public function delete(): bool {
 
-            $this->baseDatos = new BaseDatos();
+            $baseDatos = new BaseDatos();
 
-            $this->baseDatos->ejecutar("SELECT MAX(id) AS id FROM productos");
+            $baseDatos->ejecutar("SELECT MAX(id) AS id FROM productos");
 
-            $maxId = $this->baseDatos->getSiguienteRegistro();
+            $maxId = $baseDatos->getSiguienteRegistro();
             $maxId = $maxId ? $maxId['id'] : null;
 
-            $this->baseDatos->ejecutar("DELETE FROM productos WHERE id = :id", [
+            $baseDatos->ejecutar("DELETE FROM productos WHERE id = :id", [
                 ':id' => $this->id
             ]);
 
-            $output = $this->baseDatos->getNumeroRegistros() == 1;
+            $output = $baseDatos->getNumeroRegistros() == 1;
 
             if ($output && $this->id == $maxId) {
                 
-                $this->baseDatos->ejecutar("SELECT MAX(id) AS id FROM productos");
+                $baseDatos->ejecutar("SELECT MAX(id) AS id FROM productos");
 
-                $nuevoMaxId = $this->baseDatos->getSiguienteRegistro();
+                $nuevoMaxId = $baseDatos->getSiguienteRegistro();
                 $nuevoMaxId = $nuevoMaxId ? $nuevoMaxId['id'] : 0;
 
                 $nuevoAutoIncrement = $nuevoMaxId + 1; // Si la tabla está vacía, empieza en 1
 
-                $this->baseDatos->ejecutar("ALTER TABLE productos AUTO_INCREMENT = :id", [
+                $baseDatos->ejecutar("ALTER TABLE productos AUTO_INCREMENT = :id", [
                     ':id' => $nuevoAutoIncrement
                 ]);
 
             }
 
-            $this->baseDatos->cerrarConexion();
+            $baseDatos->cerrarConexion();
 
             return $output;
             

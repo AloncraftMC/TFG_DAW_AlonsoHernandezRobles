@@ -13,7 +13,6 @@
         private ?string $password;
         private ?string $rol;
         private ?string $imagen;
-        private BaseDatos $baseDatos;
         
         public function __construct(){
         }
@@ -80,19 +79,19 @@
 
         public function save(): bool{
 
-            $this->baseDatos = new BaseDatos();
+            $baseDatos = new BaseDatos();
             
-            $this->baseDatos->ejecutar("INSERT INTO usuarios VALUES(null, :nombre, :apellidos, :email, :password, :rol, null)", [
+            $baseDatos->ejecutar("INSERT INTO usuarios VALUES(null, :nombre, :apellidos, :email, :password, :rol, null)", [
                 ':nombre' => $this->nombre,
                 ':apellidos' => $this->apellidos,
                 ':email' => $this->email,
-                ':password' => password_hash($this->password, PASSWORD_BCRYPT, ['cost' => 4]),
+                ':password' => password_hash($this->password, PASSWORD_BCRYPT, ['cost' => 12]),
                 ':rol' => $this->rol
             ]);
 
-            $output = $this->baseDatos->getNumeroRegistros() == 1;
+            $output = $baseDatos->getNumeroRegistros() == 1;
 
-            $this->baseDatos->cerrarConexion();
+            $baseDatos->cerrarConexion();
 
             return $output;
 
@@ -100,19 +99,19 @@
 
         public function login(): ?Usuario{
 
-            $this->baseDatos = new BaseDatos();
+            $baseDatos = new BaseDatos();
 
             // Buscar el usuario en la base de datos
             
-            $this->baseDatos->ejecutar("SELECT * FROM usuarios WHERE email = :email", [
+            $baseDatos->ejecutar("SELECT * FROM usuarios WHERE email = :email", [
                 ':email' => $this->email,
             ]);
 
             // Si se encontró un usuario con ese email
 
-            if($this->baseDatos->getNumeroRegistros() == 1){
+            if($baseDatos->getNumeroRegistros() == 1){
                 
-                $usuario = $this->baseDatos->getSiguienteRegistro();
+                $usuario = $baseDatos->getSiguienteRegistro();
 
                 // Verificar la contraseña
                 
@@ -125,7 +124,7 @@
                     $this->setRol($usuario['rol']);
                     $this->setImagen($usuario['imagen']);
 
-                    $this->baseDatos->cerrarConexion();
+                    $baseDatos->cerrarConexion();
 
                     return $this;
 
@@ -133,7 +132,7 @@
 
             }
 
-            $this->baseDatos->cerrarConexion();
+            $baseDatos->cerrarConexion();
 
             return null;
 
@@ -141,7 +140,7 @@
 
         public function update(): bool {
 
-            $this->baseDatos = new BaseDatos();
+            $baseDatos = new BaseDatos();
 
             if(!$this->password || strlen($this->password) == 0) $this->password = null;
             
@@ -161,7 +160,7 @@
                     ':nombre' => $this->nombre,
                     ':apellidos' => $this->apellidos,
                     ':email' => $this->email,
-                    ':password' => password_hash($this->password, PASSWORD_BCRYPT, ['cost' => 4]),
+                    ':password' => password_hash($this->password, PASSWORD_BCRYPT, ['cost' => 12]),
                     ':rol' => $this->rol,
                     ':imagen' => $this->imagen,
                     ':id' => $this->id
@@ -186,11 +185,11 @@
 
             }
         
-            $this->baseDatos->ejecutar($query, $params);
+            $baseDatos->ejecutar($query, $params);
         
-            $output = $this->baseDatos->getNumeroRegistros() == 1;
+            $output = $baseDatos->getNumeroRegistros() == 1;
 
-            $this->baseDatos->cerrarConexion();
+            $baseDatos->cerrarConexion();
 
             return $output;
 
@@ -198,35 +197,35 @@
 
         public function delete(): bool {
 
-            $this->baseDatos = new BaseDatos();
+            $baseDatos = new BaseDatos();
 
-            $this->baseDatos->ejecutar("SELECT MAX(id) AS id FROM usuarios");
+            $baseDatos->ejecutar("SELECT MAX(id) AS id FROM usuarios");
 
-            $maxId = $this->baseDatos->getSiguienteRegistro();
+            $maxId = $baseDatos->getSiguienteRegistro();
             $maxId = $maxId ? $maxId['id'] : null;
 
-            $this->baseDatos->ejecutar("DELETE FROM usuarios WHERE id = :id", [
+            $baseDatos->ejecutar("DELETE FROM usuarios WHERE id = :id", [
                 ':id' => $this->id
             ]);
 
-            $output = $this->baseDatos->getNumeroRegistros() == 1;
+            $output = $baseDatos->getNumeroRegistros() == 1;
 
             if ($output && $this->id == $maxId) {
                 
-                $this->baseDatos->ejecutar("SELECT MAX(id) AS id FROM usuarios");
+                $baseDatos->ejecutar("SELECT MAX(id) AS id FROM usuarios");
 
-                $nuevoMaxId = $this->baseDatos->getSiguienteRegistro();
+                $nuevoMaxId = $baseDatos->getSiguienteRegistro();
                 $nuevoMaxId = $nuevoMaxId ? $nuevoMaxId['id'] : 0;
 
                 $nuevoAutoIncrement = $nuevoMaxId + 1; // Si la tabla está vacía, empieza en 1
 
-                $this->baseDatos->ejecutar("ALTER TABLE usuarios AUTO_INCREMENT = :id", [
+                $baseDatos->ejecutar("ALTER TABLE usuarios AUTO_INCREMENT = :id", [
                     ':id' => $nuevoAutoIncrement
                 ]);
 
             }
 
-            $this->baseDatos->cerrarConexion();
+            $baseDatos->cerrarConexion();
 
             return $output;
 

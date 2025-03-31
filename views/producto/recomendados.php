@@ -4,10 +4,17 @@
 use models\Categoria;
 use models\Producto;
 
-// Recuperamos todos los productos
-$todos = Producto::getAll();
+// Recuperamos absolutamente todos los productos
+$absolutamenteTodos = Producto::getAll();
 
-$bdVacia = ($todos == null);
+// Comprobamos si la base de datos contiene productos
+$bdVacia = ($absolutamenteTodos == null);
+
+// Recuperamos todos los productos válidos (que no estén agotados)
+$todos = array_filter($absolutamenteTodos, fn($p) => $p->getStock() > 0);
+
+// Comprobamos si hay productos catalogados (tamaño de $todos > 0)
+$hayProductosCatalogados = (count($todos) > 0);
 
 // Bandera para saber si estamos en modo "por categoría"
 $modoCategoria = false;
@@ -66,20 +73,30 @@ if (isset($_GET['categoria'])) {
 
     // Modo aleatorio sin categoría
 
-    if (empty($todos)) {
-
+    if(empty($absolutamenteTodos)) {
+        
         $bdVacia = true;
 
-    } else {
+    }else{
 
         $bdVacia = false;
 
-        $numProductos = min(6, count($todos));
-        $shuffled = $todos;
+        if (empty($todos)) {
 
-        shuffle($shuffled);
-
-        $recomendados = array_slice($shuffled, 0, $numProductos);
+            $hayProductosCatalogados = false;
+    
+        } else {
+    
+            $hayProductosCatalogados = true;
+    
+            $numProductos = min(6, count($todos));
+            $shuffled = $todos;
+    
+            shuffle($shuffled);
+    
+            $recomendados = array_slice($shuffled, 0, $numProductos);
+    
+        }
 
     }
     
@@ -128,6 +145,12 @@ if (isset($_GET['categoria'])) {
 <?php elseif(isset($bdVacia) && $bdVacia): ?>
 
     <h2 style="color: rgb(180, 180, 180)">¡Vaya! Parece que nuestra base de datos está vacía...</h2>
+    <h1 style="font-size: 500%">:(</h1>
+
+<?php elseif(isset($hayProductosCatalogados) && !$hayProductosCatalogados): ?>
+
+    <h2 style="color: rgb(180, 180, 180)">¡Vaya! Todos nuestros productos están agotados...</h2>
+    <h1 style="font-size: 500%">:(</h1>
 
 <?php endif; ?>
 
@@ -153,9 +176,8 @@ if (isset($_GET['categoria'])) {
         </a>
 
         <h1>Pág. 
-            <form style="padding: 0px; background-color: unset; display: inline;" action="<?=BASE_URL?>producto/recomendados&categoria=<?= $categoria->getId() ?>" method="GET">
-                <input type="hidden" name="producto_id" value="<?=$producto->getId()?>">
-                <input type="number" name="pagina" min="1" class="quantity-input" value="<?=$pag?>" style="width: 60px; height: 40px; font-size: 30px; padding: 5px; margin: 0px;" required>
+            <form style="padding: 0px; background-color: unset; display: inline;" action="<?= BASE_URL ?>producto/recomendados&categoria=<?= $categoria->getId() ?>&pag=" method="GET">
+                <input type="number" name="pag" min="1" class="quantity-input" value="<?= $pag ?>" style="width: 60px; height: 40px; font-size: 30px; padding: 5px; margin: 0px;" required>
             </form>
         </h1>
         
@@ -202,36 +224,46 @@ if (isset($_GET['categoria'])) {
 
             <td style="width: 33%; padding: 30px; vertical-align: top;">
 
-                <img style="max-height: 200px; min-height: 200px; margin-top: 20px;" 
-                    src="<?= BASE_URL ?>assets/images/uploads/productos/<?= $producto->getImagen() ?>" 
-                    alt="<?= $producto->getNombre() ?>">
+                <div style="height: 100%; display: flex; flex-direction: column; justify-content: space-between;">
 
-                <h2 style="margin-bottom: 0px;"><?= $producto->getNombre() ?></h2>
+                    <div>
 
-                <p style="margin: 4px; margin-bottom: 10px; color: gray;">
-                    <?= Categoria::getById($producto->getCategoriaId())->getNombre() ?>
-                </p>
+                        <img style="max-height: 200px; min-height: 200px; margin-top: 20px;"
+                            src="<?= BASE_URL ?>assets/images/uploads/productos/<?= $producto->getImagen() ?>" 
+                            alt="<?= $producto->getNombre() ?>">
 
-                <?php if ($producto->getOferta() > 0): ?>
+                        <h2 style="margin-bottom: 0px;"><?= $producto->getNombre() ?></h2>
 
-                    <h3 style="margin: 4px; color: red; text-decoration: line-through;">
-                        <?= $producto->getPrecio() ?> €
-                    </h3>
+                        <p style="margin: 4px; margin-bottom: 10px; color: gray;">
+                            <?= Categoria::getById($producto->getCategoriaId())->getNombre() ?>
+                        </p>
 
-                    <h1 style="margin: 4px;">
-                        <?= round($producto->getPrecio() * (1 - $producto->getOferta() / 100), 2) ?> €
-                        <span style="font-size: 70%; opacity: 0.3">(-<?= $producto->getOferta() ?>%)</span>
-                    </h1>
-                    
-                <?php else: ?>
+                        <?php if ($producto->getOferta() > 0): ?>
 
-                    <h1 style="margin: 4px;"><?= $producto->getPrecio() ?> €</h1>
+                        <h3 style="margin: 4px; color: red; text-decoration: line-through;">
+                            <?= $producto->getPrecio() ?> €
+                        </h3>
 
-                <?php endif; ?>
+                        <h1 style="margin: 4px;">
+                            <?= round($producto->getPrecio() * (1 - $producto->getOferta() / 100), 2) ?> €
+                            <span style="font-size: 70%; opacity: 0.3">(-<?= $producto->getOferta() ?>%)</span>
+                        </h1>
+                        
+                        <?php else: ?>
 
-                <a href="<?= BASE_URL ?>producto/ver&id=<?= $producto->getId() ?>" class="boton">
-                    <button style="margin-top: 20px;">Ver Producto</button>
-                </a>
+                            <h1 style="margin: 4px;"><?= $producto->getPrecio() ?> €</h1>
+
+                        <?php endif; ?>
+
+                    </div>
+
+                    <div style="width: 100%;">
+                        <a href="<?= BASE_URL ?>producto/ver&id=<?= $producto->getId() ?>" class="boton">
+                            <button style="margin-top: 20px;">Ver Producto</button>
+                        </a>
+                    </div>
+
+                </div>
 
             </td>
 
@@ -279,9 +311,8 @@ if (isset($_GET['categoria'])) {
         </a>
 
         <h1>Pág. 
-            <form style="padding: 0px; background-color: unset; display: inline;" action="<?=BASE_URL?>producto/recomendados&categoria=<?= $categoria->getId() ?>" method="GET">
-                <input type="hidden" name="producto_id" value="<?=$producto->getId()?>">
-                <input type="number" name="pagina" min="1" class="quantity-input" value="<?=$pag?>" style="width: 60px; height: 40px; font-size: 30px; padding: 5px; margin: 0px;" required>
+            <form style="padding: 0px; background-color: unset; display: inline;" action="<?= BASE_URL ?>producto/recomendados&categoria=<?= $categoria->getId() ?>&pag=" method="GET">
+                <input type="number" name="pag" min="1" class="quantity-input" value="<?= $pag ?>" style="width: 60px; height: 40px; font-size: 30px; padding: 5px; margin: 0px;" required>
             </form>
         </h1>
 
@@ -300,3 +331,5 @@ if (isset($_GET['categoria'])) {
     </div>
 
 <?php endif; ?>
+
+<script src="<?= BASE_URL ?>js/actualizarPaginacion.js"></script>

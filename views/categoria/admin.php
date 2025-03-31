@@ -1,7 +1,8 @@
 <h1>Administración de Categorías</h1>
 
-<a href="<?=BASE_URL?>categoria/crear">
-    <button class="boton more-margin">
+<a href="<?=BASE_URL?>categoria/crear" style="text-decoration: none; margin: 10px">
+    <button class="boton more-margin" style="display: flex; justify-content: center; align-items: center; margin: 0 auto;">
+        <img src="<?=BASE_URL?>assets/images/crear.svg" alt="Crear categoría" style="margin-right: 4px">
         Crear Categoría
     </button>
 </a>

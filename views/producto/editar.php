@@ -37,7 +37,7 @@
     
     <div class="form-group">
 
-        <label for="nombre">Nombre</label>
+        <label for="nombre" id="nombre">Nombre</label>
         <input type="text" name="nombre" required value="<?=isset($_SESSION['form_data']['nombre']) ? $_SESSION['form_data']['nombre'] : $producto->getNombre()?>">
 
         <?php if(isset($_SESSION['gestion']) && $_SESSION['gestion'] == 'failed_nombre'): ?>
@@ -58,7 +58,7 @@
 
     <div class="form-group">
 
-        <label for="precio">Precio</label>
+        <label for="precio" id="precio">Precio</label>
         <input type="number" name="precio" required value="<?=isset($_SESSION['form_data']['precio']) ? $_SESSION['form_data']['precio'] : $producto->getPrecio()?>" min="0.01" step="0.01">
 
         <?php if(isset($_SESSION['gestion']) && $_SESSION['gestion'] == 'failed_precio'): ?>
@@ -72,7 +72,7 @@
 
     <div class="form-group">
 
-        <label for="stock">Stock</label>
+        <label for="stock" id="stock">Stock</label>
         <input type="number" name="stock" required value="<?=isset($_SESSION['form_data']['stock']) ? $_SESSION['form_data']['stock'] : $producto->getStock()?>" min="0">
 
         <?php if(isset($_SESSION['gestion']) && $_SESSION['gestion'] == 'failed_stock'): ?>
@@ -88,7 +88,7 @@
 
         <!-- Si la oferta es 0, no se muestra en el input. Si no, se muestra el valor de la oferta actual del producto -->
 
-        <label for="oferta">Oferta</label>
+        <label for="oferta" id="oferta">Oferta</label>
         <input type="number" name="oferta" value="<?=isset($_SESSION['form_data']['oferta']) ? $_SESSION['form_data']['oferta'] : ($producto->getOferta() == 0 ? '' : $producto->getOferta())?>" min="1" max="99" placeholder="% de descuento">
         
         <?php if(isset($_SESSION['gestion']) && $_SESSION['gestion'] == 'failed_oferta'): ?>
@@ -102,7 +102,7 @@
 
     <div class="form-group">
 
-        <label for="imagen">Imagen</label>
+        <label for="imagen" id="imagen">Imagen</label>
         <input type="file" name="imagen" style="cursor: pointer;">
 
         <?php if(isset($_SESSION['gestion']) && $_SESSION['gestion'] == 'failed_imagen'): ?>
@@ -135,11 +135,11 @@
 
 <?php if(isset($_SESSION['gestion']) && $_SESSION['gestion'] == 'nothing'): ?>
 
-    <strong class="yellow">No se ha modificado ningún dato.</strong>
+    <strong class="yellow" id="nothing">No se ha modificado ningún dato.</strong>
 
 <?php elseif(isset($_SESSION['gestion']) && $_SESSION['gestion'] == 'failed'): ?>
 
-    <strong class="red">Edición de datos fallida, introduce bien los datos.</strong>
+    <strong class="red" id="error">Edición de datos fallida, introduce bien los datos.</strong>
 
 <?php endif; ?>
 

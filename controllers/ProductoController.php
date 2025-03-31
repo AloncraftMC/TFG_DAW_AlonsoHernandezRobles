@@ -111,7 +111,7 @@
                     if(strlen($nombre) < 2){
 
                         $_SESSION['create'] = 'failed_nombre';
-                        header("Location:" . BASE_URL . "producto/crear");
+                        header("Location:" . BASE_URL . "producto/crear#nombre");
                         exit();
 
                     }
@@ -121,7 +121,7 @@
                     if($precio <= 0){
 
                         $_SESSION['create'] = 'failed_precio';
-                        header("Location:" . BASE_URL . "producto/crear");
+                        header("Location:" . BASE_URL . "producto/crear#precio");
                         exit();
 
                     }
@@ -131,7 +131,7 @@
                     if($stock < 0){
 
                         $_SESSION['create'] = 'failed_stock';
-                        header("Location:" . BASE_URL . "producto/crear");
+                        header("Location:" . BASE_URL . "producto/crear#stock");
                         exit();
 
                     }
@@ -141,7 +141,7 @@
                     if($oferta && ($oferta < 1 || $oferta > 99)){
 
                         $_SESSION['create'] = 'failed_oferta';
-                        header("Location:" . BASE_URL . "producto/crear");
+                        header("Location:" . BASE_URL . "producto/crear#oferta");
                         exit();
 
                     }
@@ -153,7 +153,7 @@
                     if(!in_array($_FILES['imagen']['type'], $permitidos) || $_FILES['imagen']['error'] != UPLOAD_ERR_OK){
 
                         $_SESSION['create'] = 'failed_imagen';
-                        header("Location:" . BASE_URL . "producto/crear");
+                        header("Location:" . BASE_URL . "producto/crear#imagen");
                         exit();
 
                     }
@@ -189,7 +189,7 @@
                         } else {
 
                             $_SESSION['create'] = 'failed';
-                            header("Location:" . BASE_URL . "producto/crear");
+                            header("Location:" . BASE_URL . "producto/crear#error");
                             exit();
 
                         }
@@ -201,7 +201,7 @@
                     }else{
                         
                         $_SESSION['create'] = 'failed';
-                        header("Location:" . BASE_URL . "producto/crear");
+                        header("Location:" . BASE_URL . "producto/crear#error");
                         exit;
 
                     }
@@ -209,7 +209,7 @@
                 } else {
                     
                     $_SESSION['create'] = 'failed';
-                    header("Location:" . BASE_URL . "producto/crear");
+                    header("Location:" . BASE_URL . "producto/crear#error");
                     exit;
 
                 }
@@ -265,7 +265,7 @@
                     if(strlen($nombre) < 2){
 
                         $_SESSION['gestion'] = 'failed_nombre';
-                        header("Location:" . BASE_URL . "producto/gestion&id=" . $id);
+                        header("Location:" . BASE_URL . "producto/gestion&id=" . $id . "#nombre");
                         exit();
 
                     }
@@ -275,7 +275,7 @@
                     if($precio <= 0){
 
                         $_SESSION['gestion'] = 'failed_precio';
-                        header("Location:" . BASE_URL . "producto/gestion&id=" . $id);
+                        header("Location:" . BASE_URL . "producto/gestion&id=" . $id . "#precio");
                         exit();
 
                     }
@@ -285,7 +285,7 @@
                     if($stock < 0){
 
                         $_SESSION['gestion'] = 'failed_stock';
-                        header("Location:" . BASE_URL . "producto/gestion&id=" . $id);
+                        header("Location:" . BASE_URL . "producto/gestion&id=" . $id . "#stock");
                         exit();
 
                     }
@@ -295,7 +295,7 @@
                     if($oferta && ($oferta < 1 || $oferta > 99)){
 
                         $_SESSION['gestion'] = 'failed_oferta';
-                        header("Location:" . BASE_URL . "producto/gestion&id=" . $id);
+                        header("Location:" . BASE_URL . "producto/gestion&id=" . $id . "#oferta");
                         exit();
 
                     }
@@ -309,7 +309,7 @@
                         if(!in_array($_FILES['imagen']['type'], $permitidos) || $_FILES['imagen']['error'] != UPLOAD_ERR_OK){
 
                             $_SESSION['gestion'] = 'failed_imagen';
-                            header("Location:" . BASE_URL . "producto/gestion&id=" . $id);
+                            header("Location:" . BASE_URL . "producto/gestion&id=" . $id . "#imagen");
                             exit();
 
                         }
@@ -350,7 +350,7 @@
                         } else {
         
                             $_SESSION['gestion'] = 'failed';
-                            header("Location:" . BASE_URL . "producto/gestion&id=" . $id);
+                            header("Location:" . BASE_URL . "producto/gestion&id=" . $id . "#error");
                             exit();
         
                         }
@@ -368,7 +368,7 @@
                     }else{
                         
                         $_SESSION['gestion'] = 'failed';
-                        header("Location:" . BASE_URL . "producto/gestion&id=" . $id);
+                        header("Location:" . BASE_URL . "producto/gestion&id=" . $id . "#error");
                         exit;
 
                     }
@@ -376,7 +376,7 @@
                 } else {
                     
                     $_SESSION['gestion'] = 'nothing';
-                    header("Location:" . BASE_URL . "producto/gestion&id=" . $id);
+                    header("Location:" . BASE_URL . "producto/gestion&id=" . $id . "#nothing");
                     exit;
 
                 }

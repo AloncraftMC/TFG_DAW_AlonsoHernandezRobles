@@ -22,9 +22,9 @@
 
 <?php else: ?>
 
-    <a href="<?=BASE_URL?>carrito/clear">
-        <button class="boton more-margin btn-del">
-            Vaciar carrito
+    <a href="<?=BASE_URL?>carrito/clear" style="text-decoration: none;">
+        <button class="boton more-margin btn-del" style="display: flex; justify-content: center; align-items: center; margin: 0 auto;">
+            <img src="<?=BASE_URL?>assets/images/vaciar.svg" alt="Vaciar carrito" style="margin-right: 4px">Vaciar carrito
         </button>
     </a>
 
@@ -47,32 +47,38 @@
                 $precioTotal = $prod->getPrecio() * (1 - $prod->getOferta() / 100) * $producto['unidades'];
                 $totalCarrito += $precioTotal;
             ?>
-                <tr>
+                <tr id="<?= $indice ?>">
                     <td>
                         <?php if ($prod->getImagen() != null): ?>
                             <a href="<?= BASE_URL ?>producto/ver&id=<?= $prod->getId() ?>"><img src="<?= BASE_URL ?>assets/images/uploads/productos/<?= $prod->getImagen() ?>" alt="<?= $prod->getNombre() ?>"></a>
                         <?php endif; ?>
                     </td>
                     <td>
-                        <a href="<?= BASE_URL ?>producto/ver&id=<?= $prod->getId() ?>" class="enlace-producto"><?= $prod->getNombre() ?></a>
+                        <a href="<?= BASE_URL ?>producto/ver&id=<?= $prod->getId() ?>" class="enlace-producto" style="font-size: 120%;"><?= $prod->getNombre() ?></a>
                     </td>
-                    <td>
+                    <td style="min-width: 200px">
                         <a href="<?= BASE_URL ?>carrito/down&index=<?= $indice ?>" class="boton boton-carrito boton-down">-</a>
-                        <h3 style="display: inline"><?= $producto['unidades'] ?></h3>
+                        <h2 style="display: inline"><?= $producto['unidades'] ?></h2>
                         <a href="<?= BASE_URL ?>carrito/up&index=<?= $indice ?>" class="boton boton-carrito boton-up">+</a>
                     </td>
                     <td>
-                        <?php if ($prod->getOferta() > 0): ?>
-                            <span style="color: red; text-decoration: line-through; font-size: 80%;"><?= $prod->getPrecio() ?> €</span>
-                            <br>
-                            <span style="color: rgb(0, 0, 0); font-weight: bold;"><?= round($prod->getPrecio() * (1 - $prod->getOferta() / 100), 2) ?> €</span>
-                            <br>
-                            <span style="font-size: 80%; opacity: 0.5">(-<?= $prod->getOferta() ?>%)</span>
-                        <?php else: ?>
-                            <span style="color: rgb(0, 0, 0); font-weight: bold;"><?= $prod->getPrecio() ?> €</span>
-                        <?php endif; ?>
+                        <span style="font-size: 125%">
+                            <?php if ($prod->getOferta() > 0): ?>
+                                <span style="color: red; text-decoration: line-through; font-size: 60%;"><?= $prod->getPrecio() ?> €</span>
+                                <br>
+                                <span style="color: rgb(0, 0, 0); font-weight: bold;"><?= round($prod->getPrecio() * (1 - $prod->getOferta() / 100), 2) ?> €</span>
+                                <br>
+                                <span style="font-size: 80%; opacity: 0.5">(-<?= $prod->getOferta() ?>%)</span>
+                            <?php else: ?>
+                                <span style="color: rgb(0, 0, 0); font-weight: bold;"><?= $prod->getPrecio() ?> €</span>
+                            <?php endif; ?>
+                        </span>
                     </td>
-                    <td><?= $precioTotal ?> €</td>
+                    <td>
+                        <span style="font-size: 150%">
+                            <?= $precioTotal ?> €
+                        </span>
+                    </td>
                     <td class="acciones-especial">
                         <a href="<?= BASE_URL ?>carrito/delete&index=<?= $indice ?>" class="boton btn-delete">Eliminar</a>
                     </td>
@@ -99,3 +105,5 @@
 <?php endif; ?>
 
 <?php Utils::deleteSession('carritoResultado'); ?>
+
+<script src="<?=BASE_URL?>js/ajusteImagenesAdminProductos.js"></script>

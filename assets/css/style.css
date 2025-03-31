@@ -163,13 +163,61 @@ main{
 /* FOOTER */
 
 footer{
+
     flex-shrink: 0;
     background-color: darkslategray;
-    color: white;
     text-align: center;
     padding: 10px;
+    color: white;
     border-top: 5px rgb(202, 230, 255);
     border-top-style: ridge;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+
+    div{
+        
+        padding: 10px;
+        display: flex;
+        flex-direction: row;
+        justify-content: space-around;
+        
+        a {
+            color: white;
+            text-decoration: none;
+            position: relative; /* Necesario para usar el pseudo-elemento */
+            transition: color 1s; /* Transición suave para el color */
+        }
+
+        a::after {
+            content: '';
+            position: absolute;
+            left: 0;
+            bottom: 0;
+            width: 100%;
+            height: 1.5px;
+            background-color: white;
+            transform: scaleX(0);
+            transform-origin: bottom right;
+            transition: transform 0.25s ease-out; /* Transición para el subrayado */
+        }
+
+        a:hover {
+            color: #cfecff; /* Color del texto al pasar el ratón */
+        }
+
+        a:hover::after {
+            transform: scaleX(1);
+            transform-origin: bottom left;
+        }
+
+        &.autor{
+            color: gray;
+            margin-left: 40px;
+        }
+
+    }
+
 }
 
 /* FORMULARIOS */
@@ -338,7 +386,6 @@ form, .container {
         font-weight: bold;
     }
 
-
 }
 
 .container{
@@ -375,6 +422,105 @@ form, .container {
 
     }
 
+    &.modificado{
+
+        flex-direction: column;
+        max-width: 900px;
+        margin: 0 auto;
+        background-color: #ffffff;
+        padding: 30px;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1); /* Sombra sutil */
+
+        h1 {
+            font-size: 2.8rem; /* Aumento el tamaño del texto */
+            text-align: left; /* Alineo el texto a la izquierda */
+            color: #2c3e50;
+            margin-bottom: 20px;
+            text-transform: uppercase;
+        }
+
+        h2 {
+            font-size: 1.7rem; /* Aumento el tamaño del texto */
+            color: #34495e;
+            margin-top: 20px;
+            border-bottom: 2px solid #3498db;
+            padding-bottom: 5px;
+            text-align: left; /* Alineo el texto a la izquierda */
+        }
+
+        p {
+            font-size: 1.1rem; /* Aumento un poco el tamaño del texto */
+            color: #555;
+            margin-bottom: 15px;
+            line-height: 1.7;
+        }
+
+        ul {
+
+            margin-left: 20px;
+            margin-bottom: 20px;
+
+            li {
+                font-size: 1.1rem; /* Aumento un poco el tamaño del texto */
+                color: #555;
+                margin-bottom: 8px;
+            }
+
+        }
+
+        a {
+
+            color: #3498db;
+            text-decoration: none;
+            font-weight: bold;
+
+            &:hover {
+                color: #2980b9;
+                text-decoration: underline;
+            }
+
+        }
+
+        &.aviso {
+            border: 5px solid red;
+            margin-top: 30px;
+            background: linear-gradient(90deg, #ffb9b9 0%, #ffebeb 100%);
+            display: none; /* El aviso comienza oculto */
+
+            h2 {
+                border-bottom: 2px solid #db3434;
+                color: #502c2c;
+            }
+
+            p {
+                color: black;
+            }
+        }
+
+    }
+
+}
+
+/* Estilos para el botón */
+#avisoBtn {
+    background-color: #e74c3c;
+    color: white;
+    font-size: 1.5rem;
+    padding: 10px 20px;
+    width: unset;
+    margin-top: 20px;
+    border: none;
+    border-radius: 15px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+#avisoBtn:hover {
+    background-color: #c0392b;
+}
+
+#avisoBtn:focus {
+    outline: none;
 }
 
 .price-offer{

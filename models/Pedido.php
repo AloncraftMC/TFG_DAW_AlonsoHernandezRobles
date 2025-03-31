@@ -15,7 +15,6 @@
         private string $estado;
         private string $fecha;
         private string $hora;
-        private BaseDatos $baseDatos;
 
         public function __construct(){
         }
@@ -93,6 +92,14 @@
         public function setHora(string $hora): void{
             $this->hora = $hora;
         }
+
+        /* MÉTODOS DINÁMICOS */
+
+
+
+        /* MÉTODOS ESTÁTICOS */
+
+        
         
     }
 

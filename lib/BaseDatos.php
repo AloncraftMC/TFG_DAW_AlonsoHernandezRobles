@@ -34,7 +34,7 @@
 
             }catch(PDOException $e){
 
-                echo $e->getMessage();
+                echo "<h1>Error de conexión: " . $e->getMessage() . "</h1>";
 
             }
         
@@ -51,7 +51,7 @@
 
             }catch(PDOException $e){
 
-                throw new PDOException("Error de conexión: " . $e->getMessage());
+                echo "<h1>Error al ejecutar la consulta: " . $e->getMessage() . "</h1>";
 
             }
 

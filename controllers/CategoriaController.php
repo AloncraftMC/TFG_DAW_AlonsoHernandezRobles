@@ -209,6 +209,8 @@
                 }
 
                 $productos = Producto::getByCategoria($id);
+
+                // Eliminamos todos los productos de la categoría (cascada) y sus imágenes
         
                 foreach ($productos as $producto) {
 
@@ -220,6 +222,8 @@
                     $producto->delete();
 
                 }
+
+                // Ahora eliminamos la categoría
 
                 if($categoria->delete()){
                     

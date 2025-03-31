@@ -86,8 +86,13 @@
                 'listo' => 'Pedido Solicitado'
             ],
             'carrito' => [
-                'gestion' => 'Carrito de Compra' . (isset($_SESSION['carrito']) ? ' (' . count($_SESSION['carrito']) . ')' : '')
-            ]
+                'gestion' => 'Carrito' . (isset($_SESSION['carrito']) ? ' (' . Utils::statsCarrito()['totalCount'] . ' producto' . (Utils::statsCarrito()['totalCount'] > 1 ? 's' : '') . ')' : ' de compras')
+            ],
+            'info' => [
+                'condicionesUso' => 'Condiciones de Uso',
+                'politicaPrivacidad' => 'Política de Privacidad',
+                'sobreNosotros' => 'Sobre Nosotros',
+            ],
         ];
 
         // Asignar título si existe en la matriz, sino generar uno genérico

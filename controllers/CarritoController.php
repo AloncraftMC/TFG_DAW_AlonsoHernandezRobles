@@ -205,7 +205,7 @@
                 }
 
                 Utils::saveCookieCarrito();
-                header('Location: ' . BASE_URL . 'carrito/gestion');
+                header('Location: ' . BASE_URL . 'carrito/gestion' . ($indice ? '#' . $indice : ''));
                 exit;
 
             } else {
@@ -243,7 +243,7 @@
                 }
 
                 Utils::saveCookieCarrito();
-                header('Location: ' . BASE_URL . 'carrito/gestion');
+                header('Location: ' . BASE_URL . 'carrito/gestion' . ($indice && $_SESSION['carrito'][$indice]['unidades'] > 0 ? '#' . $indice : ''));
                 exit;
 
             } else {

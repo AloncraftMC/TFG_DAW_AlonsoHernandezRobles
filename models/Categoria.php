@@ -8,7 +8,6 @@
 
         private int $id;
         private string $nombre;
-        private BaseDatos $baseDatos;
 
         public function __construct(){
         }
@@ -35,15 +34,15 @@
 
         public function save(): bool{
 
-            $this->baseDatos = new BaseDatos();
+            $baseDatos = new BaseDatos();
 
-            $this->baseDatos->ejecutar("INSERT INTO categorias VALUES(null, :nombre)", [
+            $baseDatos->ejecutar("INSERT INTO categorias VALUES(null, :nombre)", [
                 ':nombre' => $this->nombre
             ]);
 
-            $output = $this->baseDatos->getNumeroRegistros() == 1;
+            $output = $baseDatos->getNumeroRegistros() == 1;
             
-            $this->baseDatos->cerrarConexion();
+            $baseDatos->cerrarConexion();
 
             return $output;
 
@@ -51,16 +50,16 @@
 
         public function update(): bool {
 
-            $this->baseDatos = new BaseDatos();
+            $baseDatos = new BaseDatos();
 
-            $this->baseDatos->ejecutar("UPDATE categorias SET nombre = :nombre WHERE id = :id", [
+            $baseDatos->ejecutar("UPDATE categorias SET nombre = :nombre WHERE id = :id", [
                 ':nombre' => $this->nombre,
                 ':id' => $this->id
             ]);
 
-            $output = $this->baseDatos->getNumeroRegistros() == 1;
+            $output = $baseDatos->getNumeroRegistros() == 1;
             
-            $this->baseDatos->cerrarConexion();
+            $baseDatos->cerrarConexion();
 
             return $output;
 
@@ -68,35 +67,35 @@
 
         public function delete(): bool{
 
-            $this->baseDatos = new BaseDatos();
+            $baseDatos = new BaseDatos();
 
-            $this->baseDatos->ejecutar("SELECT MAX(id) AS id FROM categorias");
+            $baseDatos->ejecutar("SELECT MAX(id) AS id FROM categorias");
 
-            $maxId = $this->baseDatos->getSiguienteRegistro();
+            $maxId = $baseDatos->getSiguienteRegistro();
             $maxId = $maxId ? $maxId['id'] : null;
 
-            $this->baseDatos->ejecutar("DELETE FROM categorias WHERE id = :id", [
+            $baseDatos->ejecutar("DELETE FROM categorias WHERE id = :id", [
                 ':id' => $this->id
             ]);
 
-            $output = $this->baseDatos->getNumeroRegistros() == 1;
+            $output = $baseDatos->getNumeroRegistros() == 1;
 
             if ($output && $this->id == $maxId) {
                 
-                $this->baseDatos->ejecutar("SELECT MAX(id) AS id FROM categorias");
+                $baseDatos->ejecutar("SELECT MAX(id) AS id FROM categorias");
 
-                $nuevoMaxId = $this->baseDatos->getSiguienteRegistro();
+                $nuevoMaxId = $baseDatos->getSiguienteRegistro();
                 $nuevoMaxId = $nuevoMaxId ? $nuevoMaxId['id'] : 0; // Si no hay registros, se pone 0
 
                 $nuevoAutoIncrement = $nuevoMaxId + 1; // Si la tabla está vacía, empieza en 1
         
-                $this->baseDatos->ejecutar("ALTER TABLE categorias AUTO_INCREMENT = :id", [
+                $baseDatos->ejecutar("ALTER TABLE categorias AUTO_INCREMENT = :id", [
                     ':id' => $nuevoAutoIncrement
                 ]);
 
             }
             
-            $this->baseDatos->cerrarConexion();
+            $baseDatos->cerrarConexion();
 
             return $output;
 
