@@ -27,8 +27,15 @@
 
             // Ahora redirigimos a la primera o última página si la página es menor que 1 o mayor que el total de páginas
             
-            if($_SESSION['pag'] < 1) header("Location:" . BASE_URL . "categoria/admin&pag=1");
-            if($_SESSION['pag'] > $totalPag) header("Location:" . BASE_URL . "categoria/admin&pag=" . $totalPag);
+            if($_SESSION['pag'] < 1){
+                header("Location:" . BASE_URL . "categoria/admin&pag=1");
+                exit;
+            }
+            
+            if($_SESSION['pag'] > $totalPag){
+                header("Location:" . BASE_URL . "categoria/admin&pag=" . $totalPag);
+                exit;
+            }
 
             require_once 'views/categoria/admin.php';
 

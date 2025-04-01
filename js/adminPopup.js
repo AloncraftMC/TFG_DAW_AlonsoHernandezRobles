@@ -27,7 +27,6 @@ window.onload = function() {
         <ul style="text-align: left;">
             <li style="padding: 5px">Si eliminas una categoría, se eliminarán todos los productos que pertenezcan a dicha categoría.</li>
             <li style="padding: 5px">Si eliminas un usuario, se eliminarán todos los pedidos que haya realizado dicho usuario.</li>
-            <li style="padding: 5px; color: gray">No se ha implementado la funcionalidad de pedidos, por lo que el punto anterior no es relevante.</li>
         </ul>
         <button id="removeOverlay" style="margin-top: 10px; margin-bottom: 20px; padding: 0px 15px; background: red; color: white; border: none; border-radius: 15px; cursor: pointer;"><h3>Entendido</h2></button>
     `;

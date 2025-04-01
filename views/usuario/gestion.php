@@ -89,6 +89,8 @@
 
     </div>
 
+    <script src="<?=BASE_URL?>js/previsualizarColores.js"></script>
+
     <div class="form-group">
 
         <label for="imagen" id="imagen">Imagen</label>

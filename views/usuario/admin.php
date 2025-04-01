@@ -57,6 +57,7 @@
         <th>Email</th>
         <th>Rol</th>
         <th>Imagen</th>
+        <th>Color</th>
         <th>Acciones</th>
     </tr>
 
@@ -78,6 +79,15 @@
                     <img src="<?=BASE_URL?>assets/images/uploads/usuarios/<?=$usuario->getImagen()?>?t=<?=time()?>" alt="Imagen de perfil de <?=$usuario->getNombre()?>" style="max-width: 100px; max-height: 100px; border-radius: 50%;">
                 <?php else: ?>
                     <span>No disponible</span>
+                <?php endif; ?>
+            </td>
+
+            <!-- Color del Usuario -->
+            <td style="background-color: <?=($usuario->getColor() == '#000000' || $usuario->getColor() == '#ffffff') ? "unset" : $usuario->getColor()?>; width: 50px; height: 50px;">
+                <?php if($usuario->getColor() == '#000000' || $usuario->getColor() == '#ffffff'): ?>
+                    <span>No</span>
+                <?php else: ?>
+                    <span><?=strtoupper($usuario->getColor())?></span>
                 <?php endif; ?>
             </td>
 

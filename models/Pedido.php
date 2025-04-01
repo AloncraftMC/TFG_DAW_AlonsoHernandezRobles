@@ -120,6 +120,30 @@
 
         }
 
+        public function update(): bool{
+
+            $baseDatos = new BaseDatos();
+
+            $baseDatos->ejecutar("UPDATE pedidos SET usuario_id = :usuario_id, provincia = :provincia, localidad = :localidad, direccion = :direccion, coste = :coste, estado = :estado, fecha = :fecha, hora = :hora WHERE id = :id", [
+                ':id' => $this->id,
+                ':usuario_id' => $this->usuarioId,
+                ':provincia' => $this->provincia,
+                ':localidad' => $this->localidad,
+                ':direccion' => $this->direccion,
+                ':coste' => $this->coste,
+                ':estado' => $this->estado,
+                ':fecha' => $this->fecha,
+                ':hora' => $this->hora
+            ]);
+
+            $output = $baseDatos->getNumeroRegistros() == 1;
+
+            $baseDatos->cerrarConexion();
+
+            return $output;
+
+        }
+
         public function delete(): bool {
 
             $baseDatos = new BaseDatos();
@@ -259,5 +283,3 @@
         }
 
     }
-
-?>

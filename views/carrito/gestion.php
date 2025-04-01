@@ -56,12 +56,12 @@
                     <td>
                         <a href="<?= BASE_URL ?>producto/ver&id=<?= $prod->getId() ?>" class="enlace-producto" style="font-size: 120%;"><?= $prod->getNombre() ?></a>
                     </td>
-                    <td style="min-width: 200px">
+                    <td style="min-width: 200px; height: 100px;">
                         <a href="<?= BASE_URL ?>carrito/down&index=<?= $indice ?>" class="boton boton-carrito boton-down">-</a>
                         <h2 style="display: inline"><?= $producto['unidades'] ?></h2>
                         <a href="<?= BASE_URL ?>carrito/up&index=<?= $indice ?>" class="boton boton-carrito boton-up">+</a>
                     </td>
-                    <td>
+                    <td style="min-width: 70px">
                         <span style="font-size: 125%">
                             <?php if ($prod->getOferta() > 0): ?>
                                 <span style="color: red; text-decoration: line-through; font-size: 60%;"><?= $prod->getPrecio() ?> €</span>
@@ -74,8 +74,8 @@
                             <?php endif; ?>
                         </span>
                     </td>
-                    <td>
-                        <span style="font-size: 150%">
+                    <td style="min-width: 100px">
+                        <span style="font-size: 175%">
                             <?= $precioTotal ?> €
                         </span>
                     </td>
@@ -88,7 +88,7 @@
     </table>
 
     <div class="resumen-carrito" style="display: flex; flex-direction: column; justify-content: center; align-items: center; margin: 20px;">
-        <h2 style="color: green"><span style="color: black; font-weight: normal;">Total:</span> <?= $totalCarrito ?> €</h2>
+        <h2 style="color: green; font-size: 200%"><span style="color: black; font-weight: normal;">Total:</span> <?= $totalCarrito ?> €</h2>
 
         <!-- Botón para proceder a la compra -->
         <a href="<?= BASE_URL ?>pedido/crear">

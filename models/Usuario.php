@@ -13,7 +13,7 @@
         private ?string $password;
         private ?string $rol;
         private ?string $imagen;
-        private string $color;
+        private ?string $color;
         
         public function __construct(){
         }
@@ -48,7 +48,7 @@
             return $this->imagen;
         }
 
-        public function getColor(): string{
+        public function getColor(): ?string{
             return $this->color;
         }
 
@@ -80,7 +80,7 @@
             $this->imagen = $imagen;
         }
 
-        public function setColor(string $color): void{
+        public function setColor(?string $color): void{
             $this->color = $color;
         }
 
@@ -90,12 +90,13 @@
 
             $baseDatos = new BaseDatos();
             
-            $baseDatos->ejecutar("INSERT INTO usuarios VALUES(null, :nombre, :apellidos, :email, :password, :rol, null, null)", [
+            $baseDatos->ejecutar("INSERT INTO usuarios VALUES(null, :nombre, :apellidos, :email, :password, :rol, null, :color)", [
                 ':nombre' => $this->nombre,
                 ':apellidos' => $this->apellidos,
                 ':email' => $this->email,
                 ':password' => password_hash($this->password, PASSWORD_BCRYPT, ['cost' => 12]),
-                ':rol' => $this->rol
+                ':rol' => $this->rol,
+                ':color' => $this->color
             ]);
 
             $output = $baseDatos->getNumeroRegistros() == 1;
@@ -344,5 +345,3 @@
         }
         
     }
-
-?>

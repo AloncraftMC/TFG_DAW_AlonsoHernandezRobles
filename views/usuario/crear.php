@@ -78,6 +78,22 @@
 
     </div>
 
+    <div class="form-group">
+
+        <label for="color" id="color">Color</label>
+        <input type="color" name="color" value="<?= isset($_SESSION['form_data']['color']) ? $_SESSION['form_data']['color'] : '#000000' ?>" style="width: 98.8%; height: 45px; padding: 7px; cursor: pointer;">
+
+        <?php if(isset($_SESSION['register']) && $_SESSION['register'] == 'failed_color'): ?>
+
+            <small class="error">Este color no es válido.</small>
+            <?php Utils::deleteSession('register'); ?>
+
+        <?php endif; ?>
+
+    </div>
+
+    <script src="<?=BASE_URL?>js/previsualizarColores.js"></script>
+
     <!-- Campo para cargar la imagen del usuario -->
     <div class="form-group">
 

@@ -86,6 +86,22 @@
 
     <div class="form-group">
 
+        <label for="color" id="color">Color</label>
+        <input type="color" name="color" value="<?= isset($_SESSION['form_data']['color']) ? $_SESSION['form_data']['color'] : $usuario->getColor() ?>" id="color-input" style="width: 98.8%; height: 45px; padding: 7px; cursor: pointer;">
+
+        <?php if(isset($_SESSION['gestion']) && $_SESSION['gestion'] == 'failed_color'): ?>
+
+            <small class="error">Este color no es válido.</small>
+            <?php Utils::deleteSession('gestion'); ?>
+
+        <?php endif; ?>
+
+    </div>
+
+    <script src="<?=BASE_URL?>js/previsualizarColores.js"></script>
+
+    <div class="form-group">
+
         <label for="imagen" id="imagen">Imagen</label>
         <input type="file" name="imagen" style="cursor: pointer;">
 

@@ -1,15 +1,7 @@
 <?php
-
-use helpers\Utils;
-use models\Pedido;
-
-if (isset($_SESSION['identity']) && $_SESSION['identity']['rol'] === 'admin' && !isset($_SESSION['admin_popup'])): ?>
-
-    <script src="<?BASE_URL?>js/adminPopup.js"></script>
-
-    <?php $_SESSION['admin_popup'] = true; ?>
-
-<?php endif; ?>
+    use helpers\Utils;
+    use models\Pedido;
+?>
 
 <!DOCTYPE html>
 <html lang="es">
@@ -29,6 +21,7 @@ if (isset($_SESSION['identity']) && $_SESSION['identity']['rol'] === 'admin' && 
         </div>
         
         <div class="header-derecha">
+
             <?php 
                 $controlador_actual = $_GET['controller'] ?? null;
                 $accion_actual = $_GET['action'] ?? null;
@@ -50,25 +43,24 @@ if (isset($_SESSION['identity']) && $_SESSION['identity']['rol'] === 'admin' && 
                 
                 <!-- Si el usuario es admin, se muestran los botones adicionales -->
                 <?php if($rol === 'admin'): ?>
-                    <a href="<?=BASE_URL?>categoria/admin">
+                    <a href="<?=BASE_URL?>categoria/admin" id="mqAdmin">
                         <button class="boton">
-                            <img src="<?=BASE_URL?>assets/images/categoria.svg">Categorías
+                            <img src="<?=BASE_URL?>assets/images/categoria.svg"><span>Categorías</span>
                         </button>
                     </a>
-                    <a href="<?=BASE_URL?>producto/admin">
+                    <a href="<?=BASE_URL?>producto/admin" id="mqAdmin">
                         <button class="boton">
-                            <img src="<?=BASE_URL?>assets/images/producto.svg">Productos
+                            <img src="<?=BASE_URL?>assets/images/producto.svg"><span>Productos</span>
                         </button>
                     </a>
-                    <a href="<?=BASE_URL?>pedido/admin" style="opacity: 0.5; pointer-events: none;" title="Esta funcionalidad no está disponible.">
-                        <button class="boton" style="opacity: 0.5;">
-                            <img src="<?=BASE_URL?>assets/images/pedido.svg">Pedidos
+                    <a href="<?=BASE_URL?>pedido/admin" id="mqAdmin">
+                        <button class="boton">
+                            <img src="<?=BASE_URL?>assets/images/pedido.svg"><span>Pedidos</span>
                         </button>
                     </a>
-                    <!-- Botón de administración de usuarios para admin -->
-                    <a href="<?=BASE_URL?>usuario/admin">
+                    <a href="<?=BASE_URL?>usuario/admin" id="mqAdmin">
                         <button class="boton">
-                            <img src="<?=BASE_URL?>assets/images/usuarios.svg">Usuarios
+                            <img src="<?=BASE_URL?>assets/images/usuarios.svg"><span>Usuarios</span>
                         </button>
                     </a>
                     <div class="separador"></div>
@@ -77,31 +69,40 @@ if (isset($_SESSION['identity']) && $_SESSION['identity']['rol'] === 'admin' && 
                 <!-- Botón para gestionar datos personales (aparece para todos los usuarios) -->
                 <a href="<?=BASE_URL?>usuario/gestion" style="background-color: unset; border-radius: unset; box-shadow: unset;">
                     <button style="background-color: unset; padding: 0px;">
-                        <img src="<?=BASE_URL?>assets/images/uploads/usuarios/<?=$_SESSION['identity']['imagen']?>?t=0" style="width: 45px; height: 45px; margin: 0px; border-radius: 50%">
+                        <img src="<?=BASE_URL?>assets/images/uploads/usuarios/<?=$_SESSION['identity']['imagen']?>?t=0" style="width: 45px; height: 45px; margin: 0px; border-radius: 50%; box-shadow: 0px 2px 5px rgba(0,0,0,0.5);">
                     </button>
                 </a>
 
                 <!-- Botón "Mis pedidos" (aparece sólo si tienen al menos 1 pedido en la BD) -->
                 <?php if (count(Pedido::getByUsuario($_SESSION['identity']['id'])) > 0): ?>
-                    <a href="<?=BASE_URL?>pedido/misPedidos">
+                    <a href="<?=BASE_URL?>pedido/misPedidos" id="mqMisPedidos">
                         <button class="boton">
-                            <img src="<?=BASE_URL?>assets/images/pedido.svg">Mis Pedidos
+                            <img src="<?=BASE_URL?>assets/images/misPedidos.svg"><span>Mis Pedidos</span>
                         </button>
                     </a>
                 <?php endif; ?>
                 
                 <!-- Botón del carrito -->
-                <a href="<?=BASE_URL?>carrito/gestion">
+                <a href="<?=BASE_URL?>carrito/gestion" id="mqCarrito">
                     <button class="boton">
-                        <img src="<?=BASE_URL?>assets/images/carrito.svg">Carrito (<?=isset($_SESSION['carrito']) ? Utils::statsCarrito()['totalCount'] : 0 ?>)
+                        <img src="<?=BASE_URL?>assets/images/carrito.svg"><span>Carrito (<?=isset($_SESSION['carrito']) ? Utils::statsCarrito()['totalCount'] : 0 ?>)</span>
                     </button>
                 </a>
 
                 <!-- Botón para cerrar sesión -->
-                <a href="<?=BASE_URL?>usuario/salir"><button class="boton">
-                    <img src="<?=BASE_URL?>assets/images/logout.svg">Cerrar Sesión
-                </button></a>
+                <a href="<?=BASE_URL?>usuario/salir" id="mqLogout">
+                    <button class="boton">
+                        <img src="<?=BASE_URL?>assets/images/logout.svg"><span>Cerrar Sesión</span>
+                    </button>
+                </a>
+            
             <?php endif; ?>
         </div>
     </header>
+    <?php if (isset($_SESSION['identity']) && $_SESSION['identity']['rol'] === 'admin' && !isset($_SESSION['admin_popup'])): ?>
+
+        <script src="<?BASE_URL?>js/adminPopup.js"></script>
+        <?php $_SESSION['admin_popup'] = true; ?>
+
+    <?php endif; ?>
     <main>

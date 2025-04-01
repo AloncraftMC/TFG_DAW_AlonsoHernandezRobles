@@ -34,6 +34,7 @@
                 $password = isset($_POST['password']) ? trim($_POST['password']) : false;
                 $rol = isset($_POST['rol']) ? $_POST['rol'] : 'user';
                 $imagen = isset($_FILES['imagen']) ? $_FILES['imagen'] : false;
+                $color = isset($_POST['color']) ? $_POST['color'] : "#000000";
                 
                 $_SESSION['form_data'] = [
                     'nombre' => $nombre,
@@ -94,6 +95,13 @@
                         header("Location:" . BASE_URL . "usuario/" . (isset($_SESSION['admin']) ? 'crear' : 'registrarse') . "#imagen");
                         exit;
                     }
+
+                    // Validar color (hexadecimal)
+                    if ($color && !preg_match('/^#[0-9A-Fa-f]{6}$/', $color)) {
+                        $_SESSION['register'] = "failed_color";
+                        header("Location:" . BASE_URL . "usuario/" . (isset($_SESSION['admin']) ? 'crear' : 'registrarse') . "#color");
+                        exit;
+                    }
         
                     // Crear objeto Usuario y guardar en BD
 
@@ -103,6 +111,7 @@
                     $usuario->setEmail($email);
                     $usuario->setPassword($password);
                     $usuario->setRol($rol);
+                    $usuario->setColor($color);
         
                     if ($usuario->save()) {
 
@@ -145,10 +154,12 @@
 
                             Utils::deleteSession('register');
                             header("Location:" . BASE_URL . "usuario/admin&pag=" . max(1, ceil(count(Usuario::getAll()) / ITEMS_PER_PAGE)) . "#" . $usuario->getId()); // Redirigir a la última página
+                            exit;
                         
                         } else {
 
                             header("Location:" . BASE_URL . "usuario/registrarse#complete");
+                            exit;
                         
                         }
         
@@ -186,6 +197,7 @@
             if(isset($_SESSION['identity'])){
 
                 header("Location:" . BASE_URL);
+                exit;
 
             }
 
@@ -343,6 +355,7 @@
             }
 
             header("Location:" . BASE_URL);
+            exit;
 
         }
 
@@ -386,7 +399,7 @@
             Utils::isIdentity();
         
             if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-        
+                
                 // Recoger datos con trim() para evitar espacios adicionales
                 $nombre = isset($_POST['nombre']) ? trim($_POST['nombre']) : null;
                 $apellidos = isset($_POST['apellidos']) ? trim($_POST['apellidos']) : null;
@@ -394,7 +407,7 @@
                 $password = isset($_POST['password']) ? trim($_POST['password']) : null;
                 $rol = isset($_POST['rol']) ? $_POST['rol'] : $_SESSION['identity']['rol'];
                 $imagen = isset($_FILES['imagen']) ? $_FILES['imagen'] : false;
-                $color = isset($_POST['color']) ? $_POST['color'] : null;
+                $color = isset($_POST['color']) ? $_POST['color'] : "#000000";
         
                 $_SESSION['form_data'] = [
                     'nombre' => $nombre,
@@ -454,6 +467,12 @@
                     if (strlen($password) > 0 && !preg_match("/^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/", $password)) {
                         $_SESSION['gestion'] = "failed_password";
                         header("Location:" . BASE_URL . "usuario/gestion" . (isset($_GET['id']) ? "&id=" . $_GET['id'] : "") . "#password");
+                        exit;
+                    }
+
+                    if ($color && !preg_match('/^#[0-9A-Fa-f]{6}$/', $color)) {
+                        $_SESSION['gestion'] = "failed_color";
+                        header("Location:" . BASE_URL . "usuario/gestion" . (isset($_GET['id']) ? "&id=" . $_GET['id'] : "") . "#color");
                         exit;
                     }
         
@@ -635,6 +654,7 @@
                 }
         
                 header("Location:" . BASE_URL . "usuario/admin" . (isset($_SESSION['pag']) ? "&pag=" . $_SESSION['pag'] : ""));
+                exit;
         
             }else{
         
@@ -663,6 +683,7 @@
                 }
         
                 header("Location:" . BASE_URL);
+                exit;
         
             }
         
@@ -689,8 +710,15 @@
 
             // Ahora redirigimos a la primera o última página si la página es menor que 1 o mayor que el total de páginas
 
-            if($_SESSION['pag'] < 1) header("Location:" . BASE_URL . "usuario/admin&pag=1");
-            if($_SESSION['pag'] > $totalPag) header("Location:" . BASE_URL . "usuario/admin&pag=" . $totalPag);
+            if($_SESSION['pag'] < 1){
+                header("Location:" . BASE_URL . "usuario/admin&pag=1");
+                exit;
+            }
+            
+            if($_SESSION['pag'] > $totalPag){
+                header("Location:" . BASE_URL . "usuario/admin&pag=" . $totalPag);
+                exit;
+            }
 
             require_once 'views/usuario/admin.php';
 

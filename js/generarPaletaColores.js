@@ -84,6 +84,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
     // Función que actualiza todas las variables de color en :root
     function actualizarColores() {
+        
         let colorBase = getComputedStyle(document.documentElement).getPropertyValue('--color-1').trim();
 
         if (!colorBase || colorBase === '') {
@@ -108,4 +109,5 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 
     actualizarColores();
+    
 });

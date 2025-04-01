@@ -1,5 +1,9 @@
 <?php
 
+    // Búffer de salida para evitar errores de cabecera
+    
+    ob_start();
+
     // Inicio la sesión
 
     session_start();
@@ -12,11 +16,10 @@
     use models\Producto;
     use models\Usuario;
 
-    // Autoload, Configuración y Clase Utils
+    // Autoload y Configuración
 
     require_once 'autoload.php';
     require_once 'config.php';
-    require_once 'helpers/Utils.php';
 
     // Cookie del carrito
 
@@ -85,7 +88,8 @@
                 'admin' => 'Administrar Pedidos',
                 'crear' => 'Realizar Pedido',
                 'ver' => 'Detalles del Pedido',
-                'listo' => 'Pedido Solicitado'
+                'listo' => 'Pedido Solicitado',
+                'misPedidos' => 'Mis Pedidos - ' . (isset($_SESSION['identity']) ? $_SESSION['identity']['nombre'] : 'Usuario'),
             ],
             'carrito' => [
                 'gestion' => 'Carrito' . (isset($_SESSION['carrito']) ? ' (' . Utils::statsCarrito()['totalCount'] . ' producto' . (Utils::statsCarrito()['totalCount'] > 1 ? 's' : '') . ')' : ' de compras')
@@ -93,8 +97,8 @@
             'info' => [
                 'condicionesUso' => 'Condiciones de Uso',
                 'politicaPrivacidad' => 'Política de Privacidad',
-                'sobreNosotros' => 'Sobre Nosotros',
-            ],
+                'sobreNosotros' => 'Sobre Nosotros'
+            ]
         ];
 
         // Asignar título si existe en la matriz, sino generar uno genérico
@@ -176,17 +180,24 @@
 
     if (isset($_SESSION['identity']) && isset($_SESSION['identity']['color'])) {
         
-        $color = $_SESSION['identity']['color']; // Color base del usuario
-        echo '
-        <style>
-            :root {
-                --color-1: ' . $color . ';
-            }
-        </style>
-        <script src="' . BASE_URL . 'js/generarPaletaColores.js"></script>
-        ';
+        if($_SESSION['identity']['color'] != '#000000' && $_SESSION['identity']['color'] != '#ffffff'){
+
+            $color = $_SESSION['identity']['color']; // Color base del usuario
+            echo '
+            <style>
+                :root {
+                    --color-1: ' . $color . ';
+                }
+            </style>
+            <script src="' . BASE_URL . 'js/generarPaletaColores.js"></script>
+            ';
+
+        }
 
     }
 
+    // Finalmente limpio el búffer de salida y lo envío al navegador
+    
+    ob_end_flush();
 
 ?>

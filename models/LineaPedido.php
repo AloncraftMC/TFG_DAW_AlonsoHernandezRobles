@@ -106,7 +106,7 @@
 
         /* MÉTODOS ESTÁTICOS */
 
-        public static function getByPedido(int $pedidoId): ?LineaPedido{
+        public static function getByPedido(int $pedidoId): array{
 
             $baseDatos = new BaseDatos();
 
@@ -114,27 +114,25 @@
                 ':pedido_id' => $pedidoId
             ]);
 
-            if($baseDatos->getNumeroRegistros() == 1){
+            $registros = $baseDatos->getRegistros();
 
-                $registro = $baseDatos->getSiguienteRegistro();
+            $lineas = [];
 
-                $lineaPedido = new LineaPedido();
+            foreach ($registros as $registro) {
 
-                $lineaPedido->setId($registro['id']);
-                $lineaPedido->setPedidoId($registro['pedido_id']);
-                $lineaPedido->setProductoId($registro['producto_id']);
-                $lineaPedido->setUnidades($registro['unidades']);
+                $linea = new LineaPedido();
 
-                return $lineaPedido;
+                $linea->setId($registro['id']);
+                $linea->setPedidoId($registro['pedido_id']);
+                $linea->setProductoId($registro['producto_id']);
+                $linea->setUnidades($registro['unidades']);
 
+                array_push($lineas, $linea);
+                
             }
-            
-            $baseDatos->cerrarConexion();
 
-            return null;
+            return $lineas;
 
         }
 
     }
-
-?>

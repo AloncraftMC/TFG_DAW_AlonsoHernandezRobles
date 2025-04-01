@@ -26,8 +26,15 @@
 
             // Ahora redirigimos a la primera o última página si la página es menor que 1 o mayor que el total de páginas
             
-            if($_SESSION['pag'] < 1) header("Location:" . BASE_URL . "producto/recomendados" . (isset($_GET['categoria']) ? "&categoria=" . $_GET['categoria'] : "") . "&pag=1");
-            if($_SESSION['pag'] > $totalPag) header("Location:" . BASE_URL . "producto/recomendados" . (isset($_GET['categoria']) ? "&categoria=" . $_GET['categoria'] : "") . "&pag=" . $totalPag);
+            if($_SESSION['pag'] < 1){
+                header("Location:" . BASE_URL . "producto/recomendados" . (isset($_GET['categoria']) ? "&categoria=" . $_GET['categoria'] : "") . "&pag=1");
+                exit;
+            }
+            
+            if($_SESSION['pag'] > $totalPag){
+                header("Location:" . BASE_URL . "producto/recomendados" . (isset($_GET['categoria']) ? "&categoria=" . $_GET['categoria'] : "") . "&pag=" . $totalPag);
+                exit;
+            }
 
             require_once 'views/producto/recomendados.php';
             
@@ -52,8 +59,15 @@
 
             // Ahora redirigimos a la primera o última página si la página es menor que 1 o mayor que el total de páginas
             
-            if($_SESSION['pag'] < 1) header("Location:" . BASE_URL . "producto/admin&pag=1");
-            if($_SESSION['pag'] > $totalPag) header("Location:" . BASE_URL . "producto/admin&pag=" . $totalPag);
+            if($_SESSION['pag'] < 1){
+                header("Location:" . BASE_URL . "producto/admin&pag=1");
+                exit;
+            }
+            
+            if($_SESSION['pag'] > $totalPag){
+                header("Location:" . BASE_URL . "producto/admin&pag=" . $totalPag);
+                exit;
+            }
 
             require_once 'views/producto/admin.php';
 
@@ -112,7 +126,7 @@
 
                         $_SESSION['create'] = 'failed_nombre';
                         header("Location:" . BASE_URL . "producto/crear#nombre");
-                        exit();
+                        exit;
 
                     }
 
@@ -122,7 +136,7 @@
 
                         $_SESSION['create'] = 'failed_precio';
                         header("Location:" . BASE_URL . "producto/crear#precio");
-                        exit();
+                        exit;
 
                     }
 
@@ -132,7 +146,7 @@
 
                         $_SESSION['create'] = 'failed_stock';
                         header("Location:" . BASE_URL . "producto/crear#stock");
-                        exit();
+                        exit;
 
                     }
 
@@ -142,7 +156,7 @@
 
                         $_SESSION['create'] = 'failed_oferta';
                         header("Location:" . BASE_URL . "producto/crear#oferta");
-                        exit();
+                        exit;
 
                     }
 
@@ -154,7 +168,7 @@
 
                         $_SESSION['create'] = 'failed_imagen';
                         header("Location:" . BASE_URL . "producto/crear#imagen");
-                        exit();
+                        exit;
 
                     }
 
@@ -190,13 +204,13 @@
 
                             $_SESSION['create'] = 'failed';
                             header("Location:" . BASE_URL . "producto/crear#failed");
-                            exit();
+                            exit;
 
                         }
 
                         $_SESSION['create'] = 'complete';
                         header("Location:" . BASE_URL . "producto/admin&pag=" . max(1, ceil(count(Producto::getAll()) / PRODUCTS_PER_PAGE)) . "#" . $id); // Redirigimos a la última página
-                        exit();
+                        exit;
                     
                     }else{
                         
@@ -266,7 +280,7 @@
 
                         $_SESSION['gestion'] = 'failed_nombre';
                         header("Location:" . BASE_URL . "producto/gestion&id=" . $id . "#nombre");
-                        exit();
+                        exit;
 
                     }
 
@@ -276,7 +290,7 @@
 
                         $_SESSION['gestion'] = 'failed_precio';
                         header("Location:" . BASE_URL . "producto/gestion&id=" . $id . "#precio");
-                        exit();
+                        exit;
 
                     }
 
@@ -286,7 +300,7 @@
 
                         $_SESSION['gestion'] = 'failed_stock';
                         header("Location:" . BASE_URL . "producto/gestion&id=" . $id . "#stock");
-                        exit();
+                        exit;
 
                     }
 
@@ -296,7 +310,7 @@
 
                         $_SESSION['gestion'] = 'failed_oferta';
                         header("Location:" . BASE_URL . "producto/gestion&id=" . $id . "#oferta");
-                        exit();
+                        exit;
 
                     }
 
@@ -310,7 +324,7 @@
 
                             $_SESSION['gestion'] = 'failed_imagen';
                             header("Location:" . BASE_URL . "producto/gestion&id=" . $id . "#imagen");
-                            exit();
+                            exit;
 
                         }
 
@@ -351,7 +365,7 @@
         
                             $_SESSION['gestion'] = 'failed';
                             header("Location:" . BASE_URL . "producto/gestion&id=" . $id . "#failed");
-                            exit();
+                            exit;
         
                         }
 
@@ -363,7 +377,7 @@
 
                         $_SESSION['gestion'] = 'complete';
                         header("Location:" . BASE_URL . "producto/admin" . (isset($_SESSION['pag']) ? "&pag=" . $_SESSION['pag'] : "") . "#" . $id);
-                        exit();
+                        exit;
 
                     }else{
                         

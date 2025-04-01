@@ -26,6 +26,7 @@
             if(!isset($_SESSION['identity']) || $_SESSION['identity']['rol'] !== 'admin'){
 
                 header('Location:'.BASE_URL);
+                exit;
 
             }
 
@@ -38,6 +39,7 @@
             if(!isset($_SESSION['identity'])){
 
                 header('Location:'.BASE_URL);
+                exit;
 
             }
 
@@ -80,7 +82,6 @@
             if(isset($_SESSION['carrito'])){
 
                 $carrito = json_encode($_SESSION['carrito']);
-
                 setcookie('carrito', $carrito, time() + 60*60*24*3, '/');
 
             }

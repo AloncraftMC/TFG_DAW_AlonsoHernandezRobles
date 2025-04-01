@@ -5,7 +5,6 @@
 ## 0 - 15 minutos ⚡️
 
 - Paginación con números en admin.
-- Corregir color personalizado de botones del carrusel.
 
 <hr>
 

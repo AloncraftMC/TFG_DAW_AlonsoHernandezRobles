@@ -228,9 +228,11 @@ if (isset($_GET['categoria'])) {
 
                     <div>
 
-                        <img style="max-height: 200px; min-height: 200px; margin-top: 20px;"
-                            src="<?= BASE_URL ?>assets/images/uploads/productos/<?= $producto->getImagen() ?>" 
-                            alt="<?= $producto->getNombre() ?>">
+                        <a href="<?= BASE_URL ?>producto/ver&id=<?= $producto->getId() ?>">
+                            <img style="max-height: 200px; min-height: 200px; margin-top: 20px;"
+                                src="<?= BASE_URL ?>assets/images/uploads/productos/<?= $producto->getImagen() ?>" 
+                                alt="<?= $producto->getNombre() ?>">
+                        </a>
 
                         <h2 style="margin-bottom: 0px;"><?= $producto->getNombre() ?></h2>
 

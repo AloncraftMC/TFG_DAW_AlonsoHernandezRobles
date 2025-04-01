@@ -225,8 +225,21 @@ footer{
         }
 
         &.autor{
-            color: gray;
+
             margin-left: 40px;
+
+            a{
+
+                color: gray;
+                transition: color 0.2s; /* Transición suave para el color */
+            
+                &:hover{
+                    color: white;
+                    text-shadow: 0px 0px 5px rgba(238, 255, 0, 0.5);
+                }
+
+            }
+
         }
 
     }
@@ -365,6 +378,10 @@ form, .container {
         display: inline-block;
         text-decoration: none;
         cursor: pointer;
+
+        &.verde{
+            background-color: green;
+        }
     }
     
     button {
@@ -964,4 +981,92 @@ table {
 
 .carousel-btn:hover {
     background-color: var(--color-3);
+}
+
+/* Ocultar textos de los botones de admin */
+
+@media screen and (max-width: 1600px) {
+    
+    #mqAdmin{
+        button{
+            img{
+                margin-right: 0px;
+            }
+            span{
+                display: none;
+            }
+        }
+    }
+    
+}
+
+/* Ocultar texto del botón de carrito */
+
+@media screen and (max-width: 1300px) {
+    
+    #mqCarrito{
+        button{
+            img{
+                margin-right: 0px;
+            }
+            span{
+                display: none;
+            }
+        }
+    }
+
+}
+
+/* Ocultar texto del botón de logout */
+
+@media screen and (max-width: 1200px) {
+    
+    #mqLogout{
+        button{
+            img{
+                margin-right: 0px;
+            }
+            span{
+                display: none;
+            }
+        }
+    }
+
+}
+
+/* Ocultar texto del botón de mis pedidos */
+
+@media screen and (max-width: 1080px) {
+    
+    #mqMisPedidos{
+        button{
+            img{
+                margin-right: 0px;
+            }
+            span{
+                display: none;
+            }
+        }
+    }
+
+}
+
+
+
+@media screen and (max-width: 600px) {
+    #mqAdmin{display: none;}
+    #mqFooter{ /* Esto es lo mismo que footer{} */
+        div{
+            flex-direction: column;
+            a{
+                margin: 10px 0px;
+            }
+
+            &.autor{
+                margin-left: 0px;
+                margin-top: 0px;
+            }
+        }
+    }
+
 }
