@@ -114,5 +114,13 @@
 
 <?php endif; ?>
 
+<?php if(isset($_SESSION['carritoResultado'])): ?>
+    
+    <a href="<?=BASE_URL?>carrito/gestion" class="boton" style="margin-top: 20px; margin-bottom: 20px;">
+        <button class="ver-carrito">Ver carrito</button>
+    </a>
+
+<?php endif; ?>
+
 <?php Utils::deleteSession('carritoResultado'); ?>
 <?php Utils::deleteSession('cantidadAnadida'); ?>

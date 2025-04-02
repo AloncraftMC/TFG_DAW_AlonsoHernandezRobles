@@ -149,3 +149,5 @@
     <?php endif; ?>
 
 </div>
+
+<script src="<?=BASE_URL?>js/actualizarPaginacion.js"></script>

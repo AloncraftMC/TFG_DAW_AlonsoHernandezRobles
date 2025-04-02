@@ -13,7 +13,6 @@ document.addEventListener("DOMContentLoaded", () => {
     function applyStyles(img) {
         
         let aspectRatio = img.naturalWidth / img.naturalHeight;
-        console.log("Aspect Ratio:", aspectRatio);
 
         if (aspectRatio > 2) {
             

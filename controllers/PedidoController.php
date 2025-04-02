@@ -2,11 +2,19 @@
 
     namespace controllers;
 
+    use Exception;
     use helpers\Utils;
     use models\Pedido;
     use models\LineaPedido;
     use models\Producto;
+    use PayPalCheckoutSdk\Core\PayPalHttpClient;
+    use PayPalCheckoutSdk\Core\SandboxEnvironment;
+    use PayPalCheckoutSdk\Core\ProductionEnvironment;
+    use PayPalCheckoutSdk\Orders\OrdersCreateRequest;
+    use PayPalCheckoutSdk\Orders\OrdersCaptureRequest;
 
+    require_once __DIR__ . '/../vendor/autoload.php'; // Para asegurarte de que las dependencias de Composer se carguen correctamente
+    
     class PedidoController{
 
         public function admin(){ // ✔
@@ -66,8 +74,13 @@
             if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
                 $usuarioId = $_SESSION['identity']['id'];
+                $comunidad = isset($_POST['comunidad']) ? htmlspecialchars(trim($_POST['comunidad'])) : '';
                 $provincia = isset($_POST['provincia']) ? htmlspecialchars(trim($_POST['provincia'])) : '';
-                $localidad = isset($_POST['localidad']) ? htmlspecialchars(trim($_POST['localidad'])) : '';
+                $municipio = isset($_POST['municipio']) ? htmlspecialchars(trim($_POST['municipio'])) : '';
+                $poblacion = isset($_POST['poblacion']) ? htmlspecialchars(trim($_POST['poblacion'])) : '';
+                $nucleo = isset($_POST['nucleo']) ? htmlspecialchars(trim($_POST['nucleo'])) : '';
+                $codigoPostal = isset($_POST['codigoPostal']) ? htmlspecialchars(trim($_POST['codigoPostal'])) : '';
+                $calle = isset($_POST['calle']) ? htmlspecialchars(trim($_POST['calle'])) : '';
                 $direccion = isset($_POST['direccion']) ? htmlspecialchars(trim($_POST['direccion'])) : '';
                 $coste = Utils::statsCarrito()['total'];
                 $estado = "Pendiente";
@@ -75,38 +88,87 @@
                 $hora = date('H:i:s');
 
                 $_SESSION['form_data'] = [
+                    'comunidad' => $comunidad,
                     'provincia' => $provincia,
-                    'localidad' => $localidad,
+                    'municipio' => $municipio,
+                    'poblacion' => $poblacion,
+                    'nucleo' => $nucleo,
+                    'codigoPostal' => $codigoPostal,
+                    'calle' => $calle,
                     'direccion' => $direccion
                 ];
                 
-                if($provincia && $localidad && $direccion){
+                if($comunidad && $provincia && $municipio && $poblacion && $nucleo && $codigoPostal && $calle && $direccion){
         
-                    // Validar localidad
-
-                    if(strlen($localidad) < 2){
-
-                        $_SESSION['create'] = 'failed_localidad';
-                        header("Location:" . BASE_URL . "pedido/crear#localidad");
+                    // Validar comunidad (no está vacía)
+                    if(strlen($comunidad) == 0){
+                        $_SESSION['create'] = 'failed';
+                        header("Location:" . BASE_URL . "pedido/crear#failed");
                         exit;
-
+                    }
+                    
+                    // Validar provincia (no está vacía)
+                    if(strlen($provincia) == 0){
+                        $_SESSION['create'] = 'failed';
+                        header("Location:" . BASE_URL . "pedido/crear#failed");
+                        exit;
                     }
 
-                    // Validar dirección
-
-                    if(strlen($direccion) < 2){
-
-                        $_SESSION['create'] = 'failed_direccion';
-                        header("Location:" . BASE_URL . "pedido/crear#direccion");
+                    // Validar municipio (no está vacía)
+                    if(strlen($municipio) == 0){
+                        $_SESSION['create'] = 'failed';
+                        header("Location:" . BASE_URL . "pedido/crear#failed");
                         exit;
-
                     }
+
+                    // Validar población (no está vacía)
+                    if(strlen($poblacion) == 0){
+                        $_SESSION['create'] = 'failed';
+                        header("Location:" . BASE_URL . "pedido/crear#failed");
+                        exit;
+                    }
+
+                    // Validar núcleo (no está vacía)
+                    if(strlen($nucleo) == 0){
+                        $_SESSION['create'] = 'failed';
+                        header("Location:" . BASE_URL . "pedido/crear#failed");
+                        exit;
+                    }
+
+                    // Validar código postal (no está vacío)
+                    if(strlen($codigoPostal) == 0){
+                        $_SESSION['create'] = 'failed';
+                        header("Location:" . BASE_URL . "pedido/crear#failed");
+                        exit;
+                    }
+
+                    // Validar calle (no está vacía)
+                    if(strlen($calle) == 0){
+                        $_SESSION['create'] = 'failed';
+                        header("Location:" . BASE_URL . "pedido/crear#failed");
+                        exit;
+                    }
+
+                    // Validar dirección (no está vacía)
+                    if(strlen($direccion) == 0){
+                        $_SESSION['create'] = 'failed';
+                        header("Location:" . BASE_URL . "pedido/crear#failed");
+                        exit;
+                    }
+
+                    // Unificamos la dirección completa en una sola variable
+
+                    $direccion = $calle . ' ' . $direccion;
 
                     $pedido = new Pedido();
 
                     $pedido->setUsuarioId($usuarioId);
+                    $pedido->setComunidad($comunidad);
                     $pedido->setProvincia($provincia);
-                    $pedido->setLocalidad($localidad);
+                    $pedido->setMunicipio($municipio);
+                    $pedido->setPoblacion($poblacion);
+                    $pedido->setNucleo($nucleo);
+                    $pedido->setCodigoPostal($codigoPostal);
                     $pedido->setDireccion($direccion);
                     $pedido->setCoste($coste);
                     $pedido->setEstado($estado);
@@ -114,6 +176,8 @@
                     $pedido->setHora($hora);
                     
                     if ($pedido->save()) {
+
+                        // AQUI PayPal
 
                         Utils::deleteSession('form_data');
 
@@ -125,6 +189,7 @@
                             $unidades = $elemento['unidades'];
 
                             $linea = new LineaPedido();
+
                             $linea->setPedidoId($pedido->getId());
                             $linea->setProductoId($producto->getId());
                             $linea->setUnidades($unidades);
@@ -147,7 +212,7 @@
                         Utils::deleteCookieCarrito();
                         
                         header("Location:" . BASE_URL . "pedido/listo");
-                        exit();
+                        exit;
                     
                     }else{
                         
@@ -180,13 +245,14 @@
         public function listo(){ // ✔
 
             Utils::isIdentity();
-            Utils::deleteSession('create');
 
-            if(!isset($_SESSION['pedido'])){
+            if(!isset($_SESSION['create']) || $_SESSION['create'] != 'complete'){
                 header('Location: '.BASE_URL);
                 exit;
             }
             
+            Utils::deleteSession('create');
+
             require_once 'views/pedido/listo.php';
         
         }

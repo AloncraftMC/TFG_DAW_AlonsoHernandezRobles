@@ -84,6 +84,26 @@
             $this->color = $color;
         }
 
+        /* MÉTODO AUXILIAR */
+
+        public function getPosicion(): int{
+
+            $baseDatos = new BaseDatos();
+
+            $baseDatos->ejecutar("SELECT ROW_NUMBER() OVER (ORDER BY id ASC) AS position FROM usuarios WHERE id = :id", [
+                ':id' => $this->id
+            ]);
+
+            $registro = $baseDatos->getSiguienteRegistro();
+
+            $posicion = $registro ? $registro['position'] : 0;
+
+            $baseDatos->cerrarConexion();
+
+            return $posicion;
+
+        }
+
         /* MÉTODOS DINÁMICOS */
 
         public function save(): bool{

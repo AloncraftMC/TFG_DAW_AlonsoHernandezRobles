@@ -37,7 +37,7 @@ if (isset($_GET['categoria'])) {
 
     $productosFiltrados = [];
 
-    foreach ($todos as $producto) {
+    foreach ($absolutamenteTodos as $producto) {
         if ($producto->getCategoriaId() == $categoria->getId()) {
             $productosFiltrados[] = $producto;
         }
@@ -242,8 +242,11 @@ if (isset($_GET['categoria'])) {
 
                         <?php if ($producto->getOferta() > 0): ?>
 
-                        <h3 style="margin: 4px; color: red; text-decoration: line-through;">
-                            <?= $producto->getPrecio() ?> €
+                        <h3 style="margin: 4px;">
+                            <span style="color: red; text-decoration: line-through;"><?= $producto->getPrecio() ?> €</span>
+                            <?php if ($producto->getStock() == 0): ?>
+                                <span style="color: rgb(185, 185, 0); font-weight: bold; margin-left: 5px;">Agotado</span>
+                            <?php endif; ?>
                         </h3>
 
                         <h1 style="margin: 4px;">
@@ -253,7 +256,15 @@ if (isset($_GET['categoria'])) {
                         
                         <?php else: ?>
 
-                            <h1 style="margin: 4px;"><?= $producto->getPrecio() ?> €</h1>
+                            <?php if ($producto->getStock() == 0): ?>
+                                <h3 style="margin: 4px;">
+                                    <span style="color: rgb(185, 185, 0); font-weight: bold;">Agotado</span>
+                                </h3>
+                            <?php endif; ?>
+
+                            <h1 style="margin: 4px;">
+                                <?= $producto->getPrecio() ?> €
+                            </h1>
 
                         <?php endif; ?>
 

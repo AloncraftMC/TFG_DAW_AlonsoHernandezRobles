@@ -4,13 +4,9 @@
 
 ## 0 - 15 minutos ⚡️
 
-- Paginación con números en admin.
-
 <hr>
 
 ## 15 - 60 minutos ⏳
-
-- Botón `"Mis pedidos"`.
 
 <hr>
 
@@ -24,7 +20,6 @@
 
 ## 2h - 6h 🎨
 
-- Personalizar color de tienda en el perfil de usuario (y añadir en consecuencia eso a la base de datos).
 - Valoraciones de productos por parte de usuarios que han comprado el producto (Añadir un botón de `"Deja una valoración"` en la vista de producto cuando un pedido que contenía ese producto esté confirmado).
 - Buscador de productos en el header.
 
@@ -32,8 +27,7 @@
 
 ## 6h - 12h 📦
 
-- Todo lo de pedidos.
-- Reducir botones del header a iconos sólamente con media queries y *Responsiveness* en general.
+- *Responsiveness* (Adaptabilidad).
 
 <hr>
 

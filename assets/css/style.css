@@ -42,34 +42,67 @@ header{
 }
 
 .header-izquierda{
-    
+
     display: flex;
     flex-direction: row;
-    align-items: center;
-    text-shadow: 2px 2px 2px rgba(0,0,0,0.5);
-    transition: 0.2s;
-    
-    img{
-        max-width: 50px;
-        max-height: 50px;
-        margin: 10px;
-    }
 
-    a{
+    .hi1{
 
-        text-decoration: none;
-        color: white;
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        text-shadow: 2px 2px 2px rgba(0,0,0,0.5);
+        transition: 0.2s;
+        
+        img{
+            max-width: 50px;
+            max-height: 50px;
+            margin: 10px;
+        }
 
-        h1{
-            font-size: 27px;
+        a{
+
+            text-decoration: none;
+            color: white;
+
+            h1{
+                font-size: 27px;
+            }
+
+        }
+
+        &:hover{
+            transform: scale(1.01);
+            text-shadow: 5px 5px 5px rgba(0,0,0,0.5);
+            filter: saturate(1.5);
         }
 
     }
+    
+    .hi2{
 
-    &:hover{
-        transform: scale(1.01);
-        text-shadow: 5px 5px 5px rgba(0,0,0,0.5);
-        filter: saturate(1.5);
+        margin-left: 10px;
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        gap: 10px;
+
+        .casa, .lupa{
+            min-height: 40px;
+            min-width: 40px;
+            filter: drop-shadow(2px 2px 2px rgba(0,0,0,0.5));
+            transition: 0.2s;
+            &:hover{
+                filter: drop-shadow(5px 5px 5px rgba(0,0,0,0.5));
+            }
+        }
+
+        button{
+            background-color: transparent;
+            border: 0px;
+            cursor: pointer;
+        }
+
     }
     
 }
@@ -365,6 +398,7 @@ form, .container {
     }
 
     button, .btn-delete {
+
         margin-top: 20px;
         width: 100%;
         padding: 12px;
@@ -382,6 +416,11 @@ form, .container {
         &.verde{
             background-color: green;
         }
+
+        &.azul{
+            background-color: rgb(0, 11, 128);
+        }
+
     }
     
     button {
@@ -705,9 +744,28 @@ table {
         }
 
         img{
+
             min-height: 100px;
             max-height: 100px;
             margin: 0 10px;
+
+            &.ver{
+
+                min-height: 30px;
+                max-height: 30px;
+                margin: 0px; 
+                padding: 5px;
+                border-radius: 10px;
+                background-color: var(--color-8);
+                transition: 0.3s;
+            
+                &:hover{
+                    filter: brightness(0.75);
+                    cursor: pointer;
+                }
+            
+            }
+
         }
     
     }
@@ -983,17 +1041,90 @@ table {
     background-color: var(--color-3);
 }
 
+/* Más cosas */
+
+.enlace-basico{
+    
+    color: blue;
+    text-decoration: none;
+    
+    &:hover{
+        text-decoration: underline;
+    }
+
+}
+
+.ver-carrito{
+
+    background-color: green;
+
+    &:hover{
+        background-color: rgb(0, 172, 0);
+    }
+
+}
+
+/* Mostrar textos de los botones de admin */
+
+@media screen and (min-width: 1710px) {
+    .mqa1::before {
+        content: "Categorías";
+    }
+    .mqa2::before {
+        content: "Productos";
+    }
+    .mqa3::before {
+        content: "Pedidos";
+    }
+    .mqa4::before {
+        content: "Usuarios";
+    }
+}
+
 /* Ocultar textos de los botones de admin */
 
-@media screen and (max-width: 1600px) {
+@media screen and (max-width: 1710px) {
+    
+    #mqAdmin{
+        button{
+            img{
+                margin-right: 10px;
+            }
+            .mqa1::after{
+                content: "Cat.";
+            }
+            .mqa2::after{
+                content: "Prod.";
+            }
+            .mqa3::after{
+                content: "Ped.";
+            }
+            .mqa4::after{
+                content: "Usu.";
+            }
+        }
+    }
+    
+}
+
+@media screen and (max-width: 1550px) {
     
     #mqAdmin{
         button{
             img{
                 margin-right: 0px;
             }
-            span{
-                display: none;
+            .mqa1::after{
+                content: "";
+            }
+            .mqa2::after{
+                content: "";
+            }
+            .mqa3::after{
+                content: "";
+            }
+            .mqa4::after{
+                content: "";
             }
         }
     }
@@ -1002,7 +1133,7 @@ table {
 
 /* Ocultar texto del botón de carrito */
 
-@media screen and (max-width: 1300px) {
+@media screen and (max-width: 1370px) {
     
     #mqCarrito{
         button{
@@ -1019,7 +1150,7 @@ table {
 
 /* Ocultar texto del botón de logout */
 
-@media screen and (max-width: 1200px) {
+@media screen and (max-width: 1280px) {
     
     #mqLogout{
         button{
@@ -1036,7 +1167,7 @@ table {
 
 /* Ocultar texto del botón de mis pedidos */
 
-@media screen and (max-width: 1080px) {
+@media screen and (max-width: 1160px) {
     
     #mqMisPedidos{
         button{
@@ -1051,9 +1182,29 @@ table {
 
 }
 
+/* Ocultar texto "Tienda de señales de Trafico" */
 
+@media screen and (max-width: 1060px) {
+    
+    #mqTiendaSeñalesTrafico{
+        display: none;
+    }
+
+}
+
+/* Ocultar icono de autopista */
+
+@media screen and (max-width: 700px) {
+
+    #mqLogo{display: none;}
+
+    header{
+        height: 74px;
+    }
+}
 
 @media screen and (max-width: 600px) {
+
     #mqAdmin{display: none;}
     #mqFooter{ /* Esto es lo mismo que footer{} */
         div{

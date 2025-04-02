@@ -16,8 +16,16 @@
 <body>
     <header>
         <div class="header-izquierda">
-            <a href="<?=BASE_URL?>"><img src="<?=BASE_URL?>assets/images/logo.svg" alt="logo"></a>
-            <a href="<?=BASE_URL?>"><h1>Tienda de Señales de Tráfico</h1></a>
+            <div class="hi1">
+                <a href="<?=BASE_URL?>" id="mqLogo"><img src="<?=BASE_URL?>assets/images/logo.svg" alt="logo"></a>
+                <a href="<?=BASE_URL?>" id="mqTiendaSeñalesTrafico"><h1>Tienda de Señales de Tráfico</h1></a>
+            </div>
+            <div class="hi2">
+                <a href="<?=BASE_URL?>"><img src="<?=BASE_URL?>assets/images/casa.svg" class="casa"></a>
+                <button id="buscar">
+                    <img src="<?=BASE_URL?>assets/images/buscar.svg" alt="Buscar" class="lupa">
+                </button>
+            </div>
         </div>
         
         <div class="header-derecha">
@@ -45,22 +53,22 @@
                 <?php if($rol === 'admin'): ?>
                     <a href="<?=BASE_URL?>categoria/admin" id="mqAdmin">
                         <button class="boton">
-                            <img src="<?=BASE_URL?>assets/images/categoria.svg"><span>Categorías</span>
+                            <img src="<?=BASE_URL?>assets/images/categoria.svg"><span class="mqa1"></span>
                         </button>
                     </a>
                     <a href="<?=BASE_URL?>producto/admin" id="mqAdmin">
                         <button class="boton">
-                            <img src="<?=BASE_URL?>assets/images/producto.svg"><span>Productos</span>
+                            <img src="<?=BASE_URL?>assets/images/producto.svg"><span class="mqa2"></span>
                         </button>
                     </a>
                     <a href="<?=BASE_URL?>pedido/admin" id="mqAdmin">
                         <button class="boton">
-                            <img src="<?=BASE_URL?>assets/images/pedido.svg"><span>Pedidos</span>
+                            <img src="<?=BASE_URL?>assets/images/pedido.svg"><span class="mqa3"></span>
                         </button>
                     </a>
                     <a href="<?=BASE_URL?>usuario/admin" id="mqAdmin">
                         <button class="boton">
-                            <img src="<?=BASE_URL?>assets/images/usuarios.svg"><span>Usuarios</span>
+                            <img src="<?=BASE_URL?>assets/images/usuarios.svg"><span class="mqa4"></span>
                         </button>
                     </a>
                     <div class="separador"></div>

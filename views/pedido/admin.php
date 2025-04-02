@@ -57,8 +57,12 @@
             <th>ID</th>
             <th>Nº Productos</th>
             <th>Usuario</th>
+            <th>Comunidad</th>
             <th>Provincia</th>
-            <th>Localidad</th>
+            <th>Municipio</th>
+            <th>Población</th>
+            <th>Núcleo</th>
+            <th>Código Postal</th>
             <th>Dirección</th>
             <th>Coste</th>
             <th>Fecha</th>
@@ -83,17 +87,29 @@
                             $numProductos += $linea->getUnidades();
                         }
                         
-                        echo $numProductos;
+                        echo $numProductos . ' producto' . (($numProductos > 1) ? 's' : '');
                     
                     ?>
 
                 </td>
 
-                <td><?=Usuario::getById($pedido->getUsuarioId())->getNombre()?><br><?=Usuario::getById($pedido->getUsuarioId())->getApellidos()?></td>
+                <td>
+                    <a href="<?=BASE_URL?>usuario/admin&pag=<?= ceil(Usuario::getById($pedido->getUsuarioId())->getPosicion() / ITEMS_PER_PAGE) ?>#<?=Usuario::getById($pedido->getUsuarioId())->getId()?>" class="enlace-basico">
+                        <?=Usuario::getById($pedido->getUsuarioId())->getNombre()?> <?=Usuario::getById($pedido->getUsuarioId())->getApellidos()?>
+                    </a>
+                </td>
 
+                <td><?=$pedido->getComunidad()?></td>
                 <td><?=$pedido->getProvincia()?></td>
-                <td><?=$pedido->getLocalidad()?></td>
-                <td><?=$pedido->getDireccion()?></td>
+                <td><?=$pedido->getMunicipio()?></td>
+                <td><?=$pedido->getPoblacion()?></td>
+                <td><?=$pedido->getNucleo()?></td>
+                <td><?=$pedido->getCodigoPostal()?></td>
+                <td>
+                    <a href="https://www.google.com/maps/search/?q=<?=$pedido->getDireccion().' '.$pedido->getCodigoPostal().' '.$pedido->getMunicipio().' '.$pedido->getProvincia()?>" target="_blank" class="enlace-basico">
+                        <?=$pedido->getDireccion()?>
+                    </a>
+                </td>
                 <td><?=$pedido->getCoste()?> €</td>
 
                 <td>
@@ -114,7 +130,7 @@
 
                     <?php if($pedido->getEstado() == 'Pendiente'): ?>
 
-                        <div class="separador" style="transform: scale(0.5);"></div>
+                        <div class="separador" style="transform: scaleX(1.2) scaleY(0.5)"></div>
 
                         <a href="<?=BASE_URL?>pedido/confirmar&id=<?=$pedido->getId()?>">
                             Confirmar
@@ -122,7 +138,7 @@
 
                     <?php endif; ?>
 
-                    <div class="separador" style="transform: scale(0.5);"></div>
+                    <div class="separador" style="transform: scaleX(1.2) scaleY(0.5);"></div>
 
                     <a href="<?=BASE_URL?>pedido/eliminar&id=<?=$pedido->getId()?>">
                         Eliminar

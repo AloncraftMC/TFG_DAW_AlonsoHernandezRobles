@@ -48,12 +48,16 @@
     <tr>
         <th>Fecha</th>
         <th>Nº Productos</th>
+        <th>Comunidad</th>
         <th>Provincia</th>
-        <th>Localidad</th>
+        <th>Municipio</th>
+        <th>Población</th>
+        <th>Núcleo</th>
+        <th>Código Postal</th>
         <th>Dirección</th>
         <th>Coste</th>
         <th>Estado</th>
-        <th>Acciones</th>
+        <th>Ver</th>
     </tr>
 
     <?php foreach($pedidos as $pedido): ?>
@@ -83,8 +87,12 @@
 
             </td>
 
+            <td><?=$pedido->getComunidad()?></td>
             <td><?=$pedido->getProvincia()?></td>
-            <td><?=$pedido->getLocalidad()?></td>
+            <td><?=$pedido->getMunicipio()?></td>
+            <td><?=$pedido->getPoblacion()?></td>
+            <td><?=$pedido->getNucleo()?></td>
+            <td><?=$pedido->getCodigoPostal()?></td>
             <td><?=$pedido->getDireccion()?></td>
             <td style="font-size: 200%;"><?=$pedido->getCoste()?> €</td>
             
@@ -98,8 +106,10 @@
 
             <td class="acciones-especial">
 
-                <a href="<?=BASE_URL?>pedido/ver&id=<?=$pedido->getId()?>" style="color: blue">
-                    Ver
+                <a href="<?=BASE_URL?>pedido/ver&id=<?=$pedido->getId()?>" style="color: blue;">
+                    <div>
+                        <img src="<?=BASE_URL?>assets/images/ver.svg" alt="Ver pedido" class="ver">
+                    </div>
                 </a>
 
             </td>

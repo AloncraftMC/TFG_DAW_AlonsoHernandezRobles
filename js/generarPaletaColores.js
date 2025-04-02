@@ -105,7 +105,6 @@ document.addEventListener("DOMContentLoaded", function () {
         document.documentElement.style.setProperty('--color-9', paleta.color9);
         document.documentElement.style.setProperty('--color-10', paleta.color10);
 
-        console.log("✅ Paleta generada:", paleta);
     }
 
     actualizarColores();

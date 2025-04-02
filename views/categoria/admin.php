@@ -128,4 +128,4 @@
 
 <?php endif; ?>
 
-<script src="<?BASE_URL?>js/actualizarPaginacion.js"></script>
+<script src="<?=BASE_URL?>js/actualizarPaginacion.js"></script>

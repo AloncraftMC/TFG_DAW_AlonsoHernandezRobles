@@ -8,8 +8,12 @@
 
         private int $id;
         private int $usuarioId;
+        private string $comunidad;
         private string $provincia;
-        private string $localidad;
+        private string $municipio;
+        private string $poblacion;
+        private string $nucleo;
+        private string $codigoPostal;
         private string $direccion;
         private float $coste;
         private string $estado;
@@ -29,12 +33,28 @@
             return $this->usuarioId;
         }
 
+        public function getComunidad(): string{
+            return $this->comunidad;
+        }
+
         public function getProvincia(): string{
             return $this->provincia;
         }
 
-        public function getLocalidad(): string{
-            return $this->localidad;
+        public function getMunicipio(): string{
+            return $this->municipio;
+        }
+
+        public function getPoblacion(): string{
+            return $this->poblacion;
+        }
+
+        public function getNucleo(): string{
+            return $this->nucleo;
+        }
+
+        public function getCodigoPostal(): string{
+            return $this->codigoPostal;
         }
 
         public function getDireccion(): string{
@@ -65,12 +85,28 @@
             $this->usuarioId = $usuarioId;
         }
 
+        public function setComunidad(string $comunidad): void{
+            $this->comunidad = $comunidad;
+        }
+
         public function setProvincia(string $provincia): void{
             $this->provincia = $provincia;
         }
 
-        public function setLocalidad(string $localidad): void{
-            $this->localidad = $localidad;
+        public function setMunicipio(string $municipio): void{
+            $this->municipio = $municipio;
+        }
+
+        public function setPoblacion(string $poblacion): void{
+            $this->poblacion = $poblacion;
+        }
+
+        public function setNucleo(string $nucleo): void{
+            $this->nucleo = $nucleo;
+        }
+
+        public function setCodigoPostal(string $codigoPostal): void{
+            $this->codigoPostal = $codigoPostal;
         }
 
         public function setDireccion(string $direccion): void{
@@ -99,10 +135,14 @@
 
             $baseDatos = new BaseDatos();
 
-            $baseDatos->ejecutar("INSERT INTO pedidos(usuario_id, provincia, localidad, direccion, coste, estado, fecha, hora) VALUES(:usuario_id, :provincia, :localidad, :direccion, :coste, :estado, :fecha, :hora)", [
+            $baseDatos->ejecutar("INSERT INTO pedidos(usuario_id, comunidad, provincia, municipio, poblacion, nucleo, codigo_postal, direccion, coste, estado, fecha, hora) VALUES(:usuario_id, :comunidad, :provincia, :municipio, :poblacion, :nucleo, :codigo_postal, :direccion, :coste, :estado, :fecha, :hora)", [
                 ':usuario_id' => $this->usuarioId,
+                ':comunidad' => $this->comunidad,
                 ':provincia' => $this->provincia,
-                ':localidad' => $this->localidad,
+                ':municipio' => $this->municipio,
+                ':poblacion' => $this->poblacion,
+                ':nucleo' => $this->nucleo,
+                ':codigo_postal' => $this->codigoPostal,
                 ':direccion' => $this->direccion,
                 ':coste' => $this->coste,
                 ':estado' => $this->estado,
@@ -124,11 +164,15 @@
 
             $baseDatos = new BaseDatos();
 
-            $baseDatos->ejecutar("UPDATE pedidos SET usuario_id = :usuario_id, provincia = :provincia, localidad = :localidad, direccion = :direccion, coste = :coste, estado = :estado, fecha = :fecha, hora = :hora WHERE id = :id", [
+            $baseDatos->ejecutar("UPDATE pedidos SET usuario_id = :usuario_id, comunidad = :comunidad, provincia = :provincia, municipio = :municipio, poblacion = :poblacion, nucleo = :nucleo, codigo_postal = :codigo_postal, direccion = :direccion, coste = :coste, estado = :estado, fecha = :fecha, hora = :hora WHERE id = :id", [
                 ':id' => $this->id,
                 ':usuario_id' => $this->usuarioId,
+                ':comunidad' => $this->comunidad,
                 ':provincia' => $this->provincia,
-                ':localidad' => $this->localidad,
+                ':municipio' => $this->municipio,
+                ':poblacion' => $this->poblacion,
+                ':nucleo' => $this->nucleo,
+                ':codigo_postal' => $this->codigoPostal,
                 ':direccion' => $this->direccion,
                 ':coste' => $this->coste,
                 ':estado' => $this->estado,
@@ -196,8 +240,12 @@
 
                 $pedido->setId($registro['id']);
                 $pedido->setUsuarioId($registro['usuario_id']);
+                $pedido->setComunidad($registro['comunidad']);
                 $pedido->setProvincia($registro['provincia']);
-                $pedido->setLocalidad($registro['localidad']);
+                $pedido->setMunicipio($registro['municipio']);
+                $pedido->setPoblacion($registro['poblacion']);
+                $pedido->setNucleo($registro['nucleo']);
+                $pedido->setCodigoPostal($registro['codigo_postal']);
                 $pedido->setDireccion($registro['direccion']);
                 $pedido->setCoste($registro['coste']);
                 $pedido->setEstado($registro['estado']);
@@ -232,8 +280,12 @@
 
                 $pedido->setId($registro['id']);
                 $pedido->setUsuarioId($registro['usuario_id']);
+                $pedido->setComunidad($registro['comunidad']);
                 $pedido->setProvincia($registro['provincia']);
-                $pedido->setLocalidad($registro['localidad']);
+                $pedido->setMunicipio($registro['municipio']);
+                $pedido->setPoblacion($registro['poblacion']);
+                $pedido->setNucleo($registro['nucleo']);
+                $pedido->setCodigoPostal($registro['codigo_postal']);
                 $pedido->setDireccion($registro['direccion']);
                 $pedido->setCoste($registro['coste']);
                 $pedido->setEstado($registro['estado']);
@@ -264,8 +316,12 @@
 
                 $pedido->setId($registro['id']);
                 $pedido->setUsuarioId($registro['usuario_id']);
+                $pedido->setComunidad($registro['comunidad']);
                 $pedido->setProvincia($registro['provincia']);
-                $pedido->setLocalidad($registro['localidad']);
+                $pedido->setMunicipio($registro['municipio']);
+                $pedido->setPoblacion($registro['poblacion']);
+                $pedido->setNucleo($registro['nucleo']);
+                $pedido->setCodigoPostal($registro['codigo_postal']);
                 $pedido->setDireccion($registro['direccion']);
                 $pedido->setCoste($registro['coste']);
                 $pedido->setEstado($registro['estado']);
