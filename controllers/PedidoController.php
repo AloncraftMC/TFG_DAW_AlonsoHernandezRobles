@@ -2,7 +2,6 @@
 
     namespace controllers;
 
-    use Exception;
     use helpers\Utils;
     use models\Pedido;
     use models\LineaPedido;
