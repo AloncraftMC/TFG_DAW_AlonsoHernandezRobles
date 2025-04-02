@@ -7,13 +7,6 @@
     use models\Pedido;
     use models\LineaPedido;
     use models\Producto;
-    use PayPalCheckoutSdk\Core\PayPalHttpClient;
-    use PayPalCheckoutSdk\Core\SandboxEnvironment;
-    use PayPalCheckoutSdk\Core\ProductionEnvironment;
-    use PayPalCheckoutSdk\Orders\OrdersCreateRequest;
-    use PayPalCheckoutSdk\Orders\OrdersCaptureRequest;
-
-    require_once __DIR__ . '/../vendor/autoload.php'; // Para asegurarte de que las dependencias de Composer se carguen correctamente
     
     class PedidoController{
 
