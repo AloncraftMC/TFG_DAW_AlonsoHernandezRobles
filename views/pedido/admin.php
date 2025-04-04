@@ -57,13 +57,8 @@
             <th>ID</th>
             <th>Nº Productos</th>
             <th>Usuario</th>
-            <th>Comunidad</th>
-            <th>Provincia</th>
-            <th>Municipio</th>
-            <th>Población</th>
-            <th>Núcleo</th>
-            <th>Código Postal</th>
             <th>Dirección</th>
+            <th>Ubicación</th>
             <th>Coste</th>
             <th>Fecha</th>
             <th>Estado</th>
@@ -99,17 +94,16 @@
                     </a>
                 </td>
 
-                <td><?=$pedido->getComunidad()?></td>
-                <td><?=$pedido->getProvincia()?></td>
-                <td><?=$pedido->getMunicipio()?></td>
-                <td><?=$pedido->getPoblacion()?></td>
-                <td><?=$pedido->getNucleo()?></td>
-                <td><?=$pedido->getCodigoPostal()?></td>
-                <td>
+                <td><?=$pedido->getComunidad()?>, <?=$pedido->getProvincia()?>, <?=$pedido->getMunicipio()?>, <?=$pedido->getPoblacion()?>, <?=$pedido->getNucleo()?>, <?=$pedido->getCodigoPostal()?>, <?=$pedido->getDireccion()?></td>
+                
+                <td class="acciones-especial">
                     <a href="https://www.google.com/maps/search/?q=<?=$pedido->getDireccion().' '.$pedido->getCodigoPostal().' '.$pedido->getMunicipio().' '.$pedido->getProvincia()?>" target="_blank" class="enlace-basico">
-                        <?=$pedido->getDireccion()?>
+                        <div>
+                            <img src="<?=BASE_URL?>assets/images/maps.svg" alt="Ver Ubicación" class="ver">
+                        </div>
                     </a>
                 </td>
+                
                 <td><?=$pedido->getCoste()?> €</td>
 
                 <td>

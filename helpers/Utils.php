@@ -2,6 +2,7 @@
 
     namespace helpers;
 
+    use lib\BaseDatos;
     use models\Producto;
 
     class Utils{
@@ -104,7 +105,51 @@
 
         public static function deleteCookieCarrito(): void {
             setcookie('carrito', '', time() - 3600, '/');
-        }        
+        }
+        
+        // Método para comprobar si el usuario puede valorar un producto
+
+        public static function usuarioPuedeValorarProducto(int $usuarioId, int $productoId): bool{
+
+            // Se tienen que dar dos condiciones para que el usuario pueda valorar el producto:
+
+            $baseDatos = new BaseDatos();
+
+            // 1. El usuario ha comprado el producto al menos una vez
+
+            $baseDatos->ejecutar("SELECT * FROM lineas_pedidos lp
+                                  INNER JOIN pedidos p ON lp.pedido_id = p.id
+                                  WHERE p.usuario_id = :usuario_id
+                                  AND lp.producto_id = :producto_id
+                                  LIMIT 1", [
+                ':usuario_id' => $usuarioId,
+                ':producto_id' => $productoId
+            ]);
+
+            if ($baseDatos->getNumeroRegistros() == 0) {
+
+                $baseDatos->cerrarConexion();
+                return false;
+
+            }
+
+            // 2. El usuario no ha valorado el producto
+
+            $baseDatos->ejecutar("SELECT * FROM valoraciones
+                                  WHERE usuario_id = :usuario_id
+                                  AND producto_id = :producto_id
+                                  LIMIT 1", [
+                ':usuario_id' => $usuarioId,
+                ':producto_id' => $productoId
+            ]);
+
+            $output = $baseDatos->getNumeroRegistros() == 0;
+
+            $baseDatos->cerrarConexion();
+
+            return $output;
+
+        }
 
     }
 

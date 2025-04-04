@@ -4,9 +4,13 @@
 
 ## 0 - 15 minutos ⚡️
 
+- Arreglar el problema de las anclas relativas del usuario desde administración de pedidos
+
 <hr>
 
 ## 15 - 60 minutos ⏳
+
+- Añadir localStorage para guardar las constantes `PRODUCTS_PER_PAGE` y `ITEMS_PER_PAGE`.
 
 <hr>
 
@@ -20,14 +24,13 @@
 
 ## 2h - 6h 🎨
 
-- Valoraciones de productos por parte de usuarios que han comprado el producto (Añadir un botón de `"Deja una valoración"` en la vista de producto cuando un pedido que contenía ese producto esté confirmado).
 - Buscador de productos en el header.
 
 <hr>
 
 ## 6h - 12h 📦
 
-- *Responsiveness* (Adaptabilidad).
+- *Responsiveness* (Adaptabilidad) completa.
 
 <hr>
 

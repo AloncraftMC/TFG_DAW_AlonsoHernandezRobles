@@ -11,9 +11,6 @@
         private int $productoId;
         private int $unidades;
 
-        public function __construct(){
-        }
-
         /* GETTERS Y SETTERS */
 
         public function getId(): int{

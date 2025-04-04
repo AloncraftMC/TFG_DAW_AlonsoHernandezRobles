@@ -14,9 +14,6 @@
         private ?string $rol;
         private ?string $imagen;
         private ?string $color;
-        
-        public function __construct(){
-        }
 
         /* GETTERS Y SETTERS */
         

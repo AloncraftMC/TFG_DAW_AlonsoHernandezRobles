@@ -90,11 +90,14 @@
     </tbody>
 </table>
 
-<div class="resumen-carrito" style="display: flex; flex-direction: column; justify-content: center; align-items: center; margin: 20px;">
+<div class="resumen-carrito" style="display: flex; flex-direction: column; justify-content: center; align-items: center; margin: 20px; margin-bottom: 0px">
     <h1 style="color: green; font-size: 200%"><span style="color: black; font-weight: normal;">Total:</span> <?= $pedido->getCoste() ?> €</h2>
+</div>
+
+<div class="container" style="width: unset; margin-top: 0px">
     <h4 style="margin: 0px; text-align: center;">
-        Realizado el <?=date('d/m/Y', strtotime($pedido->getFecha()))?> a las <?=$pedido->getHora()?>
-        <div style="height: 5px"></div>
+        <span style="font-size: 130%">Realizado el <?=date('d/m/Y', strtotime($pedido->getFecha()))?> a las <?=$pedido->getHora()?></span>
+        <div class="separador-2" style="background-color: lightgray; margin: 10px 0px"></div>
         Envío a <a href="https://www.google.com/maps/search/?q=<?=urlencode($pedido->getDireccion().' '.$pedido->getCodigoPostal().' '.$pedido->getMunicipio().' '.$pedido->getProvincia())?>" target="_blank" class="enlace-basico">
             <?=$pedido->getDireccion().', '.$pedido->getPoblacion().' ('.$pedido->getCodigoPostal().') - '.$pedido->getProvincia()?>
         </a>

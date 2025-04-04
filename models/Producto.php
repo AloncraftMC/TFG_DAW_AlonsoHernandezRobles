@@ -16,9 +16,6 @@
         private string $fecha;
         private string $imagen;
 
-        public function __construct(){
-        }
-
         /* GETTERS Y SETTERS */
 
         public function getId(): int{

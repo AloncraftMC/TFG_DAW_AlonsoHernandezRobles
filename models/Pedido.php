@@ -20,9 +20,6 @@
         private string $fecha;
         private string $hora;
 
-        public function __construct(){
-        }
-
         /* GETTERS Y SETTERS */
 
         public function getId(): int{

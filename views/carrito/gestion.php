@@ -16,8 +16,11 @@
 
     <h3>No hay productos en el carrito.</h3>
 
-    <a href="<?= BASE_URL ?>" class="boton">
-        <button class="boton">Empieza a comprar</button>
+    <a href="<?= BASE_URL ?>" class="boton" style="text-decoration: none;">
+        <button class="boton" style="display: flex; flex-direction: row; justify-content: center; align-items: center; margin: 0 auto;">
+            <span>Empieza a comprar</span>
+            <img src="<?= BASE_URL ?>assets/images/login.svg" alt="Tienda" style="margin-left: 5px; width: 25px; filter: invert(1);">
+        </button>
     </a>
 
 <?php else: ?>
@@ -91,8 +94,11 @@
         <h2 style="color: green; font-size: 200%"><span style="color: black; font-weight: normal;">Total:</span> <?= $totalCarrito ?> €</h2>
 
         <!-- Botón para proceder a la compra -->
-        <a href="<?= BASE_URL ?>pedido/crear">
-            <button class="boton">Hacer pedido</button>
+        <a href="<?= BASE_URL ?>pedido/crear" class="hacer-pedido">
+            <button class="boton" class="pedido-azul">
+                <img src="<?= BASE_URL ?>assets/images/caja.svg" alt="Realizar pedido">
+                <span>Hacer pedido</span>
+            </button>
         </a>
     </div>
 
@@ -102,7 +108,7 @@
 
     <strong class="red" id="failed_stock">No tenemos el stock solicitado para este producto.</strong>
 
-    <strong class="red" style="font-size: 95%; margin-top: 10px;">Stock máximo disponible: <?=Producto::getById($_SESSION['idProductoNoMas'])->getStock()?> unidades.</strong>
+    <strong class="red" style="font-size: 95%; margin-top: 10px;">Stock disponible: <?=Producto::getById($_SESSION['idProductoNoMas'])->getStock()?> unidades.</strong>
     <strong style="font-size: 95%; margin-top: 10px;">
     
         <?php

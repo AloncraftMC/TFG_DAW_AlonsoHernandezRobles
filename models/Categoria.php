@@ -9,9 +9,6 @@
         private int $id;
         private string $nombre;
 
-        public function __construct(){
-        }
-
         /* GETTERS Y SETTERS */
         
         public function getId(): int{
