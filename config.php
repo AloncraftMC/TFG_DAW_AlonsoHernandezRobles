@@ -18,7 +18,7 @@
 
     // Paginación
 
-    define('ITEMS_PER_PAGE', 10);   // Usuarios y Categorías
-    define('PRODUCTS_PER_PAGE', 6); // Conviene que sea un múltiplo de 3 para obtener la vista más óptima
+    define('ITEMS_PER_PAGE', 10); // Conviene que sea un múltiplo de 3 para obtener la vista más óptima
+    define('PRODUCTS_PER_PAGE', 12); // Conviene que sea un múltiplo de 3 para obtener la vista más óptima
 
 ?>

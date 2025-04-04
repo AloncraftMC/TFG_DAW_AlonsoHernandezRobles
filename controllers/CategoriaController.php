@@ -4,6 +4,9 @@
 
     use models\Categoria;
     use models\Producto;
+    use models\Valoracion;
+    use models\LineaPedido;
+    use models\Pedido;
     use helpers\Utils;
 
     class CategoriaController{
@@ -212,22 +215,51 @@
 
                 }
 
-                $productos = Producto::getByCategoria($id);
+                // CASCADA
 
-                // Eliminamos todos los productos de la categoría (cascada) y sus imágenes
-        
-                foreach ($productos as $producto) {
+                $productos = Producto::getByCategoria($categoria->getId());
 
-                    $imagen = $producto->getImagen();
-                    $uploadDir = 'assets/images/uploads/productos/';
+                foreach($productos as $producto){
 
-                    if ($imagen && is_file($uploadDir . $imagen)) unlink($uploadDir . $imagen);
+                    $valoraciones = Valoracion::getByProducto($producto->getId());
+
+                    foreach($valoraciones as $valoracion){
+
+                        // 1. Eliminamos todas las valoraciones de todos los productos asociados a la categoría
+
+                        $valoracion->delete();
+
+                    }
+
+                    $lineas = LineaPedido::getByProducto($producto->getId());
+
+                    foreach($lineas as $linea){
+
+                        // 2. Eliminamos todas las líneas de pedido de todos los productos asociados a la categoría
+
+                        $linea->delete();
+
+                        // Bis. Eliminamos el pedido si es que ha quedado sin líneas de pedido
+
+                        $pedido = Pedido::getById($linea->getPedidoId());
+
+                        $lineasPedido = LineaPedido::getByPedido($pedido->getId());
+
+                        if(count($lineasPedido) == 0){
+
+                            $pedido->delete();
+
+                        }
+
+                    }
+
+                    // 3. Eliminamos todos los productos asociados a la categoría
 
                     $producto->delete();
 
                 }
 
-                // Ahora eliminamos la categoría
+                // 4. Eliminamos la categoría
 
                 if($categoria->delete()){
                     

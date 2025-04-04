@@ -5,6 +5,9 @@
     use helpers\Utils;
     use models\Producto;
     use models\Categoria;
+    use models\LineaPedido;
+    use models\Pedido;
+    use models\Valoracion;
 
     class ProductoController{
 
@@ -209,7 +212,7 @@
                         }
 
                         $_SESSION['create'] = 'complete';
-                        header("Location:" . BASE_URL . "producto/admin&pag=" . max(1, ceil(count(Producto::getAll()) / PRODUCTS_PER_PAGE)) . "#" . $id); // Redirigimos a la última página
+                        header("Location:" . BASE_URL . "producto/admin&pag=" . max(1, ceil(count(Producto::getAll()) / ITEMS_PER_PAGE)) . "#" . $id); // Redirigimos a la última página
                         exit;
                     
                     }else{
@@ -449,6 +452,42 @@
 
                 }
 
+                // CASCADA
+
+                $valoraciones = Valoracion::getByProducto($producto->getId());
+
+                foreach($valoraciones as $valoracion){
+
+                    // 1. Eliminamos todas las valoraciones asociadas al producto
+
+                    $valoracion->delete();
+
+                }
+
+                $lineas = LineaPedido::getByProducto($producto->getId());
+
+                foreach($lineas as $linea){
+
+                    // 2. Eliminamos todas las líneas de pedido asociadas al producto
+
+                    $linea->delete();
+
+                    // Bis. Eliminamos el pedido si es que ha quedado sin líneas de pedido
+
+                    $pedido = Pedido::getById($linea->getPedidoId());
+
+                    $lineasPedido = LineaPedido::getByPedido($pedido->getId());
+                    
+                    if(count($lineasPedido) == 0){
+
+                        $pedido->delete();
+
+                    }
+
+                }
+
+                // 3. Eliminamos el producto
+
                 if($producto->delete()){
                     
                     $_SESSION['delete'] = "complete";
@@ -493,6 +532,46 @@
 
                 require_once 'views/producto/ver.php';
 
+            }else{
+
+                header("Location:" . BASE_URL);
+                exit;
+
+            }
+
+        }
+
+        public function buscar(): void {
+
+            if(isset($_GET['search'])){
+
+                $search = urldecode(htmlspecialchars(trim($_GET['search'])));
+
+                $productosPorPagina = PRODUCTS_PER_PAGE;
+
+                $_SESSION['pag'] = isset($_GET['pag']) ? (int)$_GET['pag'] : 1;
+                
+                $productos = Producto::getByQuery($search);
+
+                $totalPag = max(1, ceil(count($productos) / $productosPorPagina));
+                $productos = array_slice($productos, ($_SESSION['pag'] - 1) * $productosPorPagina, $productosPorPagina);
+
+                if($totalPag == 0) $totalPag = 1;
+
+                // Ahora redirigimos a la primera o última página si la página es menor que 1 o mayor que el total de páginas
+                
+                if($_SESSION['pag'] < 1){
+                    header("Location:" . BASE_URL . "producto/buscar&search=" . $search . "&pag=1");
+                    exit;
+                }
+                
+                if($_SESSION['pag'] > $totalPag){
+                    header("Location:" . BASE_URL . "producto/buscar&search=" . $search . "&pag=" . $totalPag);
+                    exit;
+                }
+
+                require_once 'views/producto/buscar.php';
+                
             }else{
 
                 header("Location:" . BASE_URL);

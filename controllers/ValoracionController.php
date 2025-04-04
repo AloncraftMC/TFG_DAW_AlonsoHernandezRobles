@@ -93,6 +93,8 @@
 
                 }
 
+                // 1. Eliminamos la valoración (y punto y final)
+
                 if($valoracion->delete()){
 
                     $_SESSION['delete'] = "complete";

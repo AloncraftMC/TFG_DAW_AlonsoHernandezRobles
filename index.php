@@ -43,11 +43,11 @@
                 'color' => $usuario->getColor(),
             ];
 
-        }
-
-        if($usuario->getRol() == 'admin'){
-
-            $_SESSION['admin'] = true;
+            if($usuario->getRol() == 'admin'){
+    
+                $_SESSION['admin'] = true;
+    
+            }
 
         }
         
@@ -62,26 +62,34 @@
         $controller = $_GET['controller'];
         $action = $_GET['action'] ?? 'index';
         $id = $_GET['id'] ?? null;
+
+        $producto = isset($id) ? Producto::getById($id) : null;
+        $categoria = isset($id) ? Categoria::getById($id) : null;
+        $usuario = isset($id) ? Usuario::getById($id) : null;
+
+        $nombreProducto = $producto ? $producto->getNombre() : null;
+        $nombreCategoria = $categoria ? $categoria->getNombre() : null;
+        $nombreUsuario = $usuario ? $usuario->getNombre() : null;
         
         $titulos = [
             'producto' => [
-                'ver' => (isset($id) && $controller == 'producto' ? Producto::getById($id)->getNombre() : 'Ver Producto'),
+                'ver' => $nombreProducto,
                 'admin' => 'Administrar Productos',
                 'crear' => 'Crear Producto',
-                'gestion' => 'Editar ' . (isset($id) && $controller == 'producto' ? Producto::getById($id)->getNombre() : 'Producto'),
+                'gestion' => 'Editar ' . $nombreProducto,
                 'recomendados' => 'Tienda de Señales de Tráfico'
             ],
             'categoria' => [
                 'admin' => 'Administrar Categorías',
                 'crear' => 'Crear Categoría',
-                'editar' => 'Editar ' . (isset($id) && $controller == 'categoria' ? Categoria::getById($id)->getNombre() : 'Categoría')
+                'editar' => 'Editar ' . $nombreCategoria
             ],
             'usuario' => [
                 'login' => 'Iniciar Sesión',
                 'registrarse' => 'Registrarse',
                 'admin' => 'Administrar Usuarios',
                 'gestion' => 'Perfil de Usuario - ' . (isset($_SESSION['identity']) ? $_SESSION['identity']['nombre'] : 'Usuario'),
-                'editar' => 'Editar ' . (isset($id) && $controller == 'usuario' ? Usuario::getById($id)->getNombre() : 'Usuario'),
+                'editar' => 'Editar ' . $nombreUsuario,
                 'crear' => 'Crear Usuario'
             ],
             'pedido' => [

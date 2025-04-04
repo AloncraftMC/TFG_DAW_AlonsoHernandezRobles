@@ -87,7 +87,7 @@
 
             $baseDatos = new BaseDatos();
 
-            $baseDatos->ejecutar("SELECT ROW_NUMBER() OVER (ORDER BY id ASC) AS position FROM usuarios WHERE id = :id", [
+            $baseDatos->ejecutar("SELECT COUNT(*) + 1 AS position FROM usuarios WHERE id < :id", [
                 ':id' => $this->id
             ]);
 
@@ -236,7 +236,7 @@
             $baseDatos->ejecutar("DELETE FROM usuarios WHERE id = :id", [
                 ':id' => $this->id
             ]);
-
+            
             $output = $baseDatos->getNumeroRegistros() == 1;
 
             if ($output && $this->id == $maxId) {
@@ -247,7 +247,7 @@
                 $nuevoMaxId = $nuevoMaxId ? $nuevoMaxId['id'] : 0;
 
                 $nuevoAutoIncrement = $nuevoMaxId + 1;
-
+                
                 $baseDatos->ejecutar("ALTER TABLE usuarios AUTO_INCREMENT = $nuevoAutoIncrement");
 
             }

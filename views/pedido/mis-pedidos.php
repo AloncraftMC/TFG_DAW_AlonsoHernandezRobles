@@ -70,7 +70,7 @@
                 <?=date('H:i:s', strtotime($pedido->getHora()))?>
             </td>
 
-            <td style="font-size: 150%">
+            <td style="font-size: 125%">
 
                 <?php
                 

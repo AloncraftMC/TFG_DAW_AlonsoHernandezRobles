@@ -91,7 +91,8 @@
 </table>
 
 <div class="resumen-carrito" style="display: flex; flex-direction: column; justify-content: center; align-items: center; margin: 20px; margin-bottom: 0px">
-    <h1 style="color: green; font-size: 200%"><span style="color: black; font-weight: normal;">Total:</span> <?= $pedido->getCoste() ?> €</h2>
+    <h1 style="color: green; font-size: 200%"><span style="color: black; font-weight: normal;">Total*:</span> <?= $pedido->getCoste() ?> €</h1>
+    <h5 style="width: 500px; margin-top: 0px; margin-bottom: 20px; text-align: center; color: gray">*Los precios y ofertas de los productos están sujetos a cambios. El coste del pedido es el que figura en el momento de la compra y no se verá afectado.</h5>
 </div>
 
 <div class="container" style="width: unset; margin-top: 0px">

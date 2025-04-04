@@ -51,7 +51,7 @@ if (isset($_GET['categoria'])) {
 
         $noHayProductos = false;
 
-        // Configuración de paginación (6 productos por página)
+        // Configuración de paginación (PRODUCTS_PER_PAGE productos por página)
 
         $productosPorPagina = PRODUCTS_PER_PAGE;
         
@@ -89,7 +89,7 @@ if (isset($_GET['categoria'])) {
     
             $hayProductosCatalogados = true;
     
-            $numProductos = min(6, count($todos));
+            $numProductos = min(PRODUCTS_PER_PAGE, count($todos));
             $shuffled = $todos;
     
             shuffle($shuffled);
@@ -161,7 +161,7 @@ if (isset($_GET['categoria'])) {
         $next = ($pag < $totalPag) ? $pag + 1 : $totalPag;
 ?>
 
-    <div class="paginacion" style="text-align: center; margin-bottom: 20px;">
+    <div class="paginacion" style="text-align: center; margin-bottom: 0px;">
 
         <a href="<?=BASE_URL?>producto/recomendados&categoria=<?= $categoria->getId() ?>&pag=1" style="pointer-events: <?=($_SESSION['pag'] == 1) ? 'none' : 'auto'?>;">
             <button class="boton <?php if($_SESSION['pag'] == 1) echo 'disabled' ?>">
@@ -234,7 +234,9 @@ if (isset($_GET['categoria'])) {
                                 alt="<?= $producto->getNombre() ?>">
                         </a>
 
-                        <h2 style="margin-bottom: 0px;"><?= $producto->getNombre() ?></h2>
+                        <a href="<?= BASE_URL ?>producto/ver&id=<?= $producto->getId() ?>" style="text-decoration: none; color: black;">
+                            <h2 style="margin-bottom: 0px;"><?= $producto->getNombre() ?></h2>
+                        </a>
 
                         <p style="margin: 4px; margin-bottom: 10px; color: gray;">
                             <?= Categoria::getById($producto->getCategoriaId())->getNombre() ?>

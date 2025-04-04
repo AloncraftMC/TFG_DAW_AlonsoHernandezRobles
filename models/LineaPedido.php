@@ -132,4 +132,33 @@
 
         }
 
+        public static function getByProducto(int $productoId): array{
+
+            $baseDatos = new BaseDatos();
+
+            $baseDatos->ejecutar("SELECT * FROM lineas_pedidos WHERE producto_id = :producto_id", [
+                ':producto_id' => $productoId
+            ]);
+
+            $registros = $baseDatos->getRegistros();
+
+            $lineas = [];
+
+            foreach ($registros as $registro) {
+
+                $linea = new LineaPedido();
+
+                $linea->setId($registro['id']);
+                $linea->setPedidoId($registro['pedido_id']);
+                $linea->setProductoId($registro['producto_id']);
+                $linea->setUnidades($registro['unidades']);
+
+                array_push($lineas, $linea);
+                
+            }
+
+            return $lineas;
+
+        }
+
     }

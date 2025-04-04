@@ -260,6 +260,46 @@
 
         }
 
+        // El siguiente método va a buscar por query, que se aplica a: */
+        // Nombre del producto
+        // Nombre de la categoría
+
+        public static function getByQuery(string $query): array {
+
+            $baseDatos = new BaseDatos();
+
+            $baseDatos->ejecutar("SELECT p.* FROM productos p LEFT JOIN categorias c ON p.categoria_id = c.id WHERE p.nombre LIKE :query OR c.nombre LIKE :query", [
+                ':query' => "%$query%"
+            ]);
+        
+            $registros = $baseDatos->getRegistros();
+        
+            $productos = [];
+        
+            foreach ($registros as $registro) {
+        
+                $producto = new Producto();
+        
+                $producto->setId($registro['id']);
+                $producto->setCategoriaId($registro['categoria_id']);
+                $producto->setNombre($registro['nombre']);
+                $producto->setDescripcion($registro['descripcion']);
+                $producto->setPrecio($registro['precio']);
+                $producto->setStock($registro['stock']);
+                $producto->setOferta($registro['oferta']);
+                $producto->setFecha($registro['fecha']);
+                $producto->setImagen($registro['imagen']);
+        
+                array_push($productos, $producto);
+                
+            }
+
+            $baseDatos->cerrarConexion();
+        
+            return $productos;
+
+        }
+
         public static function getAll(): array{
 
             $baseDatos = new BaseDatos();

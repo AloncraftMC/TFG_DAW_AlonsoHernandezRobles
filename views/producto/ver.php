@@ -26,6 +26,40 @@
             
             <ul>
 
+                <?php if(count($valoraciones) > 0){
+
+                    echo '<li style="list-style: none; margin: 0px;">';
+
+                    $suma = 0;
+
+                    // Sumar todas las puntuaciones
+                    foreach($valoraciones as $valoracion) {
+                        $suma += $valoracion->getPuntuacion();
+                    }
+
+                    // Calcular la puntuación promedio
+                    $puntuacion = $suma / count($valoraciones);
+
+                    // Mostrar las estrellas, redondeando la puntuación al entero más cercano
+                    $estrellas = round($puntuacion);
+
+                    for($i = 1; $i <= $estrellas; $i++) {
+                        echo '⭐';
+                    }
+
+                    // Mostrar la puntuación redondeada a dos decimales, pero sin mostrar el cero extra si es innecesario
+                    $puntuacion_formateada = number_format($puntuacion, 2);
+                    $puntuacion_formateada = rtrim($puntuacion_formateada, '0'); // Elimina los ceros al final
+
+                    // Si el segundo decimal es 0, elimina el punto
+                    if (substr($puntuacion_formateada, -1) === '.') {
+                        $puntuacion_formateada = substr($puntuacion_formateada, 0, -1);
+                    }
+
+                    echo ' (' . $puntuacion_formateada . ')</li>';
+
+                }?>
+
                 <li><h2>Categoría: <span class="value"><?=Categoria::getById($producto->getCategoriaId())->getNombre()?></span></h2></li>
 
                 <?php if ($producto->getOferta() > 0): ?>
@@ -152,11 +186,11 @@
         <label for="puntuacion">Puntuación</label>
         <select name="puntuacion" id="puntuacion" required>
             <option value="" disabled <?=isset($_SESSION['form_data']['puntuacion']) ? '' : 'selected'?>>Selecciona una puntuación</option>
-            <option value="1" <?=isset($_SESSION['form_data']['puntuacion']) && $_SESSION['form_data']['puntuacion'] == 5 ? 'selected' : ''?>>⭐⭐⭐⭐⭐</option>
-            <option value="2" <?=isset($_SESSION['form_data']['puntuacion']) && $_SESSION['form_data']['puntuacion'] == 4 ? 'selected' : ''?>>⭐⭐⭐⭐</option>
+            <option value="5" <?=isset($_SESSION['form_data']['puntuacion']) && $_SESSION['form_data']['puntuacion'] == 5 ? 'selected' : ''?>>⭐⭐⭐⭐⭐</option>
+            <option value="4" <?=isset($_SESSION['form_data']['puntuacion']) && $_SESSION['form_data']['puntuacion'] == 4 ? 'selected' : ''?>>⭐⭐⭐⭐</option>
             <option value="3" <?=isset($_SESSION['form_data']['puntuacion']) && $_SESSION['form_data']['puntuacion'] == 3 ? 'selected' : ''?>>⭐⭐⭐</option>
-            <option value="4" <?=isset($_SESSION['form_data']['puntuacion']) && $_SESSION['form_data']['puntuacion'] == 2 ? 'selected' : ''?>>⭐⭐</option>
-            <option value="5" <?=isset($_SESSION['form_data']['puntuacion']) && $_SESSION['form_data']['puntuacion'] == 1 ? 'selected' : ''?>>⭐</option>
+            <option value="2" <?=isset($_SESSION['form_data']['puntuacion']) && $_SESSION['form_data']['puntuacion'] == 2 ? 'selected' : ''?>>⭐⭐</option>
+            <option value="1" <?=isset($_SESSION['form_data']['puntuacion']) && $_SESSION['form_data']['puntuacion'] == 1 ? 'selected' : ''?>>⭐</option>
         </select>
 
         <?php if(isset($_SESSION['create']) && $_SESSION['create'] == 'failed_puntuacion'): ?>

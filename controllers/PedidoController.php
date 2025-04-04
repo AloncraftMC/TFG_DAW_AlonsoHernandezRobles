@@ -6,7 +6,8 @@
     use models\Pedido;
     use models\LineaPedido;
     use models\Producto;
-    
+use models\Valoracion;
+
     class PedidoController{
 
         public function admin(){ // ✔
@@ -349,13 +350,25 @@
 
                 }
 
-                // Eliminamos las líneas de pedido asociadas al pedido
+                // CASCADA
 
                 $lineas = LineaPedido::getByPedido($pedido->getId());
 
                 foreach($lineas as $linea){
+
+                    // 1. Eliminamos todas las valoraciones de todos los productos asociados al pedido
+
+                    $valoracion = Valoracion::getByProductoAndUsuario($linea->getProductoId(), $pedido->getUsuarioId());
+
+                    $valoracion->delete();
+
+                    // 2. Eliminamos todas las líneas de pedido asociadas al pedido
+
                     $linea->delete();
+
                 }
+
+                // 3. Eliminamos el pedido
 
                 if($pedido->delete()){
                     

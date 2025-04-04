@@ -55,7 +55,7 @@
 
         <tr>
             <th>ID</th>
-            <th>Nº Productos</th>
+            <th style="min-width: 100px">Nº Productos</th>
             <th>Usuario</th>
             <th>Dirección</th>
             <th>Ubicación</th>

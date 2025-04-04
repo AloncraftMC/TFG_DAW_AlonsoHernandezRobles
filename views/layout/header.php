@@ -22,9 +22,17 @@
             </div>
             <div class="hi2">
                 <a href="<?=BASE_URL?>"><img src="<?=BASE_URL?>assets/images/casa.svg" class="casa"></a>
-                <button id="buscar">
-                    <img src="<?=BASE_URL?>assets/images/buscar.svg" alt="Buscar" class="lupa">
-                </button>
+                <div id="buscarContainer">
+                    <button id="buscar" onclick="toggleSearchField()">
+                        <img src="<?=BASE_URL?>assets/images/buscar.svg" alt="Buscar" class="lupa">
+                    </button>
+                    <input type="text" id="searchInput" placeholder="Buscar..." style="display: none;" onkeyup="handleSearch(event)" value="<?=isset($_GET['search']) ? htmlspecialchars($_GET['search']) : ''?>">
+                    <button id="closeSearch" onclick="toggleSearchField()" style="display: none;">
+                        <img src="<?=BASE_URL?>assets/images/cerrar.svg" alt="Cerrar" class="cerrar">
+                    </button>
+                </div>
+                <script>const BASE_URL = "<?=BASE_URL?>";</script>
+                <script src="<?=BASE_URL?>js/buscador.js"></script>    
             </div>
         </div>
         

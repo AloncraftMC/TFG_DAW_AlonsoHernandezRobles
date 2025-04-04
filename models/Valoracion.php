@@ -173,6 +173,40 @@
 
         }
 
+        public static function getByProductoAndUsuario(int $productoId, int $usuarioId) : ?Valoracion {
+
+            $baseDatos = new BaseDatos();
+
+            $baseDatos->ejecutar("SELECT * FROM valoraciones WHERE producto_id = :producto_id AND usuario_id = :usuario_id", [
+                ':producto_id' => $productoId,
+                ':usuario_id' => $usuarioId
+            ]);
+        
+            if($baseDatos->getNumeroRegistros() == 1){
+
+                $registro = $baseDatos->getSiguienteRegistro();
+
+                $valoracion = new Valoracion();
+
+                $valoracion->setId($registro['id']);
+                $valoracion->setUsuarioId($registro['usuario_id']);
+                $valoracion->setProductoId($registro['producto_id']);
+                $valoracion->setPuntuacion($registro['puntuacion']);
+                $valoracion->setComentario($registro['comentario']);
+                $valoracion->setFecha($registro['fecha']);
+
+                $baseDatos->cerrarConexion();
+
+                return $valoracion;
+
+            }
+
+            $baseDatos->cerrarConexion();
+
+            return null;
+
+        }
+
         public static function getByUsuario(int $usuarioId): array {
 
             $baseDatos = new BaseDatos();

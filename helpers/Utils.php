@@ -115,12 +115,14 @@
 
             $baseDatos = new BaseDatos();
 
-            // 1. El usuario ha comprado el producto al menos una vez
+            // 1. El usuario ha comprado el producto al menos una vez y el pedido está confirmado
 
-            $baseDatos->ejecutar("SELECT * FROM lineas_pedidos lp
+            $baseDatos->ejecutar("SELECT *
+                                  FROM lineas_pedidos lp
                                   INNER JOIN pedidos p ON lp.pedido_id = p.id
                                   WHERE p.usuario_id = :usuario_id
                                   AND lp.producto_id = :producto_id
+                                  AND p.estado = 'Confirmado'
                                   LIMIT 1", [
                 ':usuario_id' => $usuarioId,
                 ':producto_id' => $productoId

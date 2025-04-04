@@ -1,4 +1,7 @@
-<?php use models\Categoria; ?>
+<?php
+    use helpers\Utils;
+    use models\Categoria;
+?>
 
 <h1>Administración de Productos</h1>
 
@@ -188,5 +191,7 @@
     </div>
 
 <?php endif; ?>
+
+<?php Utils::deleteSession('create'); ?>
 
 <script src="<?=BASE_URL?>js/actualizarPaginacion.js"></script>

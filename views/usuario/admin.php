@@ -76,7 +76,7 @@
             <!-- Imagen del Usuario -->
             <td>
                 <?php if($usuario->getImagen()): ?>
-                    <img src="<?=BASE_URL?>assets/images/uploads/usuarios/<?=$usuario->getImagen()?>?t=<?=time()?>" alt="Imagen de perfil de <?=$usuario->getNombre()?>" style="max-width: 100px; max-height: 100px; border-radius: 50%;">
+                    <img src="<?=BASE_URL?>assets/images/uploads/usuarios/<?=$usuario->getImagen()?>?t=<?=time()?>" alt="Imagen de perfil de <?=$usuario->getNombre()?>" style="max-width: 100px; max-height: 100px; width: 100px; height: 100px; border-radius: 50%;">
                 <?php else: ?>
                     <span>No disponible</span>
                 <?php endif; ?>

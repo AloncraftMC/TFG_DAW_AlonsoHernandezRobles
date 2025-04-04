@@ -3,6 +3,9 @@
     namespace controllers;
 
     use models\Usuario;
+    use models\Pedido;
+    use models\LineaPedido;
+    use models\Valoracion;
     use helpers\Utils;
 
     class UsuarioController{
@@ -624,6 +627,34 @@
                     exit;
         
                 }
+
+                // Eliminamos todos los pedidos del usuario (cascada)
+
+                $pedidos = Pedido::getByUsuario($id);
+
+                foreach($pedidos as $pedido){
+
+                    // Eliminamos todas las lineas de pedido asociadas al pedido (cascada)
+
+                    $lineas = LineaPedido::getByPedido($pedido->getId());
+
+                    foreach($lineas as $linea){
+                        $linea->delete();                    
+                    }
+
+                    $pedido->delete();
+
+                }
+
+                // Eliminamos todas las valoraciones del usuario (cascada)
+
+                $valoraciones = Valoracion::getByUsuario($id);
+
+                foreach($valoraciones as $valoracion){
+                    $valoracion->delete();
+                }
+
+                // Eliminamos el usuario
         
                 if($usuario->delete()){
         
@@ -638,11 +669,8 @@
                     }
         
                     if($_SESSION['identity']['id'] == $id){
-        
-                        Utils::deleteSession('identity');
-                        Utils::deleteSession('admin');
 
-                        header("Location:" . BASE_URL);
+                        header("Location:" . BASE_URL . "usuario/salir");
                         exit;
         
                     }
@@ -657,9 +685,63 @@
                 exit;
         
             }else{
+
+                $id = $_SESSION['identity']['id'];
         
-                $usuario = new Usuario();
-                $usuario->setId($_SESSION['identity']['id']);
+                $usuario = Usuario::getById($id);
+
+                if(!$usuario){
+        
+                    header("Location:" . BASE_URL);
+                    exit;
+        
+                }
+                
+                // CASCADA
+
+                $pedidos = Pedido::getByUsuario($usuario->getId());
+
+                foreach($pedidos as $pedido){
+
+                    $valoraciones = Valoracion::getByUsuario($pedido->getUsuarioId());
+
+                    foreach($valoraciones as $valoracion){
+
+                        // 1. Eliminamos todas las valoraciones de todos los pedidos asociados al usuario
+
+                        $valoracion->delete();
+
+                    }
+
+                    $lineas = LineaPedido::getByPedido($pedido->getId());
+
+                    foreach($lineas as $linea){
+
+                        // 2. Eliminamos todas las líneas de pedido de todos los pedidos asociados al usuario
+
+                        $linea->delete();
+
+                        // Bis. Eliminamos el pedido si es que ha quedado sin líneas de pedido
+
+                        $pedido = Pedido::getById($linea->getPedidoId());
+
+                        $lineasPedido = LineaPedido::getByPedido($pedido->getId());
+
+                        if(count($lineasPedido) == 0){
+
+                            $pedido->delete();
+
+                        }
+
+                    }
+
+                    // 3. Eliminamos todos los pedidos asociados al usuario
+
+                    $pedido->delete();
+
+                }
+
+                // 4. Eliminamos el usuario
         
                 if($usuario->delete()){
         
@@ -673,21 +755,16 @@
                         unlink($uploadDir . $imagen);
                     }
         
-                    Utils::deleteSession('identity');
-                    Utils::deleteSession('admin');
-        
                 }else{
         
                     $_SESSION['delete'] = "failed";
         
                 }
         
-                header("Location:" . BASE_URL);
+                header("Location:" . BASE_URL . "usuario/salir");
                 exit;
         
             }
-        
-            exit;
         
         }        
 

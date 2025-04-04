@@ -4,18 +4,19 @@
 
 ## 0 - 15 minutos ⚡️
 
-- Arreglar el problema de las anclas relativas del usuario desde administración de pedidos
+- Añadir `"C. "` a los enlaces de Google Maps.
 
 <hr>
 
 ## 15 - 60 minutos ⏳
 
-- Añadir localStorage para guardar las constantes `PRODUCTS_PER_PAGE` y `ITEMS_PER_PAGE`.
+- Añadir el usuario del pedido si la vista actual es de admin y es distinto al usuario logueado (debajo de "Realizado...").
 
 <hr>
 
 ## 1h - 2h 🔄
 
+- Añadir animaciones a los textos de `$_SESSION` (que desaparezcan tras unos pocos segundos).
 - Añadir confirmaciones a todas las eliminaciones.
 - Hacer que al logearse con el botón de carrito añada *actually* el producto al carrito.
 - Si pones una imagen nueva en gestión o edición de usuario y la quitas, no vuelve la imagen anterior. En edición de productos sí funciona.
@@ -24,7 +25,8 @@
 
 ## 2h - 6h 🎨
 
-- Buscador de productos en el header.
+- Envío de correos al usuario cuando se registra y también cuando se hace un pedido.
+- Cookie del carrito compleja (para cada usuario).
 
 <hr>
 
@@ -58,3 +60,7 @@ on line
 ## Imposible (♾️ horas) 
 
 - Botón de ver producto siempre abajo (ajuste css)
+
+<div style="page-break-after: always;"></div>
+
+- Revisar que se eliminan todas las variables de `$_SESSION` para evitar mensajes que no deben aparecer.
