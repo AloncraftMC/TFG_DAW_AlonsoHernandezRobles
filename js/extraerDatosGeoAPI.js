@@ -43,9 +43,36 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 
     function capitalizarTexto(texto) {
-        texto = texto.replace(/\*/g, '');
-        return texto.toLowerCase().replace(/(?:^|\s|-|\()(\p{L})/gu, (m) => m.toUpperCase());
+        texto = texto.replace(/\*/g, ''); // Eliminar asteriscos
+    
+        const minusculas = ["de", "del", "y", "la", "el", "las", "los"];
+        
+        let palabras = texto.toLowerCase().split(/(\s+|\(|\)|\-)/);
+    
+        let resultado = palabras.map((palabra, index) => {
+            
+            // Siempre capitalizar primera palabra o después de ( o -
+            if (index === 0 || palabras[index - 1] === "(" || palabras[index - 1] === "-") {
+                return palabra.charAt(0).toUpperCase() + palabra.slice(1);
+            }
+    
+            // Si está en lista de palabras en minúscula
+            if (minusculas.includes(palabra)) {
+                return palabra;
+            }
+    
+            // Si no es espacio, guion o paréntesis -> Capitalizar
+            if (![" ", "(", ")", "-"].includes(palabra)) {
+                return palabra.charAt(0).toUpperCase() + palabra.slice(1);
+            }
+    
+            return palabra;
+        });
+    
+        return resultado.join('');
     }
+    
+    
 
     // Cargar comunidades autónomas
     obtenerDatos(`https://apiv1.geoapi.es/comunidades?type=JSON&key=${API_KEY}&sandbox=${SANDBOX}`)
@@ -135,16 +162,16 @@ document.addEventListener("DOMContentLoaded", function () {
         let poblacionNombre = this.value;
         let provinciaId = codigosSeleccionados.provincia[provinciaSelect.value];
         let municipioId = codigosSeleccionados.municipio[municipioSelect.value];
-
+    
         limpiarSelect(nucleoSelect, codigoPostalSelect, calleSelect);
-
+    
         if (poblacionNombre) {
-            obtenerDatos(`https://apiv1.geoapi.es/nucleos?CPRO=${provinciaId}&CMUM=${municipioId}&NENTSI50=${poblacionNombre}&type=JSON&key=${API_KEY}&sandbox=${SANDBOX}`)
+            obtenerDatos(`https://apiv1.geoapi.es/nucleos?CPRO=${provinciaId}&CMUM=${municipioId}&NENTSI50=${poblacionNombre.toUpperCase()}&type=JSON&key=${API_KEY}&sandbox=${SANDBOX}`)
                 .then(nucleos => {
                     nucleos.forEach(nucleo => {
                         let nombre = capitalizarTexto(nucleo.NNUCLE50);
                         codigosSeleccionados.nucleo[nombre] = nucleo.CUN;
-
+    
                         let option = document.createElement("option");
                         option.value = nombre;
                         option.textContent = nombre;
@@ -154,6 +181,7 @@ document.addEventListener("DOMContentLoaded", function () {
                 });
         }
     });
+    
 
     nucleoSelect.addEventListener("change", function () {
         let provinciaId = codigosSeleccionados.provincia[provinciaSelect.value];
@@ -162,7 +190,7 @@ document.addEventListener("DOMContentLoaded", function () {
         let nucleoId = codigosSeleccionados.nucleo[nucleoNombre]; // Obtener el código real del núcleo
         
         if (nucleoId) {
-            obtenerDatos(`https://apiv1.geoapi.es/cps?CPRO=${provinciaId}&CMUM=${municipioId}&CUN=${nucleoId}&type=JSON&key=${API_KEY}&sandbox=${SANDBOX}`)
+            obtenerDatos(`https://apiv1.geoapi.es/cps?CPRO=${provinciaId}&CMUM=${municipioId}&type=JSON&key=${API_KEY}&sandbox=${SANDBOX}`)
                 .then(codigos => {
                     codigoPostalSelect.innerHTML = '<option value="">Selecciona un código postal</option>';
                     codigos.forEach(cp => {
@@ -186,7 +214,7 @@ document.addEventListener("DOMContentLoaded", function () {
         limpiarSelect(calleSelect);
     
         if (codigoPostalId && nucleoId) { // Asegurar que ambos valores existen
-            obtenerDatos(`https://apiv1.geoapi.es/calles?CPRO=${provinciaId}&CMUM=${municipioId}&CUN=${nucleoId}&CPOS=${codigoPostalId}&type=JSON&key=${API_KEY}&sandbox=${SANDBOX}`)
+            obtenerDatos(`https://apiv1.geoapi.es/calles?CPRO=${provinciaId}&CMUM=${municipioId}&CPOS=${codigoPostalId}&type=JSON&key=${API_KEY}&sandbox=${SANDBOX}`)
                 .then(calles => {
                     if (calles.length > 0) {
                         calleSelect.innerHTML = '<option value="">Selecciona una calle</option>';

@@ -63,7 +63,7 @@
 
     <?php foreach($usuarios as $usuario): ?>
 
-        <tr id="<?=$usuario->getId()?>">
+        <tr id="<?=$usuario->getId()?>" style="<?=isset($_GET['mark']) && $_GET['mark'] == $usuario->getId() ? 'border: 2px solid var(--color-1); background-color: var(--color-4);' : ''?>">
 
             <td><?=$usuario->getId()?></td>
             <td><?=$usuario->getNombre()?></td>
@@ -84,10 +84,32 @@
 
             <!-- Color del Usuario -->
             <td style="background-color: <?=($usuario->getColor() == '#000000' || $usuario->getColor() == '#ffffff') ? "unset" : $usuario->getColor()?>; width: 50px; height: 50px;">
+                
+                <?php
+                    $color = $usuario->getColor();
+
+                    // Verificar si el color es blanco o negro para asignar un color de texto por defecto
+                    if ($color == '#000000' || $color == '#ffffff') {
+                        $textColor = 'black'; // Texto negro para los colores extremos
+                    } else {
+                        // Eliminar el "#" y calcular la luminosidad
+                        $hex = ltrim($color, '#');
+                        $r = hexdec(substr($hex, 0, 2));
+                        $g = hexdec(substr($hex, 2, 2));
+                        $b = hexdec(substr($hex, 4, 2));
+
+                        // Calcular la luminosidad
+                        $luminosity = 0.2126 * $r + 0.7152 * $g + 0.0722 * $b;
+
+                        // Decidir el color del texto según la luminosidad
+                        $textColor = $luminosity > 128 ? 'black' : 'white';
+                    }
+                ?>
+            
                 <?php if($usuario->getColor() == '#000000' || $usuario->getColor() == '#ffffff'): ?>
                     <span>No</span>
                 <?php else: ?>
-                    <span><?=strtoupper($usuario->getColor())?></span>
+                    <span style="color: <?= $textColor; ?>"><?= strtoupper($color) ?></span>
                 <?php endif; ?>
             </td>
 

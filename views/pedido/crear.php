@@ -76,5 +76,4 @@
 
 <?php Utils::deleteSession('create'); ?>
 
-<script>const BASE_URL = '<?=BASE_URL?>';</script>
-<script src="<?=BASE_URL?>js/extraerDatosGeoAPI.js"></script>
+<script src="<?=BASE_URL?>js/extraerDatosGeoAPI.js?t=<?=time()?>"></script>

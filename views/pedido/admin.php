@@ -89,7 +89,7 @@
                 </td>
 
                 <td>
-                    <a href="<?=BASE_URL?>usuario/admin&pag=<?= ceil(Usuario::getById($pedido->getUsuarioId())->getPosicion() / ITEMS_PER_PAGE) ?>#<?=Usuario::getById($pedido->getUsuarioId())->getId()?>" class="enlace-basico">
+                    <a href="<?=BASE_URL?>usuario/admin&pag=<?= ceil(Usuario::getById($pedido->getUsuarioId())->getPosicion() / ITEMS_PER_PAGE) ?>&mark=<?=Usuario::getById($pedido->getUsuarioId())->getId()?>#<?=Usuario::getById($pedido->getUsuarioId())->getId()?>" class="enlace-basico" target="_blank">
                         <?=Usuario::getById($pedido->getUsuarioId())->getNombre()?> <?=Usuario::getById($pedido->getUsuarioId())->getApellidos()?>
                     </a>
                 </td>
@@ -97,7 +97,7 @@
                 <td><?=$pedido->getComunidad()?>, <?=$pedido->getProvincia()?>, <?=$pedido->getMunicipio()?>, <?=$pedido->getPoblacion()?>, <?=$pedido->getNucleo()?>, <?=$pedido->getCodigoPostal()?>, <?=$pedido->getDireccion()?></td>
                 
                 <td class="acciones-especial">
-                    <a href="https://www.google.com/maps/search/?q=<?=$pedido->getDireccion().' '.$pedido->getCodigoPostal().' '.$pedido->getMunicipio().' '.$pedido->getProvincia()?>" target="_blank" class="enlace-basico">
+                    <a href="https://www.google.com/maps/search/?q=<?='C. '.$pedido->getDireccion().' '.$pedido->getCodigoPostal().' '.$pedido->getMunicipio().' '.$pedido->getProvincia()?>" target="_blank" class="enlace-basico">
                         <div>
                             <img src="<?=BASE_URL?>assets/images/maps.svg" alt="Ver Ubicación" class="ver">
                         </div>

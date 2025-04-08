@@ -92,7 +92,7 @@
 
     </div>
 
-    <script src="<?=BASE_URL?>js/previsualizarColores.js"></script>
+    <script src="<?=BASE_URL?>js/previsualizarColores.js?t=<?=time()?>"></script>
 
     <!-- Campo para cargar la imagen del usuario -->
     <div class="form-group">

@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Rubik:ital,wght@0,300..900;1,300..900&display=swap" rel="stylesheet">
+</head>
+<body style="font-family: 'Rubik', sans-serif; margin: 0px; padding: 0px; width: 100%; background-color: #CAE6FF;">
+    <header style="margin: 0px; padding-bottom: 0px; padding-top: 5px; background-color: #1864AF; color: white; text-align: center; border-bottom: 5px #CAE6FF dashed; width: 100%">
+        <h1 style="font-weight: 600; font-size: 300%">Tienda de Señales de Tráfico</h1>
+    </header>
+    <table role="presentation" style="width: 100%; height: 100%; margin: 0px; padding: 0px; background-color: #CAE6FF; border: 0;">
+        <tr>
+            <td style="text-align: center; vertical-align: middle;">
+                <main style="margin: 0px; padding: 20px; display: inline-block; width: auto;">
+                    <h1 style="color: green; font-weight: 500; font-size: 220%"><b>Has editado tu cuenta.</b></h1>
+                    <p style="color: black; font-size: 200%"><b>{{USERNAME}}</b>, has editado tu cuenta con éxito.</p>
+                    <ul style="list-style: none; padding: 0px; margin: 0px; font-size: 150%; color: black;">
+                        <li style="margin-bottom: 10px;">Usuario: <b>{{USERNAME}} {{APELLIDOS}}</b></li>
+                        <li style="margin-bottom: 10px;">Email: <b>{{EMAIL}}</b></li>
+                        <li style="margin-bottom: 10px;">Color: <b>{{COLOR}}</b></li>
+                    </ul>
+                    <p style="color: black; font-size: 150%">Es posible que otros valores también hayan cambiado.</p>
+                </main>
+            </td>
+        </tr>
+    </table>
+    <footer style="font-size: 150%; margin: 0px; background-color: darkslategray; text-align: center; padding: 10px; color: white; border-top: 5px #CAE6FF; border-top-style: ridge;">
+        Tienda de Señales de Tráfico &copy; {{ANIO}}
+    </footer>
+</body>
+</html>

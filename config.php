@@ -18,7 +18,12 @@
 
     // Paginación
 
-    define('ITEMS_PER_PAGE', 10); // Conviene que sea un múltiplo de 3 para obtener la vista más óptima
+    define('ITEMS_PER_PAGE', 10);
     define('PRODUCTS_PER_PAGE', 12); // Conviene que sea un múltiplo de 3 para obtener la vista más óptima
+
+    // Correo
+
+    define('MAIL_USERNAME', 'senalesdetrafico.store@gmail.com');
+    define('MAIL_PASSWORD', 'kbux vhvv xvfl apkp');
 
 ?>

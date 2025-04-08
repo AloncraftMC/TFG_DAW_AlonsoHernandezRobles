@@ -1,8 +1,8 @@
 <?php
-    use helpers\Utils;
     use models\Producto;
     use models\Pedido;
     use models\LineaPedido;
+    use models\Usuario;
     $pedido = Pedido::getById($_GET['id']);
 ?>
 
@@ -98,8 +98,19 @@
 <div class="container" style="width: unset; margin-top: 0px">
     <h4 style="margin: 0px; text-align: center;">
         <span style="font-size: 130%">Realizado el <?=date('d/m/Y', strtotime($pedido->getFecha()))?> a las <?=$pedido->getHora()?></span>
+        <?php if($_SESSION['identity']['rol'] == 'admin'): ?>
+            <br>
+            <span>por 
+                <a href="<?=BASE_URL?>usuario/admin&pag=<?= ceil(Usuario::getById($pedido->getUsuarioId())->getPosicion() / ITEMS_PER_PAGE) ?>&mark=<?=Usuario::getById($pedido->getUsuarioId())->getId()?>#<?=Usuario::getById($pedido->getUsuarioId())->getId()?>" class="enlace-basico" target="_blank">
+                    <?=Usuario::getById($pedido->getUsuarioId())->getNombre()?> <?=Usuario::getById($pedido->getUsuarioId())->getApellidos()?></a>
+
+                <?php if($_SESSION['identity']['id'] == $pedido->getUsuarioId()): ?>
+                    <span style="font-weight: normal;">(tú)</span>
+                <?php endif; ?>
+            </span>
+        <?php endif; ?>
         <div class="separador-2" style="background-color: lightgray; margin: 10px 0px"></div>
-        Envío a <a href="https://www.google.com/maps/search/?q=<?=urlencode($pedido->getDireccion().' '.$pedido->getCodigoPostal().' '.$pedido->getMunicipio().' '.$pedido->getProvincia())?>" target="_blank" class="enlace-basico">
+        Envío a <a href="https://www.google.com/maps/search/?q=<?=urlencode('C. '.$pedido->getDireccion().' '.$pedido->getCodigoPostal().' '.$pedido->getMunicipio().' '.$pedido->getProvincia())?>" target="_blank" class="enlace-basico">
             <?=$pedido->getDireccion().', '.$pedido->getPoblacion().' ('.$pedido->getCodigoPostal().') - '.$pedido->getProvincia()?>
         </a>
     </h4>

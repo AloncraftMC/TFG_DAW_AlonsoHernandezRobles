@@ -3,13 +3,6 @@
     use models\Producto;
 ?>
 
-<!-- Si productos = 0, mostramos Carrito Vacío
- Si productos = 1, mostramos (1 producto)
- Si productos > 0, mostramos (x productos)"
-
- Todo esto respecto al siguiente h1
--->
-
 <h1>Carrito <?php if (Utils::statsCarrito()['count'] == 0): ?>Vacío<?php elseif (Utils::statsCarrito()['totalCount'] == 1): ?>(1 producto)<?php else: ?>(<?= Utils::statsCarrito()['totalCount'] ?> productos)<?php endif; ?></h1>
 
 <?php if (!isset($_SESSION['carrito']) || Utils::statsCarrito()['count'] == 0): ?>
@@ -31,6 +24,45 @@
         </button>
     </a>
 
+    <div class="paginacion">
+
+        <?php if($totalPag > 1): ?>
+
+            <a href="<?=BASE_URL?>carrito/gestion&pag=1" style="pointer-events: <?=($_SESSION['pag'] == 1) ? 'none' : 'auto'?>;">
+                <button class="boton <?php if($_SESSION['pag'] == 1) echo 'disabled' ?>">
+                    <img src="<?=BASE_URL?>assets/images/doubleleft.png" alt="Primera página" style="width: 10px; padding: 5px;">
+                </button>
+            </a>
+
+            <a href="<?=BASE_URL?>carrito/gestion&pag=<?= ($_SESSION['pag'] > 1) ? $_SESSION['pag'] - 1 : 1 ?>" style="pointer-events: <?=($_SESSION['pag'] == 1) ? 'none' : 'auto'?>;">
+                <button class="boton <?php if($_SESSION['pag'] == 1) echo 'disabled' ?>">
+                    <img src="<?=BASE_URL?>assets/images/left.svg" alt="Página anterior">
+                </button>
+            </a>
+
+            <h1>Pág.
+                <form style="padding: 0px; background-color: unset; display: inline;" action="<?= BASE_URL ?>carrito/gestion" method="GET">
+                    <input type="number" name="pag" min="1" max="<?= $totalPag ?>" class="quantity-input" value="<?= $_SESSION['pag'] ?>" style="width: 60px; height: 40px; font-size: 30px; padding: 5px; margin: 0px;" required>
+                    <input type="submit" value="Ir" style="display: none;">
+                </form>
+            </h1>
+
+            <a href="<?=BASE_URL?>carrito/gestion&pag=<?= ($_SESSION['pag'] < $totalPag) ? $_SESSION['pag'] + 1 : $totalPag ?>" style="pointer-events: <?=($_SESSION['pag'] == $totalPag) ? 'none' : 'auto'?>;">
+                <button class="boton <?php if($_SESSION['pag'] == $totalPag) echo 'disabled' ?>">
+                    <img src="<?=BASE_URL?>assets/images/right.svg" alt="Página siguiente">
+                </button>
+            </a>
+
+            <a href="<?=BASE_URL?>carrito/gestion&pag=<?=$totalPag?>" style="pointer-events: <?=($_SESSION['pag'] == $totalPag) ? 'none' : 'auto'?>;">
+                <button class="boton <?php if($_SESSION['pag'] == $totalPag) echo 'disabled' ?>">
+                    <img src="<?=BASE_URL?>assets/images/doubleright.png" alt="Última página" style="width: 10px; padding: 5px;">
+                </button>
+            </a>
+
+        <?php endif; ?>
+
+    </div>
+
     <table class="tabla-carrito">
         <thead>
             <tr>
@@ -45,7 +77,7 @@
         <tbody>
             <?php
             $totalCarrito = 0;
-            foreach ($_SESSION['carrito'] as $indice => $producto):
+            foreach ($productos as $indice => $producto):
                 $prod = Producto::getById($producto['id_producto']); // Obtiene la información del producto
                 $precioTotal = $prod->getPrecio() * (1 - $prod->getOferta() / 100) * $producto['unidades'];
                 $totalCarrito += $precioTotal;
@@ -90,7 +122,46 @@
         </tbody>
     </table>
 
-    <div class="resumen-carrito" style="display: flex; flex-direction: column; justify-content: center; align-items: center; margin: 20px;">
+    <div class="paginacion" style="margin-bottom: 0px;">
+
+        <?php if($totalPag > 1): ?>
+
+            <a href="<?=BASE_URL?>carrito/gestion&pag=1" style="pointer-events: <?=($_SESSION['pag'] == 1) ? 'none' : 'auto'?>;">
+                <button class="boton <?php if($_SESSION['pag'] == 1) echo 'disabled' ?>">
+                    <img src="<?=BASE_URL?>assets/images/doubleleft.png" alt="Primera página" style="width: 10px; padding: 5px;">
+                </button>
+            </a>
+
+            <a href="<?=BASE_URL?>carrito/gestion&pag=<?= ($_SESSION['pag'] > 1) ? $_SESSION['pag'] - 1 : 1 ?>" style="pointer-events: <?=($_SESSION['pag'] == 1) ? 'none' : 'auto'?>;">
+                <button class="boton <?php if($_SESSION['pag'] == 1) echo 'disabled' ?>">
+                    <img src="<?=BASE_URL?>assets/images/left.svg" alt="Página anterior">
+                </button>
+            </a>
+
+            <h1>Pág.
+                <form style="padding: 0px; background-color: unset; display: inline;" action="<?= BASE_URL ?>carrito/gestion" method="GET">
+                    <input type="number" name="pag" min="1" max="<?= $totalPag ?>" class="quantity-input" value="<?= $_SESSION['pag'] ?>" style="width: 60px; height: 40px; font-size: 30px; padding: 5px; margin: 0px;" required>
+                    <input type="submit" value="Ir" style="display: none;">
+                </form>
+            </h1>
+
+            <a href="<?=BASE_URL?>carrito/gestion&pag=<?= ($_SESSION['pag'] < $totalPag) ? $_SESSION['pag'] + 1 : $totalPag ?>" style="pointer-events: <?=($_SESSION['pag'] == $totalPag) ? 'none' : 'auto'?>;">
+                <button class="boton <?php if($_SESSION['pag'] == $totalPag) echo 'disabled' ?>">
+                    <img src="<?=BASE_URL?>assets/images/right.svg" alt="Página siguiente">
+                </button>
+            </a>
+
+            <a href="<?=BASE_URL?>carrito/gestion&pag=<?=$totalPag?>" style="pointer-events: <?=($_SESSION['pag'] == $totalPag) ? 'none' : 'auto'?>;">
+                <button class="boton <?php if($_SESSION['pag'] == $totalPag) echo 'disabled' ?>">
+                    <img src="<?=BASE_URL?>assets/images/doubleright.png" alt="Última página" style="width: 10px; padding: 5px;">
+                </button>
+            </a>
+
+        <?php endif; ?>
+
+    </div>
+
+    <div class="resumen-carrito" style="display: flex; flex-direction: column; justify-content: center; align-items: center; margin: <?= $totalPag > 1 ? '0px' : '20px' ?>">
         <h2 style="color: green; font-size: 200%"><span style="color: black; font-weight: normal;">Total:</span> <?= $totalCarrito ?> €</h2>
 
         <!-- Botón para proceder a la compra -->
@@ -146,3 +217,4 @@
 <?php Utils::deleteSession('productoNoMas'); ?>
 
 <script src="<?=BASE_URL?>js/ajusteImagenesAdminProductos.js"></script>
+<script src="<?=BASE_URL?>js/actualizarPaginacion.js"></script>

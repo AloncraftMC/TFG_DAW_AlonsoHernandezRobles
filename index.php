@@ -77,7 +77,8 @@
                 'admin' => 'Administrar Productos',
                 'crear' => 'Crear Producto',
                 'gestion' => 'Editar ' . $nombreProducto,
-                'recomendados' => 'Tienda de Señales de Tráfico'
+                'recomendados' => 'Tienda de Señales de Tráfico',
+                'buscar' => 'Búsqueda: ' . (isset($_GET['search']) ? $_GET['search'] : 'Producto') . '',
             ],
             'categoria' => [
                 'admin' => 'Administrar Categorías',
@@ -95,7 +96,7 @@
             'pedido' => [
                 'admin' => 'Administrar Pedidos',
                 'crear' => 'Realizar Pedido',
-                'ver' => 'Detalles del Pedido',
+                'ver' => 'Detalles del Pedido (#' . (isset($id) ? $id : '') . ')',
                 'listo' => 'Pedido Solicitado',
                 'misPedidos' => 'Mis Pedidos - ' . (isset($_SESSION['identity']) ? $_SESSION['identity']['nombre'] : 'Usuario'),
             ],

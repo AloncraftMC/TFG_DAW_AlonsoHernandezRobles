@@ -32,7 +32,7 @@
                     </button>
                 </div>
                 <script>const BASE_URL = "<?=BASE_URL?>";</script>
-                <script src="<?=BASE_URL?>js/buscador.js"></script>    
+                <script src="<?=BASE_URL?>js/buscador.js?t=<?=time()?>"></script>    
             </div>
         </div>
         

@@ -46,7 +46,7 @@ function handleSearch(event) {
         let query = input.value.trim();
 
         // Eliminar caracteres especiales (permitimos letras, números y espacios)
-        query = query.replace(/[^a-zA-Z0-9áéíóúÁÉÍÓÚñÑüÜ\s]/g, "");
+        query = query.replace(/[^a-zA-Z0-9áéíóúÁÉÍÓÚñÑüÜ\s-]/g, "");
 
         // Eliminar cualquier '+' existente
         query = query.replace(/\+/g, "");
@@ -69,6 +69,4 @@ function handleSearch(event) {
     }
 }
 
-
-// Asegúrate de agregar el evento al input para que se active el handleSearch
 document.getElementById('searchInput').addEventListener('keyup', handleSearch);

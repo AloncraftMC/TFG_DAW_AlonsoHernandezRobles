@@ -4,6 +4,7 @@
 
     use models\Categoria;
     use models\Producto;
+    use models\Usuario;
     use models\Valoracion;
     use models\LineaPedido;
     use models\Pedido;
@@ -232,8 +233,13 @@
                     }
 
                     $lineas = LineaPedido::getByProducto($producto->getId());
+                    $numProductos = 0;
 
                     foreach($lineas as $linea){
+
+                        // 0. Obtenemos el número de unidades de cada línea de pedido para el correo
+
+                        $numProductos += $linea->getUnidades();
 
                         // 2. Eliminamos todas las líneas de pedido de todos los productos asociados a la categoría
 
@@ -246,6 +252,20 @@
                         $lineasPedido = LineaPedido::getByPedido($pedido->getId());
 
                         if(count($lineasPedido) == 0){
+
+                            $usuario = Usuario::getById($pedido->getUsuarioId());
+
+                            Utils::enviarCorreo($usuario, "Pedido eliminado", BASE_URL . "mails/pedido/eliminar.html", [
+                                'ID' => $pedido->getId(),
+                                'USERNAME' => $usuario->getNombre(),
+                                'PRODUCTOS' => $numProductos,
+                                'FECHA' => $pedido->getFecha(),
+                                'HORA' => $pedido->getHora(),
+                                'QUERY' => urlencode('C. '.$pedido->getDireccion().' '.$pedido->getCodigoPostal().' '.$pedido->getMunicipio().' '.$pedido->getProvincia()),
+                                'DIRECCION' => 'C. '.$pedido->getDireccion().', '.$pedido->getPoblacion().' ('.$pedido->getCodigoPostal().') - '.$pedido->getProvincia(),
+                                'RAZON' => "La categoría del último producto ha sido eliminada, por lo que el pedido ha sido eliminado.",
+                                'COSTE' => $pedido->getCoste(),
+                            ]);
 
                             $pedido->delete();
 

@@ -10,10 +10,10 @@
     document.getElementById("searchInput").blur();
 </script>
 
-<h1>Productos Encontrados (<?= count($productos) ?>)</h1>
+<h1>Productos Encontrados (<?= count($resultados) ?>)</h1>
 <h2 style='margin-top: 0px; color: var(--color-10);'>Resultados para: "<?= $search ?>"</h2>
 
-<?php if (empty($productos)): ?>
+<?php if (empty($resultados)): ?>
     <h2 style="color: gray">No se encontraron productos que coincidan con tu búsqueda...</h2>
     <h1 style="font-size: 500%">:(</h1>
 <?php else: ?>

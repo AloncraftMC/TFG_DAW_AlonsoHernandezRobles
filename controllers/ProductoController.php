@@ -7,6 +7,7 @@
     use models\Categoria;
     use models\LineaPedido;
     use models\Pedido;
+    use models\Usuario;
     use models\Valoracion;
 
     class ProductoController{
@@ -465,8 +466,13 @@
                 }
 
                 $lineas = LineaPedido::getByProducto($producto->getId());
+                $numProductos = 0;
 
                 foreach($lineas as $linea){
+
+                    // 0. Pillamos las unidades de la línea de pedido para enviarlas al correo
+
+                    $numProductos += $linea->getUnidades();
 
                     // 2. Eliminamos todas las líneas de pedido asociadas al producto
 
@@ -479,6 +485,20 @@
                     $lineasPedido = LineaPedido::getByPedido($pedido->getId());
                     
                     if(count($lineasPedido) == 0){
+
+                        $usuario = Usuario::getById($pedido->getUsuarioId());
+
+                        Utils::enviarCorreo($usuario, "Pedido eliminado", BASE_URL . "mails/pedido/eliminar.html", [
+                            'ID' => $pedido->getId(),
+                            'USERNAME' => $usuario->getNombre(),
+                            'PRODUCTOS' => $numProductos,
+                            'FECHA' => $pedido->getFecha(),
+                            'HORA' => $pedido->getHora(),
+                            'QUERY' => urlencode('C. '.$pedido->getDireccion().' '.$pedido->getCodigoPostal().' '.$pedido->getMunicipio().' '.$pedido->getProvincia()),
+                            'DIRECCION' => 'C. '.$pedido->getDireccion().', '.$pedido->getPoblacion().' ('.$pedido->getCodigoPostal().') - '.$pedido->getProvincia(),
+                            'RAZON' => "El último producto ha sido eliminado, por lo que el pedido ha sido eliminado.",
+                            'COSTE' => $pedido->getCoste(),
+                        ]);
 
                         $pedido->delete();
 
@@ -551,10 +571,10 @@
 
                 $_SESSION['pag'] = isset($_GET['pag']) ? (int)$_GET['pag'] : 1;
                 
-                $productos = Producto::getByQuery($search);
+                $resultados = Producto::getByQuery($search);
 
-                $totalPag = max(1, ceil(count($productos) / $productosPorPagina));
-                $productos = array_slice($productos, ($_SESSION['pag'] - 1) * $productosPorPagina, $productosPorPagina);
+                $totalPag = max(1, ceil(count($resultados) / $productosPorPagina));
+                $productos = array_slice($resultados, ($_SESSION['pag'] - 1) * $productosPorPagina, $productosPorPagina);
 
                 if($totalPag == 0) $totalPag = 1;
 

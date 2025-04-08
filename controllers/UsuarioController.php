@@ -155,11 +155,21 @@
 
                             $usuario = Usuario::getByEmail($email);
 
+                            Utils::enviarCorreo($usuario, "Se te ha registrado en Tienda de Señales de Tráfico", BASE_URL."mails/usuario/crear.html", [
+                                "USERNAME" => $usuario->getNombre(),
+                            ]);
+
                             Utils::deleteSession('register');
                             header("Location:" . BASE_URL . "usuario/admin&pag=" . max(1, ceil(count(Usuario::getAll()) / ITEMS_PER_PAGE)) . "#" . $usuario->getId()); // Redirigir a la última página
                             exit;
                         
                         } else {
+
+                            $usuario = Usuario::getByEmail($email);
+                            
+                            Utils::enviarCorreo($usuario, "Te has registrado en Tienda de Señales de Tráfico", BASE_URL."mails/usuario/registro.html", [
+                                "USERNAME" => $usuario->getNombre(),
+                            ]);
 
                             header("Location:" . BASE_URL . "usuario/registrarse#complete");
                             exit;
@@ -548,11 +558,29 @@
         
                         if (isset($_GET['id'])) {
 
+                            $usuario = Usuario::getById($id);
+                            
+                            Utils::enviarCorreo($usuario, "Se ha editado tu cuenta en Tienda de Señales de Tráfico", BASE_URL."mails/usuario/editar.html", [
+                                "USERNAME" => $usuario->getNombre(),
+                                "APELLIDOS" => $usuario->getApellidos(),
+                                "EMAIL" => $usuario->getEmail(),
+                                "COLOR" => $usuario->getColor(),
+                            ]);
+                            
                             Utils::deleteSession('gestion');
                             header("Location:" . BASE_URL . "usuario/admin" . (isset($_SESSION['pag']) ? "&pag=" . $_SESSION['pag'] : "") . "#" . $id);
                             exit;
 
                         }else {
+                            
+                            $usuario = Usuario::getById($usuario->getId());
+
+                            Utils::enviarCorreo($usuario, "Has editado tu cuenta en Tienda de Señales de Tráfico", BASE_URL."mails/usuario/gestion.html", [
+                                "USERNAME" => $usuario->getNombre(),
+                                "APELLIDOS" => $usuario->getApellidos(),
+                                "EMAIL" => $usuario->getEmail(),
+                                "COLOR" => $usuario->getColor(),
+                            ]);
                         
                             header("Location:" . BASE_URL . "usuario/gestion#complete");
                             exit;
@@ -628,33 +656,52 @@
         
                 }
 
-                // Eliminamos todos los pedidos del usuario (cascada)
+                $valoraciones = Valoracion::getByUsuario($usuario->getId());
+
+                foreach($valoraciones as $valoracion){
+
+                    // 1. Eliminamos todas las valoraciones del usuario
+
+                    $valoracion->delete();
+
+                }
 
                 $pedidos = Pedido::getByUsuario($id);
 
                 foreach($pedidos as $pedido){
 
-                    // Eliminamos todas las lineas de pedido asociadas al pedido (cascada)
-
                     $lineas = LineaPedido::getByPedido($pedido->getId());
+                    $numProductos = 0;
 
                     foreach($lineas as $linea){
-                        $linea->delete();                    
+
+                        $numProductos += $linea->getUnidades();
+
+                        // Dentro. Eliminamos todas las líneas de pedido de todos los pedidos asociados al usuario
+
+                        $linea->delete();
+
                     }
+
+                    Utils::enviarCorreo($usuario, "Pedido eliminado", BASE_URL . "mails/pedido/eliminar.html", [
+                        'ID' => $pedido->getId(),
+                        'USERNAME' => $usuario->getNombre(),
+                        'PRODUCTOS' => $numProductos,
+                        'FECHA' => $pedido->getFecha(),
+                        'HORA' => $pedido->getHora(),
+                        'QUERY' => urlencode('C. '.$pedido->getDireccion().' '.$pedido->getCodigoPostal().' '.$pedido->getMunicipio().' '.$pedido->getProvincia()),
+                        'DIRECCION' => 'C. '.$pedido->getDireccion().', '.$pedido->getPoblacion().' ('.$pedido->getCodigoPostal().') - '.$pedido->getProvincia(),
+                        'RAZON' => "Tu usuario ha sido eliminado, por lo que el pedido ha sido eliminado.",
+                        'COSTE' => $pedido->getCoste(),
+                    ]);
+
+                    // 2. Eliminamos todos los pedidos asociados al usuario
 
                     $pedido->delete();
 
                 }
 
-                // Eliminamos todas las valoraciones del usuario (cascada)
-
-                $valoraciones = Valoracion::getByUsuario($id);
-
-                foreach($valoraciones as $valoracion){
-                    $valoracion->delete();
-                }
-
-                // Eliminamos el usuario
+                // 3. Eliminamos el usuario
         
                 if($usuario->delete()){
         
@@ -667,6 +714,10 @@
                     if ($imagen && is_file($uploadDir . $imagen)) {
                         unlink($uploadDir . $imagen);
                     }
+
+                    Utils::enviarCorreo($usuario, "Se ha eliminado tu cuenta en Tienda de Señales de Tráfico", BASE_URL."mails/usuario/destruir.html", [
+                        "USERNAME" => $usuario->getNombre(),
+                    ]);
         
                     if($_SESSION['identity']['id'] == $id){
 
@@ -699,49 +750,52 @@
                 
                 // CASCADA
 
+                $valoraciones = Valoracion::getByUsuario($id);
+
+                foreach($valoraciones as $valoracion){
+
+                    // 1. Eliminamos todas las valoraciones asociadas al usuario
+
+                    $valoracion->delete();
+
+                }
+
                 $pedidos = Pedido::getByUsuario($usuario->getId());
 
                 foreach($pedidos as $pedido){
 
-                    $valoraciones = Valoracion::getByUsuario($pedido->getUsuarioId());
-
-                    foreach($valoraciones as $valoracion){
-
-                        // 1. Eliminamos todas las valoraciones de todos los pedidos asociados al usuario
-
-                        $valoracion->delete();
-
-                    }
-
                     $lineas = LineaPedido::getByPedido($pedido->getId());
+                    $numProductos = 0;
 
                     foreach($lineas as $linea){
 
-                        // 2. Eliminamos todas las líneas de pedido de todos los pedidos asociados al usuario
+                        $numProductos += $linea->getUnidades();
+
+                        // Dentro. Eliminamos todas las líneas de pedido de todos los pedidos asociados al usuario
 
                         $linea->delete();
 
-                        // Bis. Eliminamos el pedido si es que ha quedado sin líneas de pedido
-
-                        $pedido = Pedido::getById($linea->getPedidoId());
-
-                        $lineasPedido = LineaPedido::getByPedido($pedido->getId());
-
-                        if(count($lineasPedido) == 0){
-
-                            $pedido->delete();
-
-                        }
-
                     }
 
-                    // 3. Eliminamos todos los pedidos asociados al usuario
+                    Utils::enviarCorreo($usuario, "Pedido eliminado", BASE_URL . "mails/pedido/eliminar.html", [
+                        'ID' => $pedido->getId(),
+                        'USERNAME' => $usuario->getNombre(),
+                        'PRODUCTOS' => $numProductos,
+                        'FECHA' => $pedido->getFecha(),
+                        'HORA' => $pedido->getHora(),
+                        'QUERY' => urlencode('C. '.$pedido->getDireccion().' '.$pedido->getCodigoPostal().' '.$pedido->getMunicipio().' '.$pedido->getProvincia()),
+                        'DIRECCION' => 'C. '.$pedido->getDireccion().', '.$pedido->getPoblacion().' ('.$pedido->getCodigoPostal().') - '.$pedido->getProvincia(),
+                        'RAZON' => "Has eliminado tu cuenta, por lo que el pedido ha sido eliminado.",
+                        'COSTE' => $pedido->getCoste(),
+                    ]);
+
+                    // 2. Eliminamos todos los pedidos asociados al usuario
 
                     $pedido->delete();
 
                 }
 
-                // 4. Eliminamos el usuario
+                // 3. Eliminamos el usuario
         
                 if($usuario->delete()){
         
@@ -754,6 +808,10 @@
                     if ($imagen && is_file($uploadDir . $imagen)) {
                         unlink($uploadDir . $imagen);
                     }
+
+                    Utils::enviarCorreo($usuario, "Has eliminado tu cuenta en Tienda de Señales de Tráfico", BASE_URL."mails/usuario/eliminar.html", [
+                        "USERNAME" => $usuario->getNombre(),
+                    ]);
         
                 }else{
         
@@ -766,7 +824,7 @@
         
             }
         
-        }        
+        }
 
         // Método para mostrar la vista de administración de usuarios
 

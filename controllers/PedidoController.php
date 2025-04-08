@@ -6,7 +6,8 @@
     use models\Pedido;
     use models\LineaPedido;
     use models\Producto;
-use models\Valoracion;
+    use models\Usuario;
+    use models\Valoracion;
 
     class PedidoController{
 
@@ -201,6 +202,19 @@ use models\Valoracion;
                         $_SESSION['create'] = 'complete';
                         $_SESSION['pedido'] = $pedido->getId();
 
+                        $usuario = Usuario::getById($pedido->getUsuarioId());
+
+                        Utils::enviarCorreo($usuario, "Pedido realizado", BASE_URL . "mails/pedido/hacer.html", [
+                            'ID' => $pedido->getId(),
+                            'USERNAME' => $usuario->getNombre(),
+                            'PRODUCTOS' => Utils::statsCarrito()['totalCount'],
+                            'FECHA' => $pedido->getFecha(),
+                            'HORA' => $pedido->getHora(),
+                            'QUERY' => urlencode('C. '.$pedido->getDireccion().' '.$pedido->getCodigoPostal().' '.$pedido->getMunicipio().' '.$pedido->getProvincia()),
+                            'DIRECCION' => 'C. '.$pedido->getDireccion().', '.$pedido->getPoblacion().' ('.$pedido->getCodigoPostal().') - '.$pedido->getProvincia(),
+                            'COSTE' => $pedido->getCoste(),
+                        ]);
+
                         Utils::deleteSession('carrito');
                         Utils::deleteCookieCarrito();
                         
@@ -328,6 +342,25 @@ use models\Valoracion;
             $pedido->setEstado('Confirmado');
             $pedido->update();
 
+            $usuario = Usuario::getById($pedido->getUsuarioId());
+            $lineas = LineaPedido::getByPedido($pedido->getId());
+            $numProductos = 0;
+
+            foreach($lineas as $linea){
+                $numProductos += $linea->getUnidades();
+            }
+
+            Utils::enviarCorreo($usuario, "Pedido confirmado", BASE_URL . "mails/pedido/confirmar.html", [
+                'ID' => $pedido->getId(),
+                'USERNAME' => $usuario->getNombre(),
+                'PRODUCTOS' => $numProductos,
+                'FECHA' => $pedido->getFecha(),
+                'HORA' => $pedido->getHora(),
+                'QUERY' => urlencode('C. '.$pedido->getDireccion().' '.$pedido->getCodigoPostal().' '.$pedido->getMunicipio().' '.$pedido->getProvincia()),
+                'DIRECCION' => 'C. '.$pedido->getDireccion().', '.$pedido->getPoblacion().' ('.$pedido->getCodigoPostal().') - '.$pedido->getProvincia(),
+                'COSTE' => $pedido->getCoste(),
+            ]);
+
             header('Location: '.BASE_URL.'pedido/admin&pag='.$_SESSION['pag'] . "#".$pedido->getId());
             exit;
 
@@ -353,14 +386,24 @@ use models\Valoracion;
                 // CASCADA
 
                 $lineas = LineaPedido::getByPedido($pedido->getId());
+                $numProductos = 0;
 
                 foreach($lineas as $linea){
 
-                    // 1. Eliminamos todas las valoraciones de todos los productos asociados al pedido
+                    // 0. Pillamos las unidades de la línea de pedido para luego enviarlas al correo
 
-                    $valoracion = Valoracion::getByProductoAndUsuario($linea->getProductoId(), $pedido->getUsuarioId());
+                    $numProductos += $linea->getUnidades();
 
-                    $valoracion->delete();
+                    // 1. Eliminamos todas las valoraciones de todos los productos asociados al pedido, teniendo en cuenta que:
+                    // sólo se elimina si el producto no figura en ningún otro pedido
+
+                    if(!Utils::existenMasComprasDeProducto($linea->getProductoId(), $pedido->getUsuarioId(), $pedido->getId())){
+
+                        $valoracion = Valoracion::getByProductoAndUsuario($linea->getProductoId(), $pedido->getUsuarioId());
+
+                        if($valoracion) $valoracion->delete();
+
+                    }
 
                     // 2. Eliminamos todas las líneas de pedido asociadas al pedido
 
@@ -373,7 +416,21 @@ use models\Valoracion;
                 if($pedido->delete()){
                     
                     $_SESSION['delete'] = "complete";
-                    // Aqui enviar correo al usuario que ha hecho el pedido para informarle de la cancelación del mismo
+                    
+                    $usuario = Usuario::getById($pedido->getUsuarioId());
+
+                    Utils::enviarCorreo($usuario, "Pedido eliminado", BASE_URL . "mails/pedido/eliminar.html", [
+                        'ID' => $pedido->getId(),
+                        'USERNAME' => $usuario->getNombre(),
+                        'PRODUCTOS' => $numProductos,
+                        'FECHA' => $pedido->getFecha(),
+                        'HORA' => $pedido->getHora(),
+                        'QUERY' => urlencode('C. '.$pedido->getDireccion().' '.$pedido->getCodigoPostal().' '.$pedido->getMunicipio().' '.$pedido->getProvincia()),
+                        'DIRECCION' => 'C. '.$pedido->getDireccion().', '.$pedido->getPoblacion().' ('.$pedido->getCodigoPostal().') - '.$pedido->getProvincia(),
+                        'RAZON' => "Un administrador ha eliminado el pedido.",
+                        'COSTE' => $pedido->getCoste(),
+                    ]);
+
                 }else{
                     
                     $_SESSION['delete'] = "failed";

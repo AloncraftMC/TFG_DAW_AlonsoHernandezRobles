@@ -8,8 +8,36 @@
     class CarritoController {
 
         public function gestion() {
+
             Utils::isIdentity();
+            
+            $productosPorPagina = ITEMS_PER_PAGE;
+
+            // Aqui seteamos el numero de pagina, y abajo redirigimos a 1 o la última página si la página es menor que 1 o mayor que el total de páginas
+
+            $_SESSION['pag'] = isset($_GET['pag']) ? (int)$_GET['pag'] : 1;
+
+            $productos = $_SESSION['carrito'] ?? [];
+
+            $totalPag = max(1, ceil(count($productos) / $productosPorPagina));
+            $productos = array_slice($productos, ($_SESSION['pag'] - 1) * $productosPorPagina, $productosPorPagina);
+
+            if($totalPag == 0) $totalPag = 1;
+
+            // Ahora redirigimos a la primera o última página si la página es menor que 1 o mayor que el total de páginas
+            
+            if($_SESSION['pag'] < 1){
+                header("Location:" . BASE_URL . "carrito/gestion&pag=1");
+                exit;
+            }
+            
+            if($_SESSION['pag'] > $totalPag){
+                header("Location:" . BASE_URL . "carrito/gestion&pag=" . $totalPag);
+                exit;
+            }
+
             require_once 'views/carrito/gestion.php';
+
         }
 
         public function add() {
