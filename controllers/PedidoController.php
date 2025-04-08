@@ -211,7 +211,7 @@
                             'FECHA' => $pedido->getFecha(),
                             'HORA' => $pedido->getHora(),
                             'QUERY' => urlencode('C. '.$pedido->getDireccion().' '.$pedido->getCodigoPostal().' '.$pedido->getMunicipio().' '.$pedido->getProvincia()),
-                            'DIRECCION' => 'C. '.$pedido->getDireccion().', '.$pedido->getPoblacion().' ('.$pedido->getCodigoPostal().') - '.$pedido->getProvincia(),
+                            'DIRECCION' => $pedido->getDireccion().', '.$pedido->getPoblacion().' ('.$pedido->getCodigoPostal().') - '.$pedido->getProvincia(),
                             'COSTE' => $pedido->getCoste(),
                         ]);
 
@@ -285,6 +285,28 @@
                 exit;
             }
 
+            $productosPorPagina = ITEMS_PER_PAGE;
+            $_SESSION['pag'] = isset($_GET['pag']) ? (int)$_GET['pag'] : 1;
+
+            $lineas = LineaPedido::getByPedido($pedido->getId());
+            $totalPag = max(1, ceil(count($lineas) / $productosPorPagina));
+
+            $lineas = array_slice($lineas, ($_SESSION['pag'] - 1) * $productosPorPagina, $productosPorPagina);
+
+            if($totalPag == 0) $totalPag = 1;
+
+            // Ahora redirigimos a la primera o última página si la página es menor que 1 o mayor que el total de páginas
+
+            if($_SESSION['pag'] < 1){
+                header("Location:" . BASE_URL . "pedido/ver&id=".$pedido->getId()."&pag=1");
+                exit;
+            }
+
+            if($_SESSION['pag'] > $totalPag){
+                header("Location:" . BASE_URL . "pedido/ver&id=".$pedido->getId()."&pag=" . $totalPag);
+                exit;
+            }
+
             require_once 'views/pedido/ver.php';
 
         }
@@ -339,6 +361,11 @@
             $pedido = new Pedido();
             $pedido = Pedido::getById($_GET['id']);
 
+            if($pedido->getEstado() != 'Pendiente'){
+                header('Location: '.BASE_URL.'pedido/admin&pag='.$_SESSION['pag'] . "#".$pedido->getId());
+                exit;
+            }
+
             $pedido->setEstado('Confirmado');
             $pedido->update();
 
@@ -357,7 +384,51 @@
                 'FECHA' => $pedido->getFecha(),
                 'HORA' => $pedido->getHora(),
                 'QUERY' => urlencode('C. '.$pedido->getDireccion().' '.$pedido->getCodigoPostal().' '.$pedido->getMunicipio().' '.$pedido->getProvincia()),
-                'DIRECCION' => 'C. '.$pedido->getDireccion().', '.$pedido->getPoblacion().' ('.$pedido->getCodigoPostal().') - '.$pedido->getProvincia(),
+                'DIRECCION' => $pedido->getDireccion().', '.$pedido->getPoblacion().' ('.$pedido->getCodigoPostal().') - '.$pedido->getProvincia(),
+                'COSTE' => $pedido->getCoste(),
+            ]);
+
+            header('Location: '.BASE_URL.'pedido/admin&pag='.$_SESSION['pag'] . "#".$pedido->getId());
+            exit;
+
+        }
+
+        public function enviar(){
+
+            Utils::isAdmin();
+
+            if(!isset($_GET['id'])){
+                header('Location: '.BASE_URL);
+                exit;
+            }
+
+            $pedido = new Pedido();
+            $pedido = Pedido::getById($_GET['id']);
+
+            if($pedido->getEstado() != 'Confirmado'){
+                header('Location: '.BASE_URL.'pedido/admin&pag='.$_SESSION['pag'] . "#".$pedido->getId());
+                exit;
+            }
+
+            $pedido->setEstado('Enviado');
+            $pedido->update();
+
+            $usuario = Usuario::getById($pedido->getUsuarioId());
+            $lineas = LineaPedido::getByPedido($pedido->getId());
+            $numProductos = 0;
+
+            foreach($lineas as $linea){
+                $numProductos += $linea->getUnidades();
+            }
+
+            Utils::enviarCorreo($usuario, "Pedido enviado", BASE_URL . "mails/pedido/enviar.html", [
+                'ID' => $pedido->getId(),
+                'USERNAME' => $usuario->getNombre(),
+                'PRODUCTOS' => $numProductos,
+                'FECHA' => $pedido->getFecha(),
+                'HORA' => $pedido->getHora(),
+                'QUERY' => urlencode('C. '.$pedido->getDireccion().' '.$pedido->getCodigoPostal().' '.$pedido->getMunicipio().' '.$pedido->getProvincia()),
+                'DIRECCION' => $pedido->getDireccion().', '.$pedido->getPoblacion().' ('.$pedido->getCodigoPostal().') - '.$pedido->getProvincia(),
                 'COSTE' => $pedido->getCoste(),
             ]);
 
@@ -426,7 +497,7 @@
                         'FECHA' => $pedido->getFecha(),
                         'HORA' => $pedido->getHora(),
                         'QUERY' => urlencode('C. '.$pedido->getDireccion().' '.$pedido->getCodigoPostal().' '.$pedido->getMunicipio().' '.$pedido->getProvincia()),
-                        'DIRECCION' => 'C. '.$pedido->getDireccion().', '.$pedido->getPoblacion().' ('.$pedido->getCodigoPostal().') - '.$pedido->getProvincia(),
+                        'DIRECCION' => $pedido->getDireccion().', '.$pedido->getPoblacion().' ('.$pedido->getCodigoPostal().') - '.$pedido->getProvincia(),
                         'RAZON' => "Un administrador ha eliminado el pedido.",
                         'COSTE' => $pedido->getCoste(),
                     ]);

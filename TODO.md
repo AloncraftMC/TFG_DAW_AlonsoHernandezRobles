@@ -15,7 +15,6 @@
 - Hacer que el botón de registrarse inicie sesión automáticamente al registrarse.
 - Añadir confirmaciones a todas las eliminaciones.
 - Hacer que al logearse con el botón de carrito añada *actually* el producto al carrito.
-- Si pones una imagen nueva en gestión o edición de usuario y la quitas, no vuelve la imagen anterior. En edición de productos sí funciona.
 
 <hr>
 
@@ -37,14 +36,13 @@
 
 ## ??? horas 🐛
 
-- Solucionar problema de carga de imágenes en gestión de usuario
-- Al iniciar sesión por el botón del carrito, redirigir al producto en el que estaba (a veces no va)
+- Al iniciar sesión por el botón del carrito, redirigir al producto en el que estaba (a veces no va).
 
 <hr>
 
 ## Imposible (♾️ horas) 
 
-- Botón de ver producto siempre abajo (ajuste css)
+- Botón de ver producto siempre abajo (ajuste css).
 
 <div style="page-break-after: always;"></div>
 

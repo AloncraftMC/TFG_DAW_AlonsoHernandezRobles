@@ -121,6 +121,8 @@
                     </a>
 
                     <!-- Si el pedido está pendiente, que aparezca el botón de confirmar -->
+                    <!-- Si el pedido está confirmado, que aparezca el botón de enviar -->
+                    <!-- Si el pedido está enviado, que no aparezca nada -->
 
                     <?php if($pedido->getEstado() == 'Pendiente'): ?>
 
@@ -128,6 +130,14 @@
 
                         <a href="<?=BASE_URL?>pedido/confirmar&id=<?=$pedido->getId()?>">
                             Confirmar
+                        </a>
+
+                    <?php elseif($pedido->getEstado() == 'Confirmado'): ?>
+
+                        <div class="separador" style="transform: scaleX(1.2) scaleY(0.5);"></div>
+
+                        <a href="<?=BASE_URL?>pedido/enviar&id=<?=$pedido->getId()?>">
+                            Enviar
                         </a>
 
                     <?php endif; ?>

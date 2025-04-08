@@ -109,7 +109,7 @@
 
         <!-- Vista previa de la imagen antes de enviarla -->
         <div style="margin-top: 0px; display: flex; justify-content: center; align-items: center; width: 100%;">
-            <img id="imagen-preview" src="#" alt="Vista previa de la imagen" style="display: none; min-height: 100px; max-height: 100px; border-radius: 5px; max-width: 500px;">
+            <img id="imagen-preview" src="#" alt="Vista previa de la imagen" style="display: none; min-height: 100px; min-width: 100px; max-height: 100px; max-width: 100px; border-radius: 50%;">
             <button id="eliminar-imagen" type="button" class="delete-image" style="display: none;">
                 Eliminar imagen
             </button>

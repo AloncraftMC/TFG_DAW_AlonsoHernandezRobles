@@ -263,7 +263,7 @@
                                 'HORA' => $pedido->getHora(),
                                 'QUERY' => urlencode('C. '.$pedido->getDireccion().' '.$pedido->getCodigoPostal().' '.$pedido->getMunicipio().' '.$pedido->getProvincia()),
                                 'DIRECCION' => 'C. '.$pedido->getDireccion().', '.$pedido->getPoblacion().' ('.$pedido->getCodigoPostal().') - '.$pedido->getProvincia(),
-                                'RAZON' => "La categoría del último producto ha sido eliminada, por lo que el pedido ha sido eliminado.",
+                                'RAZON' => "La categoría (" . (strlen($categoria->getNombre()) > 30 ? substr($categoria->getNombre(), 0, 30) . '...' : $categoria->getNombre()) . ") del último producto (" . (strlen($producto->getNombre()) > 30 ? substr($producto->getNombre(), 0, 30) . '...' : $producto->getNombre()) . ") ha sido eliminada, por lo que el pedido ha sido eliminado.",
                                 'COSTE' => $pedido->getCoste(),
                             ]);
 

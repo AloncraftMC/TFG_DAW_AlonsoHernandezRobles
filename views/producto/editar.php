@@ -113,7 +113,7 @@
         <?php endif; ?>
 
         <!-- Mensaje de error antes de la vista previa -->
-        <div id="error-imagen" style="display: none; margin-top: 10px;">
+        <div id="error-imagen" style="display: none; margin-top: 0px;">
             <small class="error">La imagen debe ser jpg, png o svg.</small>
         </div>
 
@@ -125,6 +125,7 @@
             </button>
         </div>
 
+        <script>const src = '<?=BASE_URL?>assets/images/uploads/productos/<?=$producto->getImagen()?>?t=0';</script>
         <script src="<?=BASE_URL?>js/subirImagenEditar.js"></script>
 
     </div>

@@ -26,7 +26,7 @@
 
 <?php if(isset($_SESSION['login']) && $_SESSION['login'] == 'failed'): ?>
 
-    <strong class="red" id="failed">Login fallido, introduce bien los datos.</strong>
+    <strong class="red" id="failed">Inicio de sesión fallido, introduce bien los datos.</strong>
 
 <?php endif; ?>
 

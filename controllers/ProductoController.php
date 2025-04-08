@@ -495,8 +495,8 @@
                             'FECHA' => $pedido->getFecha(),
                             'HORA' => $pedido->getHora(),
                             'QUERY' => urlencode('C. '.$pedido->getDireccion().' '.$pedido->getCodigoPostal().' '.$pedido->getMunicipio().' '.$pedido->getProvincia()),
-                            'DIRECCION' => 'C. '.$pedido->getDireccion().', '.$pedido->getPoblacion().' ('.$pedido->getCodigoPostal().') - '.$pedido->getProvincia(),
-                            'RAZON' => "El último producto ha sido eliminado, por lo que el pedido ha sido eliminado.",
+                            'DIRECCION' => $pedido->getDireccion().', '.$pedido->getPoblacion().' ('.$pedido->getCodigoPostal().') - '.$pedido->getProvincia(),
+                            'RAZON' => "El último producto (" . (strlen($producto->getNombre()) > 30 ? substr($producto->getNombre(), 0, 30) . '...' : $producto->getNombre()) . ") ha sido eliminado, por lo que el pedido ha sido eliminado.",
                             'COSTE' => $pedido->getCoste(),
                         ]);
 

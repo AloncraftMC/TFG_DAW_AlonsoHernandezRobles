@@ -71,7 +71,7 @@
                 <th>Cantidad</th>
                 <th>Precio</th>
                 <th>Total</th>
-                <th>Acciones</th>
+                <th>Eliminar</th>
             </tr>
         </thead>
         <tbody>
@@ -115,7 +115,9 @@
                         </span>
                     </td>
                     <td class="acciones-especial">
-                        <a href="<?= BASE_URL ?>carrito/delete&index=<?= $indice ?>" class="boton btn-delete">Eliminar</a>
+                        <a href="<?= BASE_URL ?>carrito/delete&index=<?= $indice ?>" class="boton btn-delete">
+                            <img src="<?= BASE_URL ?>assets/images/vaciar.svg" alt="Eliminar producto" class="ver" style="background-color: rgb(200, 0, 0);">
+                        </a>
                     </td>
                 </tr>
             <?php endforeach; ?>
@@ -161,7 +163,7 @@
 
     </div>
 
-    <div class="resumen-carrito" style="display: flex; flex-direction: column; justify-content: center; align-items: center; margin: <?= $totalPag > 1 ? '0px' : '20px' ?>">
+    <div class="resumen-carrito" style="display: flex; flex-direction: column; justify-content: center; align-items: center; margin-top: 0px; margin-bottom: 25px">
         <h2 style="color: green; font-size: 200%"><span style="color: black; font-weight: normal;">Total:</span> <?= $totalCarrito ?> €</h2>
 
         <!-- Botón para proceder a la compra -->

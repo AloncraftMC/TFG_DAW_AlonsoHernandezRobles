@@ -155,8 +155,14 @@
 
                             $usuario = Usuario::getByEmail($email);
 
-                            Utils::enviarCorreo($usuario, "Se te ha registrado en Tienda de Señales de Tráfico", BASE_URL."mails/usuario/crear.html", [
+                            Utils::enviarCorreo($usuario, "Cuenta registrada", BASE_URL."mails/usuario/crear.html", [
                                 "USERNAME" => $usuario->getNombre(),
+                            ], [
+                                [
+                                    'ruta' => __DIR__ . '/../assets/images/uploads/usuarios/' . $usuario->getImagen(),
+                                    'cid' => 'user',
+                                    'nombre' => $usuario->getNombre() . ' ' . $usuario->getApellidos()
+                                ]
                             ]);
 
                             Utils::deleteSession('register');
@@ -167,8 +173,14 @@
 
                             $usuario = Usuario::getByEmail($email);
                             
-                            Utils::enviarCorreo($usuario, "Te has registrado en Tienda de Señales de Tráfico", BASE_URL."mails/usuario/registro.html", [
+                            Utils::enviarCorreo($usuario, "Cuenta registrada", BASE_URL."mails/usuario/registro.html", [
                                 "USERNAME" => $usuario->getNombre(),
+                            ], [
+                                [
+                                    'ruta' => __DIR__ . '/../assets/images/uploads/usuarios/' . $usuario->getImagen(),
+                                    'cid' => 'user',
+                                    'nombre' => $usuario->getNombre() . ' ' . $usuario->getApellidos()
+                                ]
                             ]);
 
                             header("Location:" . BASE_URL . "usuario/registrarse#complete");
@@ -560,11 +572,17 @@
 
                             $usuario = Usuario::getById($id);
                             
-                            Utils::enviarCorreo($usuario, "Se ha editado tu cuenta en Tienda de Señales de Tráfico", BASE_URL."mails/usuario/editar.html", [
+                            Utils::enviarCorreo($usuario, "Cuenta editada", BASE_URL."mails/usuario/editar.html", [
                                 "USERNAME" => $usuario->getNombre(),
                                 "APELLIDOS" => $usuario->getApellidos(),
                                 "EMAIL" => $usuario->getEmail(),
                                 "COLOR" => $usuario->getColor(),
+                            ], [
+                                [
+                                    'ruta' => __DIR__ . '/../assets/images/uploads/usuarios/' . $usuario->getImagen(),
+                                    'cid' => 'user',
+                                    'nombre' => $usuario->getNombre() . ' ' . $usuario->getApellidos()
+                                ]
                             ]);
                             
                             Utils::deleteSession('gestion');
@@ -575,11 +593,17 @@
                             
                             $usuario = Usuario::getById($usuario->getId());
 
-                            Utils::enviarCorreo($usuario, "Has editado tu cuenta en Tienda de Señales de Tráfico", BASE_URL."mails/usuario/gestion.html", [
+                            Utils::enviarCorreo($usuario, "Cuenta editada", BASE_URL."mails/usuario/gestion.html", [
                                 "USERNAME" => $usuario->getNombre(),
                                 "APELLIDOS" => $usuario->getApellidos(),
                                 "EMAIL" => $usuario->getEmail(),
                                 "COLOR" => $usuario->getColor(),
+                            ], [
+                                [
+                                    'ruta' => __DIR__ . '/../assets/images/uploads/usuarios/' . $usuario->getImagen(),
+                                    'cid' => 'user',
+                                    'nombre' => $usuario->getNombre() . ' ' . $usuario->getApellidos()
+                                ]
                             ]);
                         
                             header("Location:" . BASE_URL . "usuario/gestion#complete");
@@ -596,7 +620,26 @@
 
                         if($usuario->getImagen() == $dummyUsuario->getImagen() && !$imagenCambiada) $_SESSION['gestion'] = "nothing";
 
-                        if($imagenCambiada) $_SESSION['gestion'] = "complete";
+                        if($imagenCambiada) {
+                            
+                            $_SESSION['gestion'] = "complete";
+
+                            $usuario = Usuario::getById($id);
+
+                            Utils::enviarCorreo($usuario, "Cuenta editada", BASE_URL."mails/usuario/gestion.html", [
+                                "USERNAME" => $usuario->getNombre(),
+                                "APELLIDOS" => $usuario->getApellidos(),
+                                "EMAIL" => $usuario->getEmail(),
+                                "COLOR" => $usuario->getColor(),
+                            ], [
+                                [
+                                    'ruta' => __DIR__ . '/../assets/images/uploads/usuarios/' . $usuario->getImagen(),
+                                    'cid' => 'user',
+                                    'nombre' => $usuario->getNombre() . ' ' . $usuario->getApellidos()
+                                ]
+                            ]);
+
+                        }
 
                         if (isset($_GET['id'])) {
 
@@ -606,7 +649,7 @@
     
                         }else {
                             
-                            header("Location:" . BASE_URL . "usuario/gestion&id=" . $id . "#" . $_SESSION['gestion']);
+                            header("Location:" . BASE_URL . "usuario/gestion" . (isset($_GET['id']) ? "&id=" . $_GET['id'] : "") . "#" . $_SESSION['gestion']);
                             exit;
     
                         }
@@ -690,7 +733,7 @@
                         'FECHA' => $pedido->getFecha(),
                         'HORA' => $pedido->getHora(),
                         'QUERY' => urlencode('C. '.$pedido->getDireccion().' '.$pedido->getCodigoPostal().' '.$pedido->getMunicipio().' '.$pedido->getProvincia()),
-                        'DIRECCION' => 'C. '.$pedido->getDireccion().', '.$pedido->getPoblacion().' ('.$pedido->getCodigoPostal().') - '.$pedido->getProvincia(),
+                        'DIRECCION' => $pedido->getDireccion().', '.$pedido->getPoblacion().' ('.$pedido->getCodigoPostal().') - '.$pedido->getProvincia(),
                         'RAZON' => "Tu usuario ha sido eliminado, por lo que el pedido ha sido eliminado.",
                         'COSTE' => $pedido->getCoste(),
                     ]);
@@ -706,6 +749,16 @@
                 if($usuario->delete()){
         
                     $_SESSION['delete'] = "complete";
+
+                    Utils::enviarCorreo($usuario, "Cuenta eliminada", BASE_URL."mails/usuario/destruir.html", [
+                        "USERNAME" => $usuario->getNombre(),
+                    ], [
+                        [
+                            'ruta' => __DIR__ . '/../assets/images/uploads/usuarios/' . $usuario->getImagen(),
+                            'cid' => 'user',
+                            'nombre' => $usuario->getNombre() . ' ' . $usuario->getApellidos()
+                        ]
+                    ]);
         
                     // Borrar la imagen asociada al usuario (si existe)
                     $imagen = $usuario->getImagen();  // Asumiendo que el usuario tiene un método para obtener su imagen
@@ -714,10 +767,6 @@
                     if ($imagen && is_file($uploadDir . $imagen)) {
                         unlink($uploadDir . $imagen);
                     }
-
-                    Utils::enviarCorreo($usuario, "Se ha eliminado tu cuenta en Tienda de Señales de Tráfico", BASE_URL."mails/usuario/destruir.html", [
-                        "USERNAME" => $usuario->getNombre(),
-                    ]);
         
                     if($_SESSION['identity']['id'] == $id){
 
@@ -784,7 +833,7 @@
                         'FECHA' => $pedido->getFecha(),
                         'HORA' => $pedido->getHora(),
                         'QUERY' => urlencode('C. '.$pedido->getDireccion().' '.$pedido->getCodigoPostal().' '.$pedido->getMunicipio().' '.$pedido->getProvincia()),
-                        'DIRECCION' => 'C. '.$pedido->getDireccion().', '.$pedido->getPoblacion().' ('.$pedido->getCodigoPostal().') - '.$pedido->getProvincia(),
+                        'DIRECCION' => $pedido->getDireccion().', '.$pedido->getPoblacion().' ('.$pedido->getCodigoPostal().') - '.$pedido->getProvincia(),
                         'RAZON' => "Has eliminado tu cuenta, por lo que el pedido ha sido eliminado.",
                         'COSTE' => $pedido->getCoste(),
                     ]);
@@ -800,6 +849,16 @@
                 if($usuario->delete()){
         
                     $_SESSION['delete'] = "complete";
+
+                    Utils::enviarCorreo($usuario, "Cuenta eliminada", BASE_URL."mails/usuario/eliminar.html", [
+                        "USERNAME" => $usuario->getNombre(),
+                    ], [
+                        [
+                            'ruta' => __DIR__ . '/../assets/images/uploads/usuarios/' . $usuario->getImagen(),
+                            'cid' => 'user',
+                            'nombre' => $usuario->getNombre() . ' ' . $usuario->getApellidos()
+                        ]
+                    ]);
         
                     // Borrar la imagen asociada al usuario (si existe)
                     $imagen = $usuario->getImagen();  // Asumiendo que el usuario tiene un método para obtener su imagen
@@ -808,10 +867,6 @@
                     if ($imagen && is_file($uploadDir . $imagen)) {
                         unlink($uploadDir . $imagen);
                     }
-
-                    Utils::enviarCorreo($usuario, "Has eliminado tu cuenta en Tienda de Señales de Tráfico", BASE_URL."mails/usuario/eliminar.html", [
-                        "USERNAME" => $usuario->getNombre(),
-                    ]);
         
                 }else{
         

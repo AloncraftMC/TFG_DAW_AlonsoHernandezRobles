@@ -101,6 +101,8 @@
                     <span style="color: brown;"><?=$pedido->getEstado()?></span>
                 <?php elseif($pedido->getEstado() == 'Confirmado'): ?>
                     <span style="color: green;"><?=$pedido->getEstado()?></span>
+                <?php elseif($pedido->getEstado() == 'Enviado'): ?>
+                    <span style="color: royalblue;"><?=$pedido->getEstado()?></span>
                 <?php endif; ?>
             </td>
 

@@ -1,11 +1,18 @@
 <?php
 
+    // Composer y Dotenv
+
+    require_once 'vendor/autoload.php';
+
+    $dotenv = Dotenv\Dotenv::createImmutable(__DIR__);
+    $dotenv->load();
+
     // Base de datos (debería ser reemplazado por el $_ENV, pero no me funciona Composer)
 
-    define('DB_HOST', 'localhost');     // define('DB_HOST', $_ENV['DB_HOST']);
-    define('DB_NAME', 'tienda');        // define('DB_NAME', $_ENV['DB_NAME']);
-    define('DB_USER', 'root');          // define('DB_USER', $_ENV['DB_USER']);
-    define('DB_PASSWORD', '');          // define('DB_PASSWORD', $_ENV['DB_PASSWORD']);
+    define('DB_HOST', $_ENV['DB_HOST']);
+    define('DB_NAME', $_ENV['DB_NAME']);
+    define('DB_USER', $_ENV['DB_USER']);
+    define('DB_PASSWORD', $_ENV['DB_PASSWORD']);
 
     // Controlador y acción por defecto
 
@@ -23,7 +30,13 @@
 
     // Correo
 
-    define('MAIL_USERNAME', 'senalesdetrafico.store@gmail.com');
-    define('MAIL_PASSWORD', 'kbux vhvv xvfl apkp');
+    define('MAIL_USERNAME', $_ENV['MAIL_USERNAME']);
+    define('MAIL_PASSWORD', $_ENV['MAIL_PASSWORD']);
+
+    // PayPal
+
+    define('PAYPAL_CLIENT_ID', $_ENV['PAYPAL_CLIENT_ID']);
+    define('PAYPAL_SECRET', $_ENV['PAYPAL_SECRET']);
+    define('PAYPAL_SANDBOX', true); // Cambia a false en producción
 
 ?>

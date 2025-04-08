@@ -95,7 +95,7 @@
 <?php if ($producto->getStock() > 0): ?>
 
     <div class="add-to-cart" id="carrito">
-        <form action="<?=BASE_URL?>carrito/add" method="POST">
+        <form action="<?=BASE_URL?>carrito/add" method="POST" style="max-width: unset;">
             <input type="hidden" name="producto_id" value="<?=$producto->getId()?>">
             <label for="cantidad"><h2 style="margin-top: 40px; font-weight: normal;">Cantidad: </h2></label>
             <input type="number" name="cantidad" min="1" value="1" class="quantity-input">

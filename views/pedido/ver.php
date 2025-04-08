@@ -6,7 +6,7 @@
     $pedido = Pedido::getById($_GET['id']);
 ?>
 
-<h1 style="margin-bottom: 0px;">Pedido con ID: <?=$pedido->getId()?></h1>
+<h1 style="margin-bottom: 0px;">Pedido (ID #<?=$pedido->getId()?>)</h1>
 
 <h3 style="margin-bottom: 0px;">
 
@@ -14,6 +14,8 @@
     <span style="color: brown;"><?=$pedido->getEstado()?></span>
 <?php elseif($pedido->getEstado() == 'Confirmado'): ?>
     <span style="color: green;"><?=$pedido->getEstado()?></span>
+<?php elseif($pedido->getEstado() == 'Enviado'): ?>
+    <span style="color: royalblue;"><?=$pedido->getEstado()?></span>
 <?php endif; ?>
 
 </h3>
@@ -23,10 +25,10 @@
 <?php
                     
     $numProductos = 0;
-    $lineas = LineaPedido::getByPedido($pedido->getId());
+    $ls = LineaPedido::getByPedido($pedido->getId());
 
-    foreach($lineas as $linea){
-        $numProductos += $linea->getUnidades();
+    foreach($ls as $l){
+        $numProductos += $l->getUnidades();
     }
     
     echo $numProductos . ' producto' . (($numProductos > 1) ? 's' : '');
@@ -34,6 +36,45 @@
 ?>
 
 </h2>
+
+<div class="paginacion" style="margin: 0px;">
+
+    <?php if($totalPag > 1): ?>
+
+        <a href="<?=BASE_URL?>pedido/ver&id=<?=$pedido->getId()?>&pag=1" style="pointer-events: <?=($_SESSION['pag'] == 1) ? 'none' : 'auto'?>;">
+            <button class="boton <?php if($_SESSION['pag'] == 1) echo 'disabled' ?>">
+                <img src="<?=BASE_URL?>assets/images/doubleleft.png" alt="Primera página" style="width: 10px; padding: 5px;">
+            </button>
+        </a>
+
+        <a href="<?=BASE_URL?>pedido/ver&id=<?=$pedido->getId()?>&pag=<?= ($_SESSION['pag'] > 1) ? $_SESSION['pag'] - 1 : 1 ?>" style="pointer-events: <?=($_SESSION['pag'] == 1) ? 'none' : 'auto'?>;">
+            <button class="boton <?php if($_SESSION['pag'] == 1) echo 'disabled' ?>">
+                <img src="<?=BASE_URL?>assets/images/left.svg" alt="Página anterior">
+            </button>
+        </a>
+
+        <h1>Pág.
+            <form style="padding: 0px; background-color: unset; display: inline;" action="<?= BASE_URL ?>pedido/ver&id=<?=$pedido->getId()?>" method="GET">
+                <input type="number" name="pag" min="1" max="<?= $totalPag ?>" class="quantity-input" value="<?= $_SESSION['pag'] ?>" style="width: 60px; height: 40px; font-size: 30px; padding: 5px; margin: 0px;" required>
+                <input type="submit" value="Ir" style="display: none;">
+            </form>
+        </h1>
+
+        <a href="<?=BASE_URL?>pedido/ver&id=<?=$pedido->getId()?>&pag=<?= ($_SESSION['pag'] < $totalPag) ? $_SESSION['pag'] + 1 : $totalPag ?>" style="pointer-events: <?=($_SESSION['pag'] == $totalPag) ? 'none' : 'auto'?>;">
+            <button class="boton <?php if($_SESSION['pag'] == $totalPag) echo 'disabled' ?>">
+                <img src="<?=BASE_URL?>assets/images/right.svg" alt="Página siguiente">
+            </button>
+        </a>
+
+        <a href="<?=BASE_URL?>pedido/ver&id=<?=$pedido->getId()?>&pag=<?=$totalPag?>" style="pointer-events: <?=($_SESSION['pag'] == $totalPag) ? 'none' : 'auto'?>;">
+            <button class="boton <?php if($_SESSION['pag'] == $totalPag) echo 'disabled' ?>">
+                <img src="<?=BASE_URL?>assets/images/doubleright.png" alt="Última página" style="width: 10px; padding: 5px;">
+            </button>
+        </a>
+
+    <?php endif; ?>
+
+</div>
 
 <table class="tabla-carrito">
     <thead>
@@ -48,7 +89,7 @@
     <tbody>
         <?php
 
-            foreach (LineaPedido::getByPedido($pedido->getId()) as $linea):
+            foreach ($lineas as $linea):
                 $producto = Producto::getById($linea->getProductoId()); // Obtiene la información del producto
                 $precioTotal = $producto->getPrecio() * (1 - $producto->getOferta() / 100) * $linea->getUnidades();
         
@@ -90,7 +131,46 @@
     </tbody>
 </table>
 
-<div class="resumen-carrito" style="display: flex; flex-direction: column; justify-content: center; align-items: center; margin: 20px; margin-bottom: 0px">
+<div class="paginacion" style="margin: 0px; margin-top: 20px;">
+
+    <?php if($totalPag > 1): ?>
+
+        <a href="<?=BASE_URL?>pedido/ver&id=<?=$pedido->getId()?>&pag=1" style="pointer-events: <?=($_SESSION['pag'] == 1) ? 'none' : 'auto'?>;">
+            <button class="boton <?php if($_SESSION['pag'] == 1) echo 'disabled' ?>">
+                <img src="<?=BASE_URL?>assets/images/doubleleft.png" alt="Primera página" style="width: 10px; padding: 5px;">
+            </button>
+        </a>
+
+        <a href="<?=BASE_URL?>pedido/ver&id=<?=$pedido->getId()?>&pag=<?= ($_SESSION['pag'] > 1) ? $_SESSION['pag'] - 1 : 1 ?>" style="pointer-events: <?=($_SESSION['pag'] == 1) ? 'none' : 'auto'?>;">
+            <button class="boton <?php if($_SESSION['pag'] == 1) echo 'disabled' ?>">
+                <img src="<?=BASE_URL?>assets/images/left.svg" alt="Página anterior">
+            </button>
+        </a>
+
+        <h1>Pág.
+            <form style="padding: 0px; background-color: unset; display: inline;" action="<?= BASE_URL ?>pedido/ver&id=<?=$pedido->getId()?>" method="GET">
+                <input type="number" name="pag" min="1" max="<?= $totalPag ?>" class="quantity-input" value="<?= $_SESSION['pag'] ?>" style="width: 60px; height: 40px; font-size: 30px; padding: 5px; margin: 0px;" required>
+                <input type="submit" value="Ir" style="display: none;">
+            </form>
+        </h1>
+
+        <a href="<?=BASE_URL?>pedido/ver&id=<?=$pedido->getId()?>&pag=<?= ($_SESSION['pag'] < $totalPag) ? $_SESSION['pag'] + 1 : $totalPag ?>" style="pointer-events: <?=($_SESSION['pag'] == $totalPag) ? 'none' : 'auto'?>;">
+            <button class="boton <?php if($_SESSION['pag'] == $totalPag) echo 'disabled' ?>">
+                <img src="<?=BASE_URL?>assets/images/right.svg" alt="Página siguiente">
+            </button>
+        </a>
+
+        <a href="<?=BASE_URL?>pedido/ver&id=<?=$pedido->getId()?>&pag=<?=$totalPag?>" style="pointer-events: <?=($_SESSION['pag'] == $totalPag) ? 'none' : 'auto'?>;">
+            <button class="boton <?php if($_SESSION['pag'] == $totalPag) echo 'disabled' ?>">
+                <img src="<?=BASE_URL?>assets/images/doubleright.png" alt="Última página" style="width: 10px; padding: 5px;">
+            </button>
+        </a>
+
+    <?php endif; ?>
+
+</div>
+
+<div class="resumen-carrito" style="display: flex; flex-direction: column; justify-content: center; align-items: center; margin-top: <?=($totalPag > 1) ? '0px' : '20px'?> margin-bottom: 0px;">
     <h1 style="color: green; font-size: 200%"><span style="color: black; font-weight: normal;">Total*:</span> <?= $pedido->getCoste() ?> €</h1>
     <h5 style="width: 500px; margin-top: 0px; margin-bottom: 20px; text-align: center; color: gray">*Los precios y ofertas de los productos están sujetos a cambios. El coste del pedido es el que figura en el momento de la compra y no se verá afectado.</h5>
 </div>
@@ -117,3 +197,4 @@
 </div>
 
 <script src="<?=BASE_URL?>js/ajusteImagenesAdminProductos.js"></script>
+<script src="<?=BASE_URL?>js/actualizarPaginacion.js"></script>

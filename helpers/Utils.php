@@ -9,8 +9,6 @@
     use PHPMailer\PHPMailer\PHPMailer;
     use PHPMailer\PHPMailer\Exception;
 
-    require 'vendor/autoload.php';
-
     class Utils{
 
         // Método para eliminar sesiones
@@ -160,14 +158,14 @@
 
             $baseDatos = new BaseDatos();
 
-            // 1. El usuario ha comprado el producto al menos una vez y el pedido está confirmado
+            // 1. El usuario ha comprado el producto al menos una vez y el pedido está enviado
 
             $baseDatos->ejecutar("SELECT *
                                   FROM lineas_pedidos lp
                                   INNER JOIN pedidos p ON lp.pedido_id = p.id
                                   WHERE p.usuario_id = :usuario_id
                                   AND lp.producto_id = :producto_id
-                                  AND p.estado = 'Confirmado'
+                                  AND p.estado = 'Enviado'
                                   LIMIT 1", [
                 ':usuario_id' => $usuarioId,
                 ':producto_id' => $productoId
@@ -228,7 +226,7 @@
         
         // Método para enviar un correo
 
-        public static function enviarCorreo(Usuario $usuario, string $asunto, string $html, array $variables = []): void{
+        public static function enviarCorreo(Usuario $usuario, string $asunto, string $html, array $variables = [], array $imagenes = []): void{
 
             $mail = new PHPMailer(true);
 
@@ -253,8 +251,13 @@
 
                 $body = str_replace('{{BASE_URL}}', BASE_URL, $body);
                 $body = str_replace('{{ANIO}}', date('Y'), $body);
+
                 foreach($variables as $variable => $valor){
                     $body = str_replace('{{' . $variable . '}}', htmlspecialchars($valor), $body);
+                }
+
+                foreach($imagenes as $imagen){
+                    $mail->addEmbeddedImage($imagen['ruta'], $imagen['cid'], $imagen['nombre']);
                 }
                 
                 $mail->Body = $body;
@@ -264,9 +267,16 @@
             } catch (Exception $e) {
 
                 echo "Error al enviar el correo: {$mail->ErrorInfo}";
-                die;
+                
+                $ruta = __DIR__ . '/../logs/error.log';
+            
+                if(!file_exists(dirname($ruta))) mkdir(dirname($ruta), 0777, true);
+            
+                $contenido = date('Y-m-d H:i:s') . ' - Error al enviar el correo: ' . $mail->ErrorInfo . ' | Exception: ' . $e->getMessage() . "\n";
+            
+                file_put_contents($ruta, $contenido, FILE_APPEND | LOCK_EX);
 
-            }
+            }            
 
         }
 

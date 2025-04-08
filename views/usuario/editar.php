@@ -112,18 +112,19 @@
 
         <?php endif; ?>
         
-        <div id="error-imagen" style="display: none; margin-top: 10px;">
+        <div id="error-imagen" style="display: none; margin-top: 0px;">
             <small class="error">La imagen debe ser jpg, png o svg.</small>
         </div>
 
         <div style="margin-top: 30px; display: flex; flex-direction: column; justify-content: center; align-items: center; width: 100%;">
-            <img id="imagen-preview" src="<?=BASE_URL?>assets/images/uploads/usuarios/<?=$usuario->getImagen()?>?t=<?=time()?>" alt="Vista previa de la imagen" style="display: block; min-height: 100px; max-height: 100px; border-radius: 5px; margin-bottom: 15px; max-width: 500px;">
+            <img id="imagen-preview" src="<?=BASE_URL?>assets/images/uploads/usuarios/<?=$usuario->getImagen()?>?t=<?=time()?>" alt="Vista previa de la imagen" style="display: block; min-height: 100px; min-width: 100px; max-height: 100px; max-width: 100px; border-radius: 50%; margin-bottom: 15px;">
             <button id="eliminar-imagen" type="button" class="delete-image">
                 Eliminar imagen
             </button>
         </div>
 
-        <script src="<?=BASE_URL?>js/subirImagenEditarUsuario.js"></script>
+        <script>const src = '<?=BASE_URL?>assets/images/uploads/usuarios/<?=$usuario->getImagen()?>?t=0';</script>
+        <script src="<?=BASE_URL?>js/subirImagenEditar.js"></script>
         
     </div>
 
