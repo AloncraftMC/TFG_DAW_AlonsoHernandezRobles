@@ -539,25 +539,48 @@
 
         public function ver(): void {
 
-            if(isset($_GET['id'])){
-
-                $producto = Producto::getById($_GET['id']);
-
-                if(!$producto){
-
-                    header("Location:" . BASE_URL);
-                    exit;
-
-                }
-
-                require_once 'views/producto/ver.php';
-
-            }else{
+            if(!isset($_GET['id'])){
 
                 header("Location:" . BASE_URL);
                 exit;
 
             }
+
+            $producto = Producto::getById($_GET['id']);
+
+            if(!$producto){
+
+                header("Location:" . BASE_URL);
+                exit;
+
+            }
+            
+            $valoracionesPorPagina = ITEMS_PER_PAGE;
+
+            // Aqui seteamos el numero de pagina, y abajo redirigimos a 1 o la última página si la página es menor que 1 o mayor que el total de páginas
+
+            $_SESSION['pag'] = isset($_GET['pag']) ? (int)$_GET['pag'] : 1;
+
+            $valoraciones = Valoracion::getByProducto($producto->getId());
+
+            $totalPag = max(1, ceil(count($valoraciones) / $valoracionesPorPagina));
+            $valoraciones = array_slice($valoraciones, ($_SESSION['pag'] - 1) * $valoracionesPorPagina, $valoracionesPorPagina);
+
+            if($totalPag == 0) $totalPag = 1;
+
+            // Ahora redirigimos a la primera o última página si la página es menor que 1 o mayor que el total de páginas
+            
+            if($_SESSION['pag'] < 1){
+                header("Location:" . BASE_URL . "producto/ver&pag=1");
+                exit;
+            }
+
+            if($_SESSION['pag'] > $totalPag){
+                header("Location:" . BASE_URL . "producto/ver&pag=" . $totalPag);
+                exit;
+            }
+
+            require_once 'views/producto/ver.php';
 
         }
 

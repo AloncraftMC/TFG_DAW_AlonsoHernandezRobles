@@ -457,11 +457,6 @@ form, .container {
         opacity: 0;
     }
 
-    .btn-delete:hover::after {
-        content: " (¡OJO: Es instantáneo!)";
-        font-weight: bold;
-    }
-
 }
 
 .container{

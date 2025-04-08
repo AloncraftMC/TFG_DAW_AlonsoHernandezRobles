@@ -2,7 +2,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
     const colorPicker = document.querySelector("input[name='color']");
 
-    colorPicker.addEventListener("input", function () {
+    function cambiar() {
 
         let nuevoColor = this.value;
 
@@ -138,6 +138,11 @@ document.addEventListener("DOMContentLoaded", function () {
 
         actualizarColores();
         
-    });
+    };
+
+    colorPicker.addEventListener("input", cambiar); // Cambia el color al seleccionar uno nuevo
+    colorPicker.addEventListener("click", cambiar); // Cambia el color al hacer click en el picker
+
+    colorPicker.click();
 
 });

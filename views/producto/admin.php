@@ -36,7 +36,7 @@
 
 <?php else: ?>
 
-    <script src="<?=BASE_URL?>js/ajusteImagenesAdminProductos.js"></script>
+    <script src="<?=BASE_URL?>js/ajusteImagenesTabla.js"></script>
 
     <div class="paginacion" style="margin-top: 0px;">
 
@@ -139,7 +139,7 @@
 
                     <div class="separador"></div>
 
-                    <a href="<?=BASE_URL?>producto/eliminar&id=<?=$producto->getId()?>">
+                    <a href="<?=BASE_URL?>producto/eliminar&id=<?=$producto->getId()?>" onclick="return confirm('¿Estás seguro de que quieres eliminar el producto <?=$producto->getNombre()?>?\nEsta acción no se puede deshacer.')">
                         Eliminar
                     </a>
 

@@ -45,22 +45,23 @@
                     'email' => $email,
                     'password' => $password,
                     'rol' => $rol,
-                    'imagen' => $imagen
+                    'imagen' => $imagen,
+                    'color' => $color
                 ];
 
                 if ($nombre && $apellidos && $email && $password) {
         
-                    // Validar nombre (solo letras y espacios, mínimo 2 caracteres)
+                    // Validar nombre (solo letras, números y espacios, mínimo 2 caracteres)
 
-                    if (!preg_match("/^[a-zA-ZáéíóúÁÉÍÓÚñÑ ]{2,}$/u", $nombre)) {
+                    if (!preg_match("/^[a-zA-Z0-9áéíóúÁÉÍÓÚñÑ ]{2,}$/u", $nombre)) {
                         $_SESSION['register'] = "failed_nombre";
                         header("Location:" . BASE_URL . "usuario/" . (isset($_SESSION['admin']) ? 'crear' : 'registrarse') . "#nombre");
                         exit;
                     }
                     
-                    // Validar apellidos (solo letras y espacios, mínimo 2 caracteres)
+                    // Validar apellidos (solo letras, números y espacios, mínimo 2 caracteres)
         
-                    if (!preg_match("/^[a-zA-ZáéíóúÁÉÍÓÚñÑ ]{2,}$/u", $apellidos)) {
+                    if (!preg_match("/^[a-zA-Z0-9áéíóúÁÉÍÓÚñÑ ]{2,}$/u", $apellidos)) {
                         $_SESSION['register'] = "failed_apellidos";
                         header("Location:" . BASE_URL . "usuario/" . (isset($_SESSION['admin']) ? 'crear' : 'registrarse') . "#apellidos");
                         exit;
@@ -461,13 +462,13 @@
                 ) {
         
                     // Validaciones
-                    if ($nombre && !preg_match("/^[a-zA-ZáéíóúÁÉÍÓÚñÑ ]{2,}$/u", $nombre)) {
+                    if ($nombre && !preg_match("/^[a-zA-Z0-9áéíóúÁÉÍÓÚñÑ ]{2,}$/u", $nombre)) {
                         $_SESSION['gestion'] = "failed_nombre";
                         header("Location:" . BASE_URL . "usuario/gestion" . (isset($_GET['id']) ? "&id=" . $_GET['id'] : "") . "#nombre");
                         exit;
                     }
         
-                    if ($apellidos && !preg_match("/^[a-zA-ZáéíóúÁÉÍÓÚñÑ ]{2,}$/u", $apellidos)) {
+                    if ($apellidos && !preg_match("/^[a-zA-Z0-9áéíóúÁÉÍÓÚñÑ ]{2,}$/u", $apellidos)) {
                         $_SESSION['gestion'] = "failed_apellidos";
                         header("Location:" . BASE_URL . "usuario/gestion" . (isset($_GET['id']) ? "&id=" . $_GET['id'] : "") . "#apellidos");
                         exit;
@@ -734,7 +735,7 @@
                         'HORA' => $pedido->getHora(),
                         'QUERY' => urlencode('C. '.$pedido->getDireccion().' '.$pedido->getCodigoPostal().' '.$pedido->getMunicipio().' '.$pedido->getProvincia()),
                         'DIRECCION' => $pedido->getDireccion().', '.$pedido->getPoblacion().' ('.$pedido->getCodigoPostal().') - '.$pedido->getProvincia(),
-                        'RAZON' => "Tu usuario ha sido eliminado, por lo que el pedido ha sido eliminado.",
+                        'RAZON' => "Tu cuenta ha sido eliminada, por lo que el pedido ha sido eliminado.",
                         'COSTE' => $pedido->getCoste(),
                     ]);
 

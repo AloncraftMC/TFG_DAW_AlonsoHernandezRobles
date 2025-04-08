@@ -13,7 +13,6 @@
 ## 1h - 2h 🔄
 
 - Hacer que el botón de registrarse inicie sesión automáticamente al registrarse.
-- Añadir confirmaciones a todas las eliminaciones.
 - Hacer que al logearse con el botón de carrito añada *actually* el producto al carrito.
 
 <hr>
@@ -45,5 +44,7 @@
 - Botón de ver producto siempre abajo (ajuste css).
 
 <div style="page-break-after: always;"></div>
+
+# Post-Implementación (Pospucio 🧹)
 
 - Revisar que se eliminan todas las variables de `$_SESSION` para evitar mensajes que no deben aparecer.

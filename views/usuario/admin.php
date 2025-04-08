@@ -121,7 +121,7 @@
 
                 <div class="separador especial"></div>
 
-                <a href="<?=BASE_URL?>usuario/eliminar&id=<?=$usuario->getId()?>">
+                <a href="<?=BASE_URL?>usuario/eliminar&id=<?=$usuario->getId()?>" onclick="return confirm('¿Estás seguro de que quieres eliminar el usuario <?=$usuario->getNombre()?>?\nEsta acción no se puede deshacer.')">
                     Eliminar
                 </a>
 

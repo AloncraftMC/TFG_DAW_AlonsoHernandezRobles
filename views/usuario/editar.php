@@ -18,7 +18,7 @@
 
         <?php if(isset($_SESSION['gestion']) && $_SESSION['gestion'] == 'failed_nombre'): ?>
 
-            <small class="error">El nombre, de al menos 2 caracteres, solo puede contener letras y espacios.</small>
+            <small class="error">El nombre, de al menos 2 caracteres, solo puede contener letras, números y espacios.</small>
             <?php Utils::deleteSession('gestion'); ?>
 
         <?php endif; ?>
@@ -32,7 +32,7 @@
 
         <?php if(isset($_SESSION['gestion']) && $_SESSION['gestion'] == 'failed_apellidos'): ?>
 
-            <small class="error">Los apellidos, de al menos 2 caracteres, solo pueden contener letras y espacios.</small>
+            <small class="error">Los apellidos, de al menos 2 caracteres, solo pueden contener letras, números y espacios.</small>
             <?php Utils::deleteSession('gestion'); ?>
 
         <?php endif; ?>
@@ -125,6 +125,7 @@
 
         <script>const src = '<?=BASE_URL?>assets/images/uploads/usuarios/<?=$usuario->getImagen()?>?t=0';</script>
         <script src="<?=BASE_URL?>js/subirImagenEditar.js"></script>
+        <script src="<?=BASE_URL?>js/validarFormularioEditar.js?t=<?=time()?>"></script>
         
     </div>
 

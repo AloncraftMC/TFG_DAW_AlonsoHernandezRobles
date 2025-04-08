@@ -18,7 +18,7 @@
 
 <?php else: ?>
 
-    <a href="<?=BASE_URL?>carrito/clear" style="text-decoration: none;">
+    <a href="<?=BASE_URL?>carrito/clear" style="text-decoration: none;" onclick="return confirm('¿Estás seguro de que quieres vaciar el carrito?\nEsta acción no se puede deshacer.')">
         <button class="boton more-margin btn-del" style="display: flex; justify-content: center; align-items: center; margin: 0 auto;">
             <img src="<?=BASE_URL?>assets/images/vaciar.svg" alt="Vaciar carrito" style="margin-right: 4px">Vaciar carrito
         </button>
@@ -92,7 +92,7 @@
                         <a href="<?= BASE_URL ?>producto/ver&id=<?= $prod->getId() ?>" class="enlace-producto" style="font-size: 120%;"><?= $prod->getNombre() ?></a>
                     </td>
                     <td style="min-width: 200px; height: 100px;">
-                        <a href="<?= BASE_URL ?>carrito/down&index=<?= $indice ?>" class="boton boton-carrito boton-down">-</a>
+                        <a href="<?= BASE_URL ?>carrito/down&index=<?= $indice ?>" class="boton boton-carrito boton-down" <?= ($producto['unidades'] == 1) ? 'onclick="return confirm(\'¿Estás seguro de que quieres eliminar el producto ' . $prod->getNombre() . ' (1 unidad)?\nEsta acción no se puede deshacer.\')"' : '' ?>>-</a>
                         <h2 style="display: inline"><?= $producto['unidades'] ?></h2>
                         <a href="<?= BASE_URL ?>carrito/up&index=<?= $indice ?>" class="boton boton-carrito boton-up">+</a>
                     </td>
@@ -115,7 +115,7 @@
                         </span>
                     </td>
                     <td class="acciones-especial">
-                        <a href="<?= BASE_URL ?>carrito/delete&index=<?= $indice ?>" class="boton btn-delete">
+                        <a href="<?= BASE_URL ?>carrito/delete&index=<?= $indice ?>" class="boton btn-delete" onclick="return confirm('¿Estás seguro de que quieres eliminar el producto <?= $prod->getNombre() ?> (<?= $producto['unidades'] ?> unidad<?= ($producto['unidades'] > 1) ? 'es' : '' ?>)?\nEsta acción no se puede deshacer.')">
                             <img src="<?= BASE_URL ?>assets/images/vaciar.svg" alt="Eliminar producto" class="ver" style="background-color: rgb(200, 0, 0);">
                         </a>
                     </td>
@@ -218,5 +218,5 @@
 <?php Utils::deleteSession('carritoResultado'); ?>
 <?php Utils::deleteSession('productoNoMas'); ?>
 
-<script src="<?=BASE_URL?>js/ajusteImagenesAdminProductos.js"></script>
+<script src="<?=BASE_URL?>js/ajusteImagenesTabla.js"></script>
 <script src="<?=BASE_URL?>js/actualizarPaginacion.js"></script>

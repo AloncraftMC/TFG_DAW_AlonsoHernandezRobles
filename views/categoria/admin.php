@@ -75,7 +75,7 @@
 
                     <div class="separador"></div>
 
-                    <a href="<?=BASE_URL?>categoria/eliminar&id=<?=$categoria->getId()?>">
+                    <a href="<?=BASE_URL?>categoria/eliminar&id=<?=$categoria->getId()?>" onclick="return confirm('¿Estás seguro de que quieres eliminar la categoría <?=$categoria->getNombre()?>?\nEsta acción no se puede deshacer.')">
                         Eliminar
                     </a>
 

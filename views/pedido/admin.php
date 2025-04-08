@@ -144,7 +144,7 @@
 
                     <div class="separador" style="transform: scaleX(1.2) scaleY(0.5);"></div>
 
-                    <a href="<?=BASE_URL?>pedido/eliminar&id=<?=$pedido->getId()?>">
+                    <a href="<?=BASE_URL?>pedido/eliminar&id=<?=$pedido->getId()?>" onclick="return confirm('¿Estás seguro de que quieres eliminar el pedido con ID #<?=$pedido->getId()?>?\nEsta acción no se puede deshacer.')">
                         Eliminar
                     </a>
 

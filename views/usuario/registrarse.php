@@ -11,7 +11,7 @@
 
         <?php if(isset($_SESSION['register']) && $_SESSION['register'] == 'failed_nombre'): ?>
 
-            <small class="error">El nombre, de al menos 2 caracteres, solo puede contener letras y espacios.</small>
+            <small class="error">El nombre, de al menos 2 caracteres, solo puede contener letras, números y espacios.</small>
             <?php Utils::deleteSession('register'); ?>
 
         <?php endif; ?>
@@ -25,7 +25,7 @@
 
         <?php if(isset($_SESSION['register']) && $_SESSION['register'] == 'failed_apellidos'): ?>
 
-            <small class="error">Los apellidos, de al menos 2 caracteres, solo pueden contener letras y espacios.</small>
+            <small class="error">Los apellidos, de al menos 2 caracteres, solo pueden contener letras, números y espacios.</small>
             <?php Utils::deleteSession('register'); ?>
 
         <?php endif; ?>
@@ -85,6 +85,7 @@
         </div>
 
         <script src="<?=BASE_URL?>js/subirImagenCrear.js"></script>
+        <script src="<?=BASE_URL?>js/validarFormularioCrear.js?t=<?=time()?>"></script>
 
     </div>
 

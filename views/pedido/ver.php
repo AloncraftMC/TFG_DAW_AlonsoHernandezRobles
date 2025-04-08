@@ -196,5 +196,5 @@
     </h4>
 </div>
 
-<script src="<?=BASE_URL?>js/ajusteImagenesAdminProductos.js"></script>
+<script src="<?=BASE_URL?>js/ajusteImagenesTabla.js"></script>
 <script src="<?=BASE_URL?>js/actualizarPaginacion.js"></script>

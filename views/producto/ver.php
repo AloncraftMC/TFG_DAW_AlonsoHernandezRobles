@@ -5,9 +5,7 @@
     use models\Usuario;
     use models\Valoracion;
 
-    $producto = Producto::getById($_GET['id']);
-    $valoraciones = Valoracion::getByProducto($producto->getId());
-
+    $todas = Valoracion::getByProducto($producto->getId());
 ?>
 
 <div class="container">
@@ -217,7 +215,7 @@
 
 <?php endif;?>
 
-<h1>Comentarios <?= (count($valoraciones) > 0) ? '('.count($valoraciones).')' : ''?></h1>
+<h1>Comentarios <?= (count($todas) > 0) ? '('.count($todas).')' : ''?></h1>
 
 <!-- Si el usuario actual ha comprado el producto, mostramos el formulario para añadir una valoración -->
 
@@ -236,9 +234,7 @@
 
     <strong style="margin-top: 0px; margin-bottom: 20px; font-size: 120%; color: gray;">Aún no hay comentarios acerca de este producto.</strong>
 
-<?php endif; ?>
-
-<?php if($valoraciones != null): ?>
+<?php else: ?>
 
     <?php foreach($valoraciones as $valoracion): ?>
 
@@ -273,7 +269,48 @@
 
     <?php endforeach; ?>
 
+    <div class="paginacion" style="margin: 0px;">
+
+        <?php if($totalPag > 1): ?>
+
+            <a href="<?=BASE_URL?>producto/ver&id=<?=$producto->getId()?>&pag=1" style="pointer-events: <?=($_SESSION['pag'] == 1) ? 'none' : 'auto'?>;">
+                <button class="boton <?php if($_SESSION['pag'] == 1) echo 'disabled' ?>">
+                    <img src="<?=BASE_URL?>assets/images/doubleleft.png" alt="Primera página" style="width: 10px; padding: 5px;">
+                </button>
+            </a>
+
+            <a href="<?=BASE_URL?>producto/ver&id=<?=$producto->getId()?>&pag=<?= ($_SESSION['pag'] > 1) ? $_SESSION['pag'] - 1 : 1 ?>" style="pointer-events: <?=($_SESSION['pag'] == 1) ? 'none' : 'auto'?>;">
+                <button class="boton <?php if($_SESSION['pag'] == 1) echo 'disabled' ?>">
+                    <img src="<?=BASE_URL?>assets/images/left.svg" alt="Página anterior">
+                </button>
+            </a>
+
+            <h1>Pág.
+                <form style="padding: 0px; background-color: unset; display: inline;" action="<?= BASE_URL ?>producto/ver&id=<?=$producto->getId()?>" method="GET">
+                    <input type="number" name="pag" min="1" max="<?= $totalPag ?>" class="quantity-input" value="<?= $_SESSION['pag'] ?>" style="width: 60px; height: 40px; font-size: 30px; padding: 5px; margin: 0px;" required>
+                    <input type="submit" value="Ir" style="display: none;">
+                </form>
+            </h1>
+
+            <a href="<?=BASE_URL?>producto/ver&id=<?=$producto->getId()?>&pag=<?= ($_SESSION['pag'] < $totalPag) ? $_SESSION['pag'] + 1 : $totalPag ?>" style="pointer-events: <?=($_SESSION['pag'] == $totalPag) ? 'none' : 'auto'?>;">
+                <button class="boton <?php if($_SESSION['pag'] == $totalPag) echo 'disabled' ?>">
+                    <img src="<?=BASE_URL?>assets/images/right.svg" alt="Página siguiente">
+                </button>
+            </a>
+
+            <a href="<?=BASE_URL?>producto/ver&id=<?=$producto->getId()?>&pag=<?=$totalPag?>" style="pointer-events: <?=($_SESSION['pag'] == $totalPag) ? 'none' : 'auto'?>;">
+                <button class="boton <?php if($_SESSION['pag'] == $totalPag) echo 'disabled' ?>">
+                    <img src="<?=BASE_URL?>assets/images/doubleright.png" alt="Última página" style="width: 10px; padding: 5px;">
+                </button>
+            </a>
+
+        <?php endif; ?>
+
+    </div>
+
 <?php endif; ?>
+
+<script src="<?=BASE_URL?>js/actualizarPaginacion.js"></script>
 
 <?php Utils::deleteSession('create'); ?>
 <?php Utils::deleteSession('delete'); ?>
