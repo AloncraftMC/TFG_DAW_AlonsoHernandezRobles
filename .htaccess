@@ -4,10 +4,11 @@
     RewriteEngine On
     ErrorDocument 404 http://localhost/TFG/error/
 
-    # Redirigir todas las peticiones al archivo index.php
+    # Redirigir todas las peticiones que sean archivos o directorios inexistentes
     RewriteCond %{SCRIPT_FILENAME} !-d
     RewriteCond %{SCRIPT_FILENAME} !-f
 
+    # Redirigir todas las peticiones al archivo index.php
     RewriteRule ^(.*)/(.*) index.php?controller=$1&action=$2
 
 </IfModule>

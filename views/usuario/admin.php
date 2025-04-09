@@ -1,4 +1,4 @@
-<h1>Administración de Usuarios</h1>
+<h1 class="mqAdminTitulo">Administración de Usuarios</h1>
 
 <!-- Botón de creación de usuario -->
 
@@ -113,16 +113,14 @@
                 <?php endif; ?>
             </td>
 
-            <td class="acciones-especial">
+            <td class="acciones" style="display: flex; flex-direction: row; justify-content: center; align-items: center; gap: 10px; margin: 0px; height: 105px">
                 
                 <a class="forzar-azul" href="<?=BASE_URL?>usuario/gestion&id=<?=$usuario->getId()?>">
-                    Editar
+                    <img src="<?=BASE_URL?>assets/images/editar.svg" alt="Editar usuario" class="ver" style="background-color: #2980B9">
                 </a>
 
-                <div class="separador especial"></div>
-
                 <a href="<?=BASE_URL?>usuario/eliminar&id=<?=$usuario->getId()?>" onclick="return confirm('¿Estás seguro de que quieres eliminar el usuario <?=$usuario->getNombre()?>?\nEsta acción no se puede deshacer.')">
-                    Eliminar
+                    <img src="<?=BASE_URL?>assets/images/vaciar.svg" alt="Eliminar usuario" class="ver" style="background-color: rgb(218, 0, 0);">
                 </a>
 
             </td>

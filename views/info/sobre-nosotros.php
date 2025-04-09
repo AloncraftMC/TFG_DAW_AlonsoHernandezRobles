@@ -1,4 +1,4 @@
-<h1>Sobre Nosotros</h1>
+<h1 class="mqAdminTitulo">Sobre Nosotros</h1>
 
 <div class="container modificado">
 
@@ -13,9 +13,12 @@
 
     <h2>4. Contacto</h2>
     <p>Si tienes alguna duda o consulta, no dudes en ponerte en contacto con nosotros. Estamos a tu disposición para ayudarte.</p>
-    <ul>
-        <li><b>Email</b>: <a href="mailto:senalesdetrafico.store@gmail.com">senalesdetrafico.store@gmail.com</a></li>
-    </ul>
+    <div class="mqSobreNosotrosEmail">
+        <ul>
+            <li><b>Email</b>: <a href="mailto:senalesdetrafico.store@gmail.com">senalesdetrafico.store@gmail.com</a></li>
+        </ul>
+        <a class="lal" href="mailto:senalesdetrafico.store@gmail.com">senalesdetrafico.store@gmail.com</a>
+    </div>
 
 </div>
 

@@ -1,4 +1,4 @@
-<h1>Condiciones de Uso</h1>
+<h1 class="mqAdminTitulo">Condiciones de Uso</h1>
 
 <div class="container modificado">
 

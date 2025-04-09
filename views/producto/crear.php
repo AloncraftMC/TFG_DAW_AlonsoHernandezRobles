@@ -107,7 +107,7 @@
 
         <div style="margin-top: 0px; display: flex; justify-content: center; align-items: center; width: 100%;">
             <img id="imagen-preview" src="#" alt="Vista previa de la imagen" style="display: none; min-height: 100px; max-height: 100px; border-radius: 5px; max-width: 500px;">
-            <button id="eliminar-imagen" type="button" class="delete-image">
+            <button id="eliminar-imagen" type="button" class="delete-image" style="width: 200px;">
                 Eliminar imagen
             </button>
         </div>

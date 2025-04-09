@@ -3,7 +3,7 @@
     use models\Producto;
 ?>
 
-<h1>Carrito <?php if (Utils::statsCarrito()['count'] == 0): ?>Vacío<?php elseif (Utils::statsCarrito()['totalCount'] == 1): ?>(1 producto)<?php else: ?>(<?= Utils::statsCarrito()['totalCount'] ?> productos)<?php endif; ?></h1>
+<h1 class="mqCarritoGestionTitulo">Carrito <?php if (Utils::statsCarrito()['count'] == 0): ?>Vacío<?php elseif (Utils::statsCarrito()['totalCount'] == 1): ?>(1 producto)<?php else: ?>(<?= Utils::statsCarrito()['totalCount'] ?> productos)<?php endif; ?></h1>
 
 <?php if (!isset($_SESSION['carrito']) || Utils::statsCarrito()['count'] == 0): ?>
 
@@ -67,7 +67,7 @@
         <thead>
             <tr>
                 <th>Imagen</th>
-                <th>Producto</th>
+                <th class="mqCarritoGestionProductoTH">Producto</th>
                 <th>Cantidad</th>
                 <th>Precio</th>
                 <th>Total</th>

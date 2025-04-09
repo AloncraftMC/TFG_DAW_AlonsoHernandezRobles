@@ -42,16 +42,33 @@
 
         public function add() {
             
-            if (!isset($_SESSION['identity'])) {
-                $_SESSION['redirect_after_login'] = $_POST['producto_id'];
-                header('Location: ' . BASE_URL . 'usuario/login');
-                exit;
-            }
-            
-            if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            if ($_SERVER['REQUEST_METHOD'] === 'POST' || isset($_SESSION['redirect_after_login'])) {
 
-                $producto_id = isset($_POST['producto_id']) ? (int) $_POST['producto_id'] : false;
+                $producto_id = isset($_POST['productoId']) ? (int) $_POST['productoId'] : false;
                 $cantidad = isset($_POST['cantidad']) ? (int) $_POST['cantidad'] : 1;
+
+                if (!isset($_SESSION['identity'])) {
+                
+                    $_SESSION['redirect_after_login'] = [
+                        'productoId' => $producto_id,
+                        'cantidad' => $cantidad,
+                    ];
+                
+                    header('Location: ' . BASE_URL . 'usuario/login');
+                    exit;
+                
+                }else{
+
+                    if (isset($_SESSION['redirect_after_login'])) {
+
+                        $producto_id = $_SESSION['redirect_after_login']['productoId'];
+                        $cantidad = $_SESSION['redirect_after_login']['cantidad'];
+
+                        Utils::deleteSession('redirect_after_login');
+
+                    }
+
+                }
 
                 if ($producto_id && $cantidad > 0) {
 

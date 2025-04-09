@@ -3,7 +3,7 @@
     use models\Categoria;
 ?>
 
-<h1>Administración de Productos</h1>
+<h1 class="mqAdminTitulo">Administración de Productos</h1>
 
 <!-- Si no hay categorías, mostramos un mensaje informativo al hacer hover sobre el botón, que además sería disabled en ese caso -->
 
@@ -125,22 +125,18 @@
                     <img src="<?=BASE_URL?>assets/images/uploads/productos/<?=$producto->getImagen()?>?t=<?=time()?>" alt="<?=$producto->getNombre()?>">
                 </td>
 
-                <td class="acciones-especial">
+                <td class="acciones-especial" style="display: flex; flex-direction: row; justify-content: center; align-items: center; gap: 10px; margin: 0px; height: 105px">
 
                     <a href="<?=BASE_URL?>producto/ver&id=<?=$producto->getId()?>">
-                        Ver
+                        <img src="<?=BASE_URL?>assets/images/ver.svg" alt="Ver producto" class="ver" style="background-color: rgb(47, 158, 0);">
                     </a>
-
-                    <div class="separador"></div>
                     
                     <a href="<?=BASE_URL?>producto/gestion&id=<?=$producto->getId()?>">
-                        Editar
+                        <img src="<?=BASE_URL?>assets/images/editar.svg" alt="Editar producto" class="ver" style="background-color: #2980B9">
                     </a>
 
-                    <div class="separador"></div>
-
                     <a href="<?=BASE_URL?>producto/eliminar&id=<?=$producto->getId()?>" onclick="return confirm('¿Estás seguro de que quieres eliminar el producto <?=$producto->getNombre()?>?\nEsta acción no se puede deshacer.')">
-                        Eliminar
+                        <img src="<?=BASE_URL?>assets/images/vaciar.svg" alt="Eliminar producto" class="ver" style="background-color: rgb(218, 0, 0);">
                     </a>
 
                 </td>

@@ -184,7 +184,22 @@
                                 ]
                             ]);
 
-                            header("Location:" . BASE_URL . "usuario/registrarse#complete");
+                            // Nuevo: iniciamos sesión
+
+                            $_SESSION['identity'] = [
+                                'id' => $usuario->getId(),
+                                'nombre' => $usuario->getNombre(),
+                                'apellidos' => $usuario->getApellidos(),
+                                'email' => $usuario->getEmail(),
+                                'rol' => $usuario->getRol(),
+                                'color' => $usuario->getColor(),
+                                'imagen' => $usuario->getImagen()
+                            ];
+
+                            if($usuario->getRol() == 'admin') $_SESSION['admin'] = true;
+
+                            // Antiguo: header("Location:" . BASE_URL . "usuario/registrarse#complete");
+                            header("Location:" . BASE_URL);
                             exit;
                         
                         }
@@ -227,34 +242,6 @@
 
             }
 
-            // Cargar cookies
-
-            if (isset($_COOKIE['recuerdame'])) {
-                
-                $email = $_COOKIE['recuerdame'];
-                
-                $usuario = Usuario::getByEmail($email);
-                
-                if ($usuario) {
-
-                    $_SESSION['identity'] = [
-                        'id' => $usuario->getId(),
-                        'nombre' => $usuario->getNombre(),
-                        'apellidos' => $usuario->getApellidos(),
-                        'email' => $usuario->getEmail(),
-                        'rol' => $usuario->getRol(),
-                        'imagen' => $usuario->getImagen()
-                    ];
-            
-                    if ($usuario->getRol() == 'admin') $_SESSION['admin'] = true;
-            
-                    header("Location:" . BASE_URL);
-                    exit;
-
-                }
-
-            }
-
             require_once 'views/usuario/login.php';
 
         }
@@ -291,6 +278,16 @@
 
                     // Compruebo si el usuario existe
 
+                    $dummyUsuario = Usuario::getByEmail($email);
+
+                    if(!$dummyUsuario){
+                        
+                        $_SESSION['login'] = "failed_unknown";
+                        header("Location:" . BASE_URL . "usuario/login#failed_unknown");
+                        exit;
+
+                    }
+
                     $usuario = $usuario->login();
 
                     // Si el usuario existe
@@ -305,6 +302,7 @@
                             'apellidos' => $usuario->getApellidos(),
                             'email' => $usuario->getEmail(),
                             'rol' => $usuario->getRol(),
+                            'color' => $usuario->getColor(),
                             'imagen' => $usuario->getImagen()
                         ];
 
@@ -312,13 +310,13 @@
 
                         if($remember){
 
-                            setcookie('recuerdame', $email, time() + 60 * 60 * 24 * 7);
+                            setcookie('recuerdame', $email, (time() + 60 * 60 * 24 * 7), '/');
 
                         }else{
 
                             if(isset($_COOKIE['recuerdame'])){
 
-                                setcookie('recuerdame', $email, time() - 1);
+                                setcookie('recuerdame', $email, time() - 1, '/');
 
                             }
 
@@ -328,10 +326,7 @@
 
                         if(isset($_SESSION['redirect_after_login'])){
                             
-                            $productoIdRedirect = $_SESSION['redirect_after_login'];
-                            Utils::deleteSession('redirect_after_login');
-                            
-                            header("Location:" . BASE_URL . "producto/ver&id=" . $productoIdRedirect);
+                            header("Location:" . BASE_URL . "carrito/add");
                             exit;
                         
                         }
@@ -341,7 +336,9 @@
 
                     }else{
 
-                        $_SESSION['login'] = "failed";
+                        $_SESSION['login'] = "failed_password";
+                        header("Location:" . BASE_URL . "usuario/login#failed_password");
+                        exit;
 
                     }
 
@@ -374,10 +371,9 @@
             Utils::deleteSession('admin_popup');
             Utils::deleteSession('carrito');
             Utils::deleteSession('gestion');
-            Utils::deleteCookieCarrito();
 
             if (isset($_COOKIE['recuerdame'])) {
-                setcookie('recuerdame', '', time() - 1);
+                setcookie('recuerdame', '', time() - 1, '/');
             }
 
             header("Location:" . BASE_URL);
@@ -751,6 +747,12 @@
         
                     $_SESSION['delete'] = "complete";
 
+                    // Eliminar su hueco en la cookie del carrito
+
+                    Utils::deleteCookieCarritoByEmail($usuario->getEmail());
+
+                    // Enviar correo
+
                     Utils::enviarCorreo($usuario, "Cuenta eliminada", BASE_URL."mails/usuario/destruir.html", [
                         "USERNAME" => $usuario->getNombre(),
                     ], [
@@ -850,6 +852,8 @@
                 if($usuario->delete()){
         
                     $_SESSION['delete'] = "complete";
+
+                    Utils::deleteCookieCarrito();
 
                     Utils::enviarCorreo($usuario, "Cuenta eliminada", BASE_URL."mails/usuario/eliminar.html", [
                         "USERNAME" => $usuario->getNombre(),

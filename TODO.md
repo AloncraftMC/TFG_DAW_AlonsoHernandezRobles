@@ -12,9 +12,6 @@
 
 ## 1h - 2h 🔄
 
-- Hacer que el botón de registrarse inicie sesión automáticamente al registrarse.
-- Hacer que al logearse con el botón de carrito añada *actually* el producto al carrito.
-
 <hr>
 
 ## 2h - 6h 🎨
@@ -23,19 +20,49 @@
 
 ## 6h - 12h 📦
 
-- *Responsiveness* (Adaptabilidad) completa.
+### · *Responsiveness* (Adaptabilidad) completa.
+
+- Carrito
+    - Gestión 🟡 (Resumen carrito)
+- Categoría
+    - Admin
+    - Crear ✅
+    - Editar ✅
+- Info
+    - Condiciones de Uso ✅
+    - Política de Privacidad ✅
+    - Sobre Nosotros ✅
+- Pedido
+    - Admin 
+    - Crear ✅
+    - Listo ✅
+    - Mis Pedidos
+    - Ver 🟡 (Resumen carrito + más)
+- Producto
+    - Admin
+    - Buscar
+    - Crear ✅
+    - Editar ✅
+    - Recomendados
+    - Ver
+- Usuario
+    - Admin
+    - Crear ✅
+    - Editar ✅
+    - Gestión ✅
+    - Login ✅
+    - Registrarse ✅
+- General: Mensajes de `$_SESSION` (error, éxito, etc.)
 
 <hr>
 
 ## Más de 12h (es decir, una jornada entera) 💰
 
-- Pagos con PayPal.
+- Putos Pagos con PayPal (PPPP).
 
 <hr>
 
 ## ??? horas 🐛
-
-- Al iniciar sesión por el botón del carrito, redirigir al producto en el que estaba (a veces no va).
 
 <hr>
 
@@ -48,3 +75,4 @@
 # Post-Implementación (Pospucio 🧹)
 
 - Revisar que se eliminan todas las variables de `$_SESSION` para evitar mensajes que no deben aparecer.
+- Poner el atributo time a todos los scripts de JS.

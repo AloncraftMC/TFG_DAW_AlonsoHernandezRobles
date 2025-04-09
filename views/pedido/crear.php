@@ -2,7 +2,7 @@
     use helpers\Utils;
 ?>
 
-<h1>Pedido (<?= Utils::statsCarrito()['totalCount'] ?> producto<?= (Utils::statsCarrito()['totalCount'] > 1) ? 's' : '' ?>)</h1>
+<h1 class="mqAdminTitulo">Pedido (<?= Utils::statsCarrito()['totalCount'] ?> producto<?= (Utils::statsCarrito()['totalCount'] > 1) ? 's' : '' ?>)</h1>
 
 <form action="<?=BASE_URL?>pedido/hacer" method="POST">
 

@@ -21,8 +21,9 @@
     require_once 'autoload.php';
     require_once 'config.php';
 
-    // Cookie del carrito
+    // Cookies de recuérdame y carrito
 
+    Utils::loadRememberCookie();
     Utils::loadCookieCarrito();
     
     // Verificar si el usuario está en la sesión y actualizar sus datos desde la base de datos
@@ -43,11 +44,7 @@
                 'color' => $usuario->getColor(),
             ];
 
-            if($usuario->getRol() == 'admin'){
-    
-                $_SESSION['admin'] = true;
-    
-            }
+            if($usuario->getRol() == 'admin') $_SESSION['admin'] = true;
 
         }
         
@@ -63,54 +60,54 @@
         $action = $_GET['action'] ?? 'index';
         $id = $_GET['id'] ?? null;
 
-        $producto = isset($id) ? Producto::getById($id) : null;
-        $categoria = isset($id) ? Categoria::getById($id) : null;
-        $usuario = isset($id) ? Usuario::getById($id) : null;
+        $producto = $id ? Producto::getById($id) : null;
+        $categoria = $id ? Categoria::getById($id) : null;
+        $usuario = $id ? Usuario::getById($id) : null;
 
         $nombreProducto = $producto ? $producto->getNombre() : null;
         $nombreCategoria = $categoria ? $categoria->getNombre() : null;
         $nombreUsuario = $usuario ? $usuario->getNombre() : null;
         
         $titulos = [
-            'producto' => [
-                'ver' => $nombreProducto,
-                'admin' => 'Administrar Productos',
-                'crear' => 'Crear Producto',
-                'gestion' => 'Editar ' . $nombreProducto,
-                'recomendados' => 'Tienda de Señales de Tráfico',
-                'buscar' => 'Búsqueda: ' . (isset($_GET['search']) ? $_GET['search'] : 'Producto') . '',
+            'carrito' => [
+                'gestion' => 'Carrito' . (isset($_SESSION['carrito']) ? ' (' . Utils::statsCarrito()['totalCount'] . ' producto' . (Utils::statsCarrito()['totalCount'] > 1 ? 's' : '') . ')' : ' de compras')
             ],
             'categoria' => [
                 'admin' => 'Administrar Categorías',
                 'crear' => 'Crear Categoría',
-                'editar' => 'Editar ' . $nombreCategoria
-            ],
-            'usuario' => [
-                'login' => 'Iniciar Sesión',
-                'registrarse' => 'Registrarse',
-                'admin' => 'Administrar Usuarios',
-                'gestion' => 'Perfil de Usuario - ' . (isset($_SESSION['identity']) ? $_SESSION['identity']['nombre'] : 'Usuario'),
-                'editar' => 'Editar ' . $nombreUsuario,
-                'crear' => 'Crear Usuario'
-            ],
-            'pedido' => [
-                'admin' => 'Administrar Pedidos',
-                'crear' => 'Realizar Pedido',
-                'ver' => 'Detalles del Pedido (#' . (isset($id) ? $id : '') . ')',
-                'listo' => 'Pedido Solicitado',
-                'misPedidos' => 'Mis Pedidos - ' . (isset($_SESSION['identity']) ? $_SESSION['identity']['nombre'] : 'Usuario'),
-            ],
-            'carrito' => [
-                'gestion' => 'Carrito' . (isset($_SESSION['carrito']) ? ' (' . Utils::statsCarrito()['totalCount'] . ' producto' . (Utils::statsCarrito()['totalCount'] > 1 ? 's' : '') . ')' : ' de compras')
+                'gestion' => 'Editar ' . $nombreCategoria
             ],
             'info' => [
                 'condicionesUso' => 'Condiciones de Uso',
                 'politicaPrivacidad' => 'Política de Privacidad',
                 'sobreNosotros' => 'Sobre Nosotros'
-            ]
+            ],
+            'pedido' => [
+                'admin' => 'Administrar Pedidos',
+                'crear' => 'Realizar Pedido',
+                'listo' => 'Pedido Solicitado',
+                'misPedidos' => 'Mis Pedidos - ' . (isset($_SESSION['identity']) ? $_SESSION['identity']['nombre'] : 'Usuario'),
+                'ver' => 'Detalles del Pedido (#' . (isset($id) ? $id : '') . ')',
+            ],
+            'producto' => [
+                'admin' => 'Administrar Productos',
+                'buscar' => 'Búsqueda: ' . (isset($_GET['search']) ? $_GET['search'] : 'Producto') . '',
+                'crear' => 'Crear Producto',
+                'gestion' => 'Editar ' . $nombreProducto,
+                'recomendados' => 'Tienda de Señales de Tráfico',
+                'ver' => $nombreProducto,
+            ],
+            'usuario' => [
+                'admin' => 'Administrar Usuarios',
+                'crear' => 'Crear Usuario',
+                'editar' => 'Editar ' . $nombreUsuario,
+                'gestion' => 'Perfil de Usuario - ' . (isset($_SESSION['identity']) ? $_SESSION['identity']['nombre'] : 'Usuario'),
+                'login' => 'Iniciar Sesión',
+                'registrarse' => 'Registrarse',
+            ],
         ];
 
-        // Asignar título si existe en la matriz, sino generar uno genérico
+        // Asignar título si existe en la matriz, si no, generar uno genérico
         
         if (isset($titulos[$controller][$action])) {
 

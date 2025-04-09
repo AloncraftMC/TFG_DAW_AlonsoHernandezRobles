@@ -149,6 +149,60 @@
             }
 
         }
+
+        // Método para eliminar la cookie del carrito de un usuario en específico
+
+        public static function deleteCookieCarritoByEmail($email): void {
+            
+            if(isset($_COOKIE['carrito'])){
+
+                $carritos = json_decode($_COOKIE['carrito'], true);
+
+                if(isset($carritos[$email])) unset($carritos[$email]);
+
+                if(!empty($carritos)){
+
+                    setcookie('carrito', json_encode($carritos), time() + 60*60*24*3, '/');
+
+                }else{
+
+                    setcookie('carrito', '', time() - 3600, '/');
+
+                }
+
+            }
+
+        }
+
+        // Método para cargar la cookie de recordar al usuario
+
+        public static function loadRememberCookie(): void{
+
+            if (isset($_COOKIE['recuerdame'])) {
+                
+                $email = $_COOKIE['recuerdame'];
+                
+                $usuario = Usuario::getByEmail($email);
+                
+                if ($usuario) {
+
+                    $_SESSION['identity'] = [
+                        'id' => $usuario->getId(),
+                        'nombre' => $usuario->getNombre(),
+                        'apellidos' => $usuario->getApellidos(),
+                        'email' => $usuario->getEmail(),
+                        'rol' => $usuario->getRol(),
+                        'color' => $usuario->getColor(),
+                        'imagen' => $usuario->getImagen()
+                    ];
+            
+                    if ($usuario->getRol() == 'admin') $_SESSION['admin'] = true;
+
+                }
+
+            }
+
+        }
         
         // Método para comprobar si el usuario puede valorar un producto
 

@@ -1254,7 +1254,44 @@ table {
     margin: 0px;
 }
 
-/* Mostrar textos de los botones de admin */
+/* Botón de admin en móvil */
+
+#adminToggle{
+    
+    box-shadow: 0px 2px 5px rgba(0,0,0,0.5);
+    background-color: white;
+    color: black;
+    border: 0px;
+    border-radius: 15px;
+    margin: 10px;
+    transition: 0.5s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 44px;
+    padding: 10px;
+    display: none;
+
+    &:hover{
+        filter: brightness(0.75);
+        cursor: pointer;
+    }
+
+}
+
+/* Punto en sobre nosotros */
+
+.mqSobreNosotrosEmail{
+    ul{
+        text-align: center;
+        list-style-type: none;
+    }
+    .lal{
+        display: none;
+    }
+}
+
+/* Mostrar textos de los botones de admin en el header */
 
 @media screen and (min-width: 1710px) {
     .mqa1::before {
@@ -1271,7 +1308,7 @@ table {
     }
 }
 
-/* Ocultar textos de los botones de admin */
+/* Minimizar textos de los botones de admin en el header */
 
 @media screen and (max-width: 1710px) {
     
@@ -1297,6 +1334,8 @@ table {
     
 }
 
+/* Ocultar textos de los botones de admin en el header */
+
 @media screen and (max-width: 1570px) {
     
     #mqAdmin{
@@ -1321,7 +1360,7 @@ table {
     
 }
 
-/* Ocultar texto del botón de carrito */
+/* Ocultar texto del botón de carrito en el header */
 
 @media screen and (max-width: 1390px) {
     
@@ -1338,7 +1377,7 @@ table {
 
 }
 
-/* Ocultar texto del botón de logout */
+/* Ocultar texto del botón de logout en el header */
 
 @media screen and (max-width: 1300px) {
     
@@ -1355,7 +1394,7 @@ table {
 
 }
 
-/* Ocultar texto del botón de mis pedidos */
+/* Ocultar texto del botón de mis pedidos en el header */
 
 @media screen and (max-width: 1180px) {
     
@@ -1372,7 +1411,7 @@ table {
 
 }
 
-/* Ocultar texto "Tienda de señales de Trafico" */
+/* Ocultar texto "Tienda de señales de Trafico" en el header */
 
 @media screen and (max-width: 1080px) {
     
@@ -1382,7 +1421,41 @@ table {
 
 }
 
-/* Ocultar icono de autopista */
+/* Ajustar tabla carrito en móvil */
+
+@media screen and (min-width: 850px){
+    .tabla-carrito {
+        transition: transform 0.3s ease, margin-bottom 0.3s ease;
+        transform: scale(1); 
+        transform-origin: top center;
+        margin-bottom: 0px;
+    }
+}
+
+@media screen and (max-width: 850px) {
+    .tabla-carrito {
+        transition: transform 0.3s ease, margin-bottom 0.3s ease; 
+        transform: scale(0.8);
+        transform-origin: top center;
+        margin-bottom: -100px;
+        thead{
+            tr{
+                th:nth-child(4){
+                    display: none;
+                }
+            }
+        }
+        tbody{
+            tr{
+                td:nth-child(4){
+                    display: none;
+                }
+            }
+        }
+    }
+}
+
+/* Ocultar icono de autopista en el header */
 
 @media screen and (max-width: 730px) {
 
@@ -1391,13 +1464,23 @@ table {
     header{
         height: 74px;
     }
+
+    .mqSobreNosotrosEmail{
+        ul{
+            display: none;
+        }
+        .lal{
+            text-align: center;
+            display: block;
+        }
+    }
+
 }
 
 /* Ajustar footer en columna */
 
 @media screen and (max-width: 600px) {
 
-    #mqAdmin{display: none;}
     #mqFooter{ /* Esto es lo mismo que footer{} */
         div{
             flex-direction: column;
@@ -1410,6 +1493,181 @@ table {
                 margin-top: 0px;
             }
         }
+    }
+
+    .tabla-carrito {
+        transition: transform 0.3s ease, margin-bottom 0.3s ease; 
+        transform: scale(0.7);
+        transform-origin: top center;
+        margin-bottom: -150px;
+        thead{
+            tr{
+                th:nth-child(2){
+                    display: none;
+                }
+            }
+        }
+        tbody{
+            tr{
+                td:nth-child(2){
+                    display: none;
+                }
+            }
+        }
+    }
+
+}
+
+/* Botones pequeños */
+
+@media screen and (max-width: 500px) {
+
+    .header-derecha{
+        
+        a{
+            button{
+                padding: 5px;
+                font-size: 12px;
+                img{
+                    width: 20px;
+                }
+            }
+        }
+
+    }
+
+    .header-izquierda{
+
+        .hi2{
+            margin-right: 0px;
+            gap: 5px;
+            .casa, .lupa, .cerrar{
+                min-height: 30px;
+                min-width: 30px;
+            }
+        }
+
+    }
+
+    .mqAdminTitulo{
+        font-size: 150%;
+    }
+
+    .mqCategoriaAdminPag{
+        display: none;
+    }
+
+}
+
+@media screen and (max-width: 420px) {
+
+    #adminToggle{
+        padding: 5px;
+        img{
+            margin: 0px;
+            max-width: 15px;
+        }
+    }
+
+    .header-derecha{
+        
+        a{
+            button{
+                padding: 5px;
+                font-size: 10px;
+                img{
+                    width: 15px;
+                }
+            }
+        }
+
+        .separador{
+            display: none;
+        }
+
+    }
+
+    .header-izquierda{
+
+        .hi2{
+            margin-right: 0px;
+            gap: 5px;
+            .casa, .lupa, .cerrar{
+                min-height: 25px;
+                min-width: 25px;
+            }
+        }
+
+    }
+
+    .tabla-carrito{
+        transition: transform 0.3s ease, margin-bottom 0.3s ease;
+        transform-origin: top center;
+        margin-bottom: -200px;
+        thead{
+            tr{
+                th:nth-child(5){
+                    display: none;
+                }
+            }
+        }
+        tbody{
+            tr{
+                td:nth-child(5){
+                    display: none;
+                }
+            }
+        }
+    }
+
+    .mqCarritoGestionTitulo{
+        font-size: 150%;
+    }
+
+    .mqAdminTitulo{
+        font-size: 125%;
+    }
+
+    .paginacion{
+
+        a:nth-child(1){
+            button{
+                width: 45px;
+                transform: scale(0.7);
+                margin-right: -15px;
+            }
+        }
+
+        a:nth-child(2){
+            button{
+                width: 45px;
+                transform: scale(0.8);
+                margin-right: -15px;
+            }
+        }
+
+        a:nth-child(4){
+            button{
+                width: 45px;
+                transform: scale(0.8);
+                margin-left: -15px;
+            }
+        }
+
+        a:nth-child(5){
+            button{
+                width: 45px;
+                transform: scale(0.7);
+                margin-left: -15px;
+            }
+        }
+
+        h1{
+            span{ /* mqCategoriaAdminPag */
+                display: none;
+            }
+        }
+        
     }
 
 }

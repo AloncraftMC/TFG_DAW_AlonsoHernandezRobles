@@ -149,6 +149,7 @@
                     $this->setApellidos($usuario['apellidos']);
                     $this->setEmail($usuario['email']);
                     $this->setRol($usuario['rol']);
+                    $this->setColor($usuario['color']);
                     $this->setImagen($usuario['imagen']);
 
                     $baseDatos->cerrarConexion();
@@ -190,8 +191,8 @@
                     ':password' => password_hash($this->password, PASSWORD_BCRYPT, ['cost' => 12]),
                     ':rol' => $this->rol,
                     ':imagen' => $this->imagen,
+                    ':color' => $this->color,
                     ':id' => $this->id,
-                    ':color' => $this->color
                 ];
 
             }else {

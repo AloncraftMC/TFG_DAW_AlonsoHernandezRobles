@@ -59,22 +59,25 @@
                 
                 <!-- Si el usuario es admin, se muestran los botones adicionales -->
                 <?php if($rol === 'admin'): ?>
-                    <a href="<?=BASE_URL?>categoria/admin" id="mqAdmin">
+                    <button id="adminToggle" class="boton oculto">
+                        <img src="<?=BASE_URL?>assets/images/more.svg">
+                    </button>
+                    <a href="<?=BASE_URL?>categoria/admin" id="mqAdmin" class="mqAdmin1">
                         <button class="boton">
                             <img src="<?=BASE_URL?>assets/images/categoria.svg"><span class="mqa1"></span>
                         </button>
                     </a>
-                    <a href="<?=BASE_URL?>producto/admin" id="mqAdmin">
+                    <a href="<?=BASE_URL?>producto/admin" id="mqAdmin" class="mqAdmin2">
                         <button class="boton">
                             <img src="<?=BASE_URL?>assets/images/producto.svg"><span class="mqa2"></span>
                         </button>
                     </a>
-                    <a href="<?=BASE_URL?>pedido/admin" id="mqAdmin">
+                    <a href="<?=BASE_URL?>pedido/admin" id="mqAdmin" class="mqAdmin3">
                         <button class="boton">
                             <img src="<?=BASE_URL?>assets/images/pedido.svg"><span class="mqa3"></span>
                         </button>
                     </a>
-                    <a href="<?=BASE_URL?>usuario/admin" id="mqAdmin">
+                    <a href="<?=BASE_URL?>usuario/admin" id="mqAdmin" class="mqAdmin4">
                         <button class="boton">
                             <img src="<?=BASE_URL?>assets/images/usuarios.svg"><span class="mqa4"></span>
                         </button>
@@ -83,7 +86,7 @@
                 <?php endif; ?>
 
                 <!-- Botón para gestionar datos personales (aparece para todos los usuarios) -->
-                <a href="<?=BASE_URL?>usuario/gestion" style="background-color: unset; border-radius: unset; box-shadow: unset;">
+                <a href="<?=BASE_URL?>usuario/gestion" style="background-color: unset; border-radius: unset; box-shadow: unset;" id="mqGestion">
                     <button style="background-color: unset; padding: 0px;">
                         <img src="<?=BASE_URL?>assets/images/uploads/usuarios/<?=$_SESSION['identity']['imagen']?>?t=0" style="width: 45px; height: 45px; margin: 0px; border-radius: 50%; box-shadow: 0px 2px 5px rgba(0,0,0,0.5);">
                     </button>
@@ -115,10 +118,14 @@
             <?php endif; ?>
         </div>
     </header>
+
+    <script src="<?=BASE_URL?>js/adminMenuMovil.js?v=<?=time()?>"></script>
+    
     <?php if (isset($_SESSION['identity']) && $_SESSION['identity']['rol'] === 'admin' && !isset($_SESSION['admin_popup'])): ?>
 
-        <script src="<?BASE_URL?>js/adminPopup.js"></script>
+        <script src="<?BASE_URL?>js/adminPopup.js?v=<?=time()?>"></script>
         <?php $_SESSION['admin_popup'] = true; ?>
 
     <?php endif; ?>
+    
     <main>

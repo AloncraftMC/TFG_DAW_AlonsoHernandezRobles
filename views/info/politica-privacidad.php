@@ -1,4 +1,4 @@
-<h1>Política de Privacidad</h1>
+<h1 class="mqAdminTitulo">Política de Privacidad</h1>
 
 <div class="container modificado">
 

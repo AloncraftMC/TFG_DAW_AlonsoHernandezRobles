@@ -5,13 +5,31 @@
 <form method="post" action="<?=BASE_URL?>usuario/entrar">
 
     <div class="form-group">
+
         <label for="email">Email</label>
         <input type="email" name="email" required value="<?= isset($_SESSION['form_data']['email']) ? $_SESSION['form_data']['email'] : '' ?>">
+
+        <?php if(isset($_SESSION['login']) && $_SESSION['login'] == 'failed_unknown'): ?>
+
+            <small class="error" id="failed_unknown">Este correo no se encuentra registrado.</small>
+            <?php Utils::deleteSession('login'); ?>
+
+        <?php endif; ?>
+    
     </div>
 
     <div class="form-group">
+
         <label for="password">Contraseña</label>
         <input type="password" name="password" required value="<?= isset($_SESSION['form_data']['password']) ? $_SESSION['form_data']['password'] : '' ?>">
+
+        <?php if(isset($_SESSION['login']) && $_SESSION['login'] == 'failed_password'): ?>
+
+            <small class="error" id="failed_password">La contraseña no es correcta.</small>
+            <?php Utils::deleteSession('login'); ?>
+
+        <?php endif; ?>
+
     </div>
 
     <!-- Casilla para recordar el usuario con una cookie que dura 7 días -->

@@ -4,7 +4,7 @@
     use models\Usuario;
 ?>
 
-<h1>Administración de Pedidos</h1>
+<h1 class="mqAdminTitulo">Administración de Pedidos</h1>
 
 <?php if(count(Pedido::getAll()) == 0): ?>
 
@@ -114,11 +114,7 @@
                 
                 <td><?=$pedido->getEstado()?></td>
 
-                <td class="acciones-especial">
-
-                    <a href="<?=BASE_URL?>pedido/ver&id=<?=$pedido->getId()?>">
-                        Ver
-                    </a>
+                <td class="acciones-especial" style="display: flex; flex-direction: row; justify-content: center; align-items: center; gap: 10px; margin: 0px; height: 100px">
 
                     <!-- Si el pedido está pendiente, que aparezca el botón de confirmar -->
                     <!-- Si el pedido está confirmado, que aparezca el botón de enviar -->
@@ -126,26 +122,32 @@
 
                     <?php if($pedido->getEstado() == 'Pendiente'): ?>
 
-                        <div class="separador" style="transform: scaleX(1.2) scaleY(0.5)"></div>
-
                         <a href="<?=BASE_URL?>pedido/confirmar&id=<?=$pedido->getId()?>">
-                            Confirmar
+                            <div>
+                                <img src="<?=BASE_URL?>assets/images/confirmar.svg" alt="Confirmar pedido" class="ver" style="background-color: rgb(47, 158, 0);">
+                            </div>
                         </a>
 
                     <?php elseif($pedido->getEstado() == 'Confirmado'): ?>
 
-                        <div class="separador" style="transform: scaleX(1.2) scaleY(0.5);"></div>
-
                         <a href="<?=BASE_URL?>pedido/enviar&id=<?=$pedido->getId()?>">
-                            Enviar
+                            <div>
+                                <img src="<?=BASE_URL?>assets/images/enviar.svg" alt="Confirmar pedido" class="ver" style="background-color: rgb(47, 158, 0);">
+                            </div>
                         </a>
 
                     <?php endif; ?>
 
-                    <div class="separador" style="transform: scaleX(1.2) scaleY(0.5);"></div>
+                    <a href="<?=BASE_URL?>pedido/ver&id=<?=$pedido->getId()?>">
+                        <div>
+                            <img src="<?=BASE_URL?>assets/images/ver.svg" alt="Ver pedido" class="ver" style="background-color: #2980B9">
+                        </div>
+                    </a>
 
                     <a href="<?=BASE_URL?>pedido/eliminar&id=<?=$pedido->getId()?>" onclick="return confirm('¿Estás seguro de que quieres eliminar el pedido con ID #<?=$pedido->getId()?>?\nEsta acción no se puede deshacer.')">
-                        Eliminar
+                        <div>
+                            <img src="<?=BASE_URL?>assets/images/vaciar.svg" alt="Eliminar pedido" class="ver" style="background-color: rgb(218, 0, 0);">
+                        </div>
                     </a>
 
                 </td>
