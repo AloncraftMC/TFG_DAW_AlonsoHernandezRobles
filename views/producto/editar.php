@@ -126,7 +126,8 @@
         </div>
 
         <script>const src = '<?=BASE_URL?>assets/images/uploads/productos/<?=$producto->getImagen()?>?t=0';</script>
-        <script src="<?=BASE_URL?>js/subirImagenEditar.js"></script>
+        <script src="<?=BASE_URL?>js/subirImagenEditar.js?t=<?=time()?>"></script>
+        <script src="<?=BASE_URL?>js/validarFormularioEditar.js?t=<?=time()?>"></script>
 
     </div>
 
@@ -136,11 +137,11 @@
 
 <?php if(isset($_SESSION['gestion']) && $_SESSION['gestion'] == 'nothing'): ?>
 
-    <strong class="yellow" id="nothing">No se ha modificado ningún dato.</strong>
+    <strong class="yellow mqAdminTitulo" id="nothing">No se ha modificado ningún dato.</strong>
 
 <?php elseif(isset($_SESSION['gestion']) && $_SESSION['gestion'] == 'failed'): ?>
 
-    <strong class="red" id="failed">Edición de datos fallida, introduce bien los datos.</strong>
+    <strong class="red mqAdminTitulo" id="failed">Edición de datos fallida, introduce bien los datos.</strong>
 
 <?php endif; ?>
 

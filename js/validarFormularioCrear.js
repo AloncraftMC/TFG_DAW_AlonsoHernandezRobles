@@ -36,15 +36,27 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     // Validar en tiempo real al escribir
-    nombre.addEventListener('input', validarNombre);
-    apellidos.addEventListener('input', validarApellidos);
-    password.addEventListener('input', validarPassword);
+    if(nombre) {
+        nombre.addEventListener('input', validarNombre);
+    }
+    if(apellidos) {
+        apellidos.addEventListener('input', validarApellidos);
+    }
+    if(password) {
+        password.addEventListener('input', validarPassword);
+    }
 
     // Validar también al enviar (por si acaso)
     formulario.addEventListener('submit', function(e) {
-        validarNombre();
-        validarApellidos();
-        validarPassword();
+        if(nombre) {
+            validarNombre();
+        }
+        if(apellidos) {
+            validarApellidos();
+        }
+        if(password) {
+            validarPassword();
+        }
 
         if (!formulario.checkValidity()) {
             e.preventDefault();

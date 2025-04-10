@@ -66,11 +66,11 @@
 
 <?php if(isset($_SESSION['create']) && $_SESSION['create'] == 'failed'): ?>
 
-    <strong class="red" id="failed">Habido un error en la creación del pedido.</strong>
+    <strong class="red mqAdminTitulo" id="failed">Habido un error en la creación del pedido.</strong>
 
 <?php elseif(isset($_SESSION['create']) && $_SESSION['create'] == 'canceled'): ?>
 
-    <strong class="red" id="canceled">El pago ha sido cancelado.</strong>
+    <strong class="red mqAdminTitulo" id="canceled">El pago ha sido cancelado.</strong>
 
 <?php endif; ?>
 

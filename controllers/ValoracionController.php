@@ -3,7 +3,9 @@
     namespace controllers;
 
     use helpers\Utils;
+    use models\Producto;
     use models\Valoracion;
+    use models\Usuario;
 
     class ValoracionController{
 
@@ -93,18 +95,50 @@
 
                 }
 
-                // 1. Eliminamos la valoración (y punto y final)
+                if($valoracion->getUsuarioId() == $_SESSION['identity']['id'] || $_SESSION['identity']['rol'] == 'admin'){
+ 
+                    // 1. Eliminamos la valoración (y punto y final)
 
-                if($valoracion->delete()){
+                    if($valoracion->delete()){
 
-                    $_SESSION['delete'] = "complete";
-                    header('Location:'.BASE_URL.'producto/ver&id='.$id.'#complete');
-                    exit;
+                        if($_SESSION['identity']['rol'] == 'admin' && $_SESSION['identity']['id'] != $valoracion->getUsuarioId()){
+
+                            $usuario = Usuario::getById($valoracion->getUsuarioId());
+
+                            Utils::enviarCorreo($usuario, "Valoración eliminada", BASE_URL."mails/valoracion/eliminar.html", [
+                                "USERNAME" => $usuario->getNombre(),
+                                "PRODUCTO_ID" => $valoracion->getProductoId(),
+                                "PRODUCTO_NOMBRE" => Producto::getById($valoracion->getProductoId())->getNombre(),
+                                "VALORACION" => str_repeat('⭐', $valoracion->getPuntuacion()),
+                                "COMENTARIO" => $valoracion->getComentario(),
+                                "FECHA" => date('d/m/Y', strtotime($valoracion->getFecha())),
+                                "HORA" => date('H:i:s', strtotime($valoracion->getFecha())),
+                                "COMENTARIO" => $valoracion->getComentario(),
+                            ], [
+                                [
+                                    'ruta' => __DIR__ . '/../assets/images/uploads/usuarios/' . $usuario->getImagen(),
+                                    'cid' => 'user',
+                                    'nombre' => $usuario->getNombre() . ' ' . $usuario->getApellidos()
+                                ]
+                            ]);
+
+                        }
+
+                        $_SESSION['delete'] = "complete";
+                        header('Location:'.BASE_URL.'producto/ver&id='.$valoracion->getProductoId().'#complete');
+                        exit;
+
+                    }else{
+
+                        $_SESSION['delete'] = "failed_eliminar";
+                        header('Location:'.BASE_URL.'producto/ver&id='.$valoracion->getProductoId().'#failed');
+                        exit;
+
+                    }
 
                 }else{
 
-                    $_SESSION['delete'] = "failed_eliminar";
-                    header('Location:'.BASE_URL.'producto/ver&id='.$id.'#failed_eliminar');
+                    header("Location:".BASE_URL);
                     exit;
 
                 }

@@ -98,7 +98,7 @@
 
     </div>
 
-    <script src="<?=BASE_URL?>js/previsualizarColores.js"></script>
+    <script src="<?=BASE_URL?>js/previsualizarColores.js?t=<?=time()?>"></script>
 
     <div class="form-group">
 
@@ -124,7 +124,7 @@
         </div>
 
         <script>const src = '<?=BASE_URL?>assets/images/uploads/usuarios/<?=$usuario->getImagen()?>?t=0';</script>
-        <script src="<?=BASE_URL?>js/subirImagenEditar.js"></script>
+        <script src="<?=BASE_URL?>js/subirImagenEditar.js?t=<?=time()?>"></script>
         <script src="<?=BASE_URL?>js/validarFormularioEditar.js?t=<?=time()?>"></script>
         
     </div>

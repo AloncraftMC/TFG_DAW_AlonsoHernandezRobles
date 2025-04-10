@@ -23,16 +23,14 @@
             <div class="hi2">
                 <a href="<?=BASE_URL?>"><img src="<?=BASE_URL?>assets/images/casa.svg" class="casa"></a>
                 <div id="buscarContainer">
-                    <button id="buscar" onclick="toggleSearchField()">
+                    <button id="buscar">
                         <img src="<?=BASE_URL?>assets/images/buscar.svg" alt="Buscar" class="lupa">
                     </button>
-                    <input type="text" id="searchInput" placeholder="Buscar..." style="display: none;" onkeyup="handleSearch(event)" value="<?=isset($_GET['search']) ? htmlspecialchars($_GET['search']) : ''?>">
-                    <button id="closeSearch" onclick="toggleSearchField()" style="display: none;">
+                    <input type="text" id="searchInput" placeholder="Buscar..." style="display: none;" value="<?=isset($_GET['search']) ? htmlspecialchars($_GET['search']) : ''?>">
+                    <button id="closeSearch" style="display: none;">
                         <img src="<?=BASE_URL?>assets/images/cerrar.svg" alt="Cerrar" class="cerrar">
                     </button>
                 </div>
-                <script>const BASE_URL = "<?=BASE_URL?>";</script>
-                <script src="<?=BASE_URL?>js/buscador.js?t=<?=time()?>"></script>    
             </div>
         </div>
         
@@ -62,6 +60,7 @@
                     <button id="adminToggle" class="boton oculto">
                         <img src="<?=BASE_URL?>assets/images/more.svg">
                     </button>
+                    <div class="nuevoSeparador"></div>
                     <a href="<?=BASE_URL?>categoria/admin" id="mqAdmin" class="mqAdmin1">
                         <button class="boton">
                             <img src="<?=BASE_URL?>assets/images/categoria.svg"><span class="mqa1"></span>
@@ -119,11 +118,12 @@
         </div>
     </header>
 
-    <script src="<?=BASE_URL?>js/adminMenuMovil.js?v=<?=time()?>"></script>
+    <script>const BASE_URL = "<?=BASE_URL?>";</script>  
+    <script src="<?=BASE_URL?>js/headerCombinado.js?t=<?=time()?>"></script>
     
     <?php if (isset($_SESSION['identity']) && $_SESSION['identity']['rol'] === 'admin' && !isset($_SESSION['admin_popup'])): ?>
 
-        <script src="<?BASE_URL?>js/adminPopup.js?v=<?=time()?>"></script>
+        <script src="<?BASE_URL?>js/adminPopup.js?t=<?=time()?>"></script>
         <?php $_SESSION['admin_popup'] = true; ?>
 
     <?php endif; ?>

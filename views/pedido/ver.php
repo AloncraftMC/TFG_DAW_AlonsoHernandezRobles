@@ -170,12 +170,12 @@
 
 </div>
 
-<div class="resumen-carrito" style="display: flex; flex-direction: column; justify-content: center; align-items: center; margin-top: <?=($totalPag > 1) ? '0px' : '20px'?> margin-bottom: 0px;">
+<div class="resumen-carrito final-pedido1" style="display: flex; flex-direction: column; justify-content: center; align-items: center; margin-top: <?=($totalPag > 1) ? '0px' : '20px'?> margin-bottom: 0px;">
     <h1 style="color: green; font-size: 200%"><span style="color: black; font-weight: normal;">Total*:</span> <?= $pedido->getCoste() ?> €</h1>
     <h5 style="width: 500px; margin-top: 0px; margin-bottom: 20px; text-align: center; color: gray">*Los precios y ofertas de los productos están sujetos a cambios. El coste del pedido es el que figura en el momento de la compra y no se verá afectado.</h5>
 </div>
 
-<div class="container" style="width: unset; margin-top: 0px">
+<div class="container final-pedido2" style="width: unset; margin-top: 0px">
     <h4 style="margin: 0px; text-align: center;">
         <span style="font-size: 130%">Realizado el <?=date('d/m/Y', strtotime($pedido->getFecha()))?> a las <?=$pedido->getHora()?></span>
         <?php if($_SESSION['identity']['rol'] == 'admin'): ?>
@@ -196,5 +196,5 @@
     </h4>
 </div>
 
-<script src="<?=BASE_URL?>js/ajusteImagenesTabla.js"></script>
-<script src="<?=BASE_URL?>js/actualizarPaginacion.js"></script>
+<script src="<?=BASE_URL?>js/ajusteImagenesTabla.js?t=<?=time()?>"></script>
+<script src="<?=BASE_URL?>js/actualizarPaginacion.js?t=<?=time()?>"></script>

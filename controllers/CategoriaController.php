@@ -70,7 +70,7 @@
         
                     // Validar nombre (solo letras y espacios, mínimo 2 caracteres)
 
-                    if (!preg_match("/^[a-zA-ZáéíóúÁÉÍÓÚñÑ ]{2,}$/u", $nombre)) {
+                    if (!preg_match("/^[a-zA-Z0-9áéíóúÁÉÍÓÚñÑ ]{2,}$/u", $nombre)) {
 
                         $_SESSION['create'] = "failed_nombre";
                         header("Location:" . BASE_URL . "categoria/crear#nombre");
@@ -134,7 +134,7 @@
 
                     // Validar nombre (solo letras y espacios, mínimo 2 caracteres)
 
-                    if ($nombre && !preg_match("/^[a-zA-ZáéíóúÁÉÍÓÚñÑ ]{2,}$/u", $nombre)) {
+                    if ($nombre && !preg_match("/^[a-zA-Z0-9áéíóúÁÉÍÓÚñÑ ]{2,}$/u", $nombre)) {
                         $_SESSION['gestion'] = "failed_nombre";
                         header("Location:" . BASE_URL . "categoria/gestion&id=" . $id . "#nombre");
                         exit;

@@ -47,4 +47,4 @@
     <p>Este sitio web no es una tienda real. Cualquier pago de PayPal que se realice en este sitio web será real, pero no se procesará ningún pedido con productos reales ni se enviará nada a cualquier localización establecida. Este sitio web ha sido creado con fines académicos y de demostración.</p>
 </div>
 
-<script src="<?=BASE_URL?>js/atencion.js"></script>
+<script src="<?=BASE_URL?>js/atencion.js?t=<?=time()?>"></script>

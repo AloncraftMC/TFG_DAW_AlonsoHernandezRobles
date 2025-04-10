@@ -10,11 +10,11 @@
     document.getElementById("searchInput").blur();
 </script>
 
-<h1>Productos Encontrados (<?= count($resultados) ?>)</h1>
-<h2 style='margin-top: 0px; color: var(--color-10);'>Resultados para: "<?= $search ?>"</h2>
+<h1 class="mqAdminTitulo">Productos Encontrados (<?= count($resultados) ?>)</h1>
+<h2 class="filtrados-por" style='margin-top: 0px; color: var(--color-10);'>Resultados para: "<?= $search ?>"</h2>
 
 <?php if (empty($resultados)): ?>
-    <h2 style="color: gray">No se encontraron productos que coincidan con tu búsqueda...</h2>
+    <h2 class="no-se-encontraron" style="color: gray">No se encontraron productos que coincidan con tu búsqueda...</h2>
     <h1 style="font-size: 500%">:(</h1>
 <?php else: ?>
     <!-- Paginación superior -->
@@ -57,7 +57,7 @@
     <?php endif; ?>
 
     <!-- Tabla de productos -->
-    <table style="width:100%;">
+    <table style="width:100%;" class="tabla-recomendados">
         <?php 
         // Dividir los productos en filas de 3
         $chunks = array_chunk($productos, 3);
@@ -69,7 +69,7 @@
         foreach ($chunks as $row):
             $bg = $bgColors[$rowIndex % 2];
         ?>
-        <script src="<?=BASE_URL?>js/ajusteImagenesProductos.js"></script>
+        <script src="<?=BASE_URL?>js/ajusteImagenesProductos.js?t=<?=time()?>"></script>
 
         <tr style="background-color: <?= $bg ?>;">
             <?php foreach ($row as $producto): ?>
@@ -116,7 +116,7 @@
                         <?php endif; ?>
                     </div>
 
-                    <div style="width: 100%;">
+                    <div style="width: 100%;" class="boton-ver-producto">
                         <a href="<?= BASE_URL ?>producto/ver&id=<?= $producto->getId() ?>" class="boton">
                             <button style="margin-top: 20px;">Ver Producto</button>
                         </a>
@@ -176,4 +176,4 @@
     <?php endif; ?>
 <?php endif; ?>
 
-<script src="<?= BASE_URL ?>js/actualizarPaginacion.js"></script>
+<script src="<?= BASE_URL ?>js/actualizarPaginacion.js?t=<?=time()?>"></script>

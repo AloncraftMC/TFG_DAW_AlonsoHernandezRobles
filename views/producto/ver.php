@@ -8,11 +8,11 @@
     $todas = Valoracion::getByProducto($producto->getId());
 ?>
 
-<div class="container">
+<div class="container ver-producto">
     
     <img src="<?=BASE_URL?>assets/images/uploads/productos/<?=$producto->getImagen()?>" alt="<?=$producto->getNombre()?>">
 
-    <script src="<?=BASE_URL?>js/ajusteImagenesProductos.js"></script>
+    <script src="<?=BASE_URL?>js/ajusteImagenesProductos.js?t=<?=time()?>"></script>
 
     <div class="product-info">
         
@@ -24,19 +24,19 @@
             
             <ul>
 
-                <?php if(count($valoraciones) > 0){
+                <?php if(count($todas) > 0){
 
                     echo '<li style="list-style: none; margin: 0px;">';
 
                     $suma = 0;
 
                     // Sumar todas las puntuaciones
-                    foreach($valoraciones as $valoracion) {
+                    foreach($todas as $valoracion) {
                         $suma += $valoracion->getPuntuacion();
                     }
 
                     // Calcular la puntuación promedio
-                    $puntuacion = $suma / count($valoraciones);
+                    $puntuacion = $suma / count($todas);
 
                     // Mostrar las estrellas, redondeando la puntuación al entero más cercano
                     $estrellas = round($puntuacion);
@@ -106,13 +106,13 @@
 
 <?php else: ?>
 
-    <strong class="yellow">Este producto está agotado.</strong>
+    <strong class="yellow mqAdminTitulo">Este producto está agotado.</strong>
 
 <?php endif; ?>
 
 <?php if(isset($_SESSION['carritoResultado']) && $_SESSION['carritoResultado'] == 'failed_stock'): ?>
 
-    <strong class="red">No tenemos el stock solicitado para este producto.</strong>
+    <strong class="red mqAdminTitulo">No tenemos el stock solicitado para este producto.</strong>
     <strong class="red" style="font-size: 95%; margin-top: 10px;">Stock disponible: <?=$producto->getStock()?> unidades.</strong>
     <strong style="font-size: 95%; margin-top: 10px;">
         
@@ -145,7 +145,7 @@
 
 <?php elseif(isset($_SESSION['carritoResultado']) && $_SESSION['carritoResultado'] == 'complete'): ?>
 
-    <strong class="green">¡Producto añadido al carrito!</strong>
+    <strong class="green mqAdminTitulo">¡Producto añadido al carrito!</strong>
     <strong class="green" style="font-size: 95%; margin-top: 10px;">(+<?=$_SESSION['cantidadAnadida']?> unidad<?=$_SESSION['cantidadAnadida'] > 1 ? 'es' : ''?>)</strong>
 
     <a href="<?=BASE_URL?>carrito/gestion" class="boton ver-carrito" style="margin-top: 20px; margin-bottom: 20px;">
@@ -157,7 +157,7 @@
 
 <?php elseif(isset($_SESSION['carritoResultado']) && $_SESSION['carritoResultado'] == 'failed'): ?>
 
-    <strong class="red" id="failed">Error al añadir el producto al carrito.</strong>
+    <strong class="red mqAdminTitulo" id="failed">Error al añadir el producto al carrito.</strong>
 
 <?php endif; ?>
 
@@ -221,18 +221,28 @@
 
 <?php if(isset($_SESSION['create']) && $_SESSION['create'] == 'complete'): ?>
 
-    <strong class="green" id="complete" style="margin-top: 0px">¡Comentario enviado!</strong>
+    <strong class="green mqAdminTitulo" id="complete" style="margin-top: 0px">¡Comentario enviado!</strong>
     <strong class="green" style="font-size: 95%; margin-top: 10px; margin-bottom: 20px;">Gracias por tu valoración.</strong>
 
 <?php elseif(isset($_SESSION['create']) && $_SESSION['create'] == 'failed_valoracion'): ?>
 
-    <strong class="red" id="failed" style="margin-bottom: 20px">Error al enviar el comentario.</strong>
+    <strong class="red mqAdminTitulo" id="failed" style="margin-bottom: 20px">Error al enviar el comentario.</strong>
+
+<?php endif; ?>
+
+<?php if(isset($_SESSION['delete']) && $_SESSION['delete'] == 'complete'): ?>
+
+    <strong class="green mqAdminTitulo" id="complete" style="margin-top: 0px; margin-bottom: 20px;">¡Comentario eliminado!</strong>
+
+<?php elseif(isset($_SESSION['delete']) && $_SESSION['delete'] == 'failed'): ?>
+
+    <strong class="red mqAdminTitulo" id="failed">Error al eliminar el comentario.</strong>
 
 <?php endif; ?>
 
 <?php if($valoraciones == null): ?>
 
-    <strong style="margin-top: 0px; margin-bottom: 20px; font-size: 120%; color: gray;">Aún no hay comentarios acerca de este producto.</strong>
+    <strong style="margin-top: 0px; margin-bottom: 20px; font-size: 120%; color: gray;" class="mqAdminTitulo">Aún no hay comentarios acerca de este producto.</strong>
 
 <?php else: ?>
 
@@ -255,8 +265,20 @@
 
                 </div>
 
-                <div class="derecha">
-                    Comentó el día <?=date('d/m/Y', strtotime($valoracion->getFecha()))?> a las <?=date('H:i:s', strtotime($valoracion->getFecha()))?> horas.
+                <div class="derecha" style="display: flex; flex-direction: row; justify-content: end; align-items: center">
+
+                    <?php if($valoracion->getUsuarioId() == $_SESSION['identity']['id'] || $_SESSION['identity']['rol'] == 'admin'): ?>
+                        
+                        <a href="<?=BASE_URL?>valoracion/eliminar&id=<?=$valoracion->getId()?>" class="oscurecer" style="margin-right: 30px; margin-top: -20px;" onclick="return confirm('¿Estás seguro de que quieres eliminar la valoración?\nEsta acción no se puede deshacer.')">
+                            <button style="padding: 5px; width: 50px; height: 50px; background-color: rgb(218, 0, 0);">
+                                <img src="<?=BASE_URL?>assets/images/vaciar.svg" style="width: 30px; min-height: unset; max-height: unset; padding: 0px;">
+                            </button>
+                        </a>
+                        
+                    <?php endif; ?>
+
+                    <span class="morir">Comentó el día <?=date('d/m/Y', strtotime($valoracion->getFecha()))?> a las <?=date('H:i:s', strtotime($valoracion->getFecha()))?> horas.</span>
+        
                 </div>
 
             </div>
@@ -310,7 +332,8 @@
 
 <?php endif; ?>
 
-<script src="<?=BASE_URL?>js/actualizarPaginacion.js"></script>
+<script src="<?=BASE_URL?>js/actualizarPaginacion.js?t=<?=time()?>"></script>
 
+<?php Utils::deleteSession('carritoResultado'); ?>
 <?php Utils::deleteSession('create'); ?>
 <?php Utils::deleteSession('delete'); ?>

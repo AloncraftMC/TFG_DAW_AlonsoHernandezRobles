@@ -23,6 +23,8 @@
 
         <?php endif; ?>
 
+        <script src="<?=BASE_URL?>js/validarFormularioEditar.js?t=<?=time()?>"></script>
+
     </div>
 
     <button type="submit">Guardar Cambios</button>
@@ -31,11 +33,11 @@
 
 <?php if(isset($_SESSION['gestion']) && $_SESSION['gestion'] == 'nothing'): ?>
 
-    <strong class="yellow" id="nothing">No se ha modificado ningún dato.</strong>
+    <strong class="yellow mqAdminTitulo" id="nothing">No se ha modificado ningún dato.</strong>
 
 <?php elseif(isset($_SESSION['gestion']) && $_SESSION['gestion'] == 'failed'): ?>
 
-    <strong class="red" id="failed">Edición de datos fallida, introduce bien los datos.</strong>
+    <strong class="red mqAdminTitulo" id="failed">Edición de datos fallida, introduce bien los datos.</strong>
 
 <?php endif; ?>
 

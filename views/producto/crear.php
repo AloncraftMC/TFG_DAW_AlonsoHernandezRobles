@@ -116,7 +116,8 @@
             <small class="error">La imagen debe ser jpg, png o svg.</small>
         </div>
 
-        <script src="<?=BASE_URL?>js/subirImagenCrear.js"></script>
+        <script src="<?=BASE_URL?>js/subirImagenCrear.js?t=<?=time()?>"></script>
+        <script src="<?=BASE_URL?>js/validarFormularioCrear.js?t=<?=time()?>"></script>
 
     </div>
 
@@ -126,7 +127,7 @@
 
 <?php if(isset($_SESSION['create']) && $_SESSION['create'] == 'failed'): ?>
 
-    <strong class="red" id="failed">Creación fallida, introduce bien los datos.</strong>
+    <strong class="red mqAdminTitulo" id="failed">Creación fallida, introduce bien los datos.</strong>
 
 <?php endif; ?>
 

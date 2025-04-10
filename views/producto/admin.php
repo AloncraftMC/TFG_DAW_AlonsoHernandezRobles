@@ -36,7 +36,7 @@
 
 <?php else: ?>
 
-    <script src="<?=BASE_URL?>js/ajusteImagenesTabla.js"></script>
+    <script src="<?=BASE_URL?>js/ajusteImagenesTabla.js?t=<?=time()?>"></script>
 
     <div class="paginacion" style="margin-top: 0px;">
 
@@ -54,7 +54,7 @@
                 </button>
             </a>
 
-            <h1>Pág.
+            <h1><span class="mqAdminPag">Pág.</span>
                 <form style="padding: 0px; background-color: unset; display: inline;" action="<?= BASE_URL ?>producto/admin" method="GET">
                     <input type="number" name="pag" min="1" max="<?= $totalPag ?>" class="quantity-input" value="<?= $_SESSION['pag'] ?>" style="width: 60px; height: 40px; font-size: 30px; padding: 5px; margin: 0px;" required>
                     <input type="submit" value="Ir" style="display: none;">
@@ -77,7 +77,7 @@
 
     </div>
 
-    <table>
+    <table class="tabla-productos">
 
         <tr>
             <th>ID</th>
@@ -125,7 +125,7 @@
                     <img src="<?=BASE_URL?>assets/images/uploads/productos/<?=$producto->getImagen()?>?t=<?=time()?>" alt="<?=$producto->getNombre()?>">
                 </td>
 
-                <td class="acciones-especial" style="display: flex; flex-direction: row; justify-content: center; align-items: center; gap: 10px; margin: 0px; height: 105px">
+                <td class="acciones-especial" style="display: flex; flex-direction: row; justify-content: center; align-items: center; gap: 10px; margin: 0px; height: 120px">
 
                     <a href="<?=BASE_URL?>producto/ver&id=<?=$producto->getId()?>">
                         <img src="<?=BASE_URL?>assets/images/ver.svg" alt="Ver producto" class="ver" style="background-color: rgb(47, 158, 0);">
@@ -163,7 +163,7 @@
                 </button>
             </a>
 
-            <h1>Pág.
+            <h1><span class="mqAdminPag">Pág.</span>
                 <form style="padding: 0px; background-color: unset; display: inline;" action="<?= BASE_URL ?>producto/admin" method="GET">
                     <input type="number" name="pag" min="1" max="<?= $totalPag ?>" class="quantity-input" value="<?= $_SESSION['pag'] ?>" style="width: 60px; height: 40px; font-size: 30px; padding: 5px; margin: 0px;" required>
                     <input type="submit" value="Ir" style="display: none;">
@@ -190,4 +190,4 @@
 
 <?php Utils::deleteSession('create'); ?>
 
-<script src="<?=BASE_URL?>js/actualizarPaginacion.js"></script>
+<script src="<?=BASE_URL?>js/actualizarPaginacion.js?t=<?=time()?>"></script>

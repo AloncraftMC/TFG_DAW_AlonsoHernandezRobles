@@ -16,6 +16,8 @@
 
         <?php endif; ?>
 
+        <script src="<?=BASE_URL?>js/validarFormularioCrear.js?t=<?=time()?>"></script>
+
     </div>
 
     <button type="submit">Crear Categoría</button>
@@ -24,7 +26,7 @@
 
 <?php if(isset($_SESSION['create']) && $_SESSION['create'] == 'failed'): ?>
 
-    <strong class="red" id="failed">Creación fallida, introduce bien los datos.</strong>
+    <strong class="red mqAdminTitulo" id="failed">Creación fallida, introduce bien los datos.</strong>
 
 <?php endif; ?>
 

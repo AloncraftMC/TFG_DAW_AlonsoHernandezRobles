@@ -26,12 +26,12 @@ $recomendados = [];
 
 if (isset($_GET['categoria'])) {
 
-    echo "<h1>Productos Filtrados</h1>";
+    echo "<h1 class='mqAdminTitulo'>Productos Filtrados</h1>";
 
     $categoria = Categoria::getById($_GET['categoria']);
     $modoCategoria = true;
 
-    echo "<h2 style='margin-top: 0px; color: var(--color-10);'>Por categoría: " . $categoria->getNombre() . "</h2>";
+    echo "<h2 class='filtrados-por' style='margin-top: 0px; color: var(--color-10);'>Por categoría: " . $categoria->getNombre() . "</h2>";
 
     // Filtrar productos de la categoría indicada
 
@@ -69,7 +69,7 @@ if (isset($_GET['categoria'])) {
 
 } else {
 
-    echo "<h1>Productos Recomendados</h1>";
+    echo "<h1 class='mqAdminTitulo'>Productos Recomendados</h1>";
 
     // Modo aleatorio sin categoría
 
@@ -132,24 +132,24 @@ if (isset($_GET['categoria'])) {
 
     </div>
 
-    <script src="<?= BASE_URL ?>js/carrusel.js"></script>
+    <script src="<?= BASE_URL ?>js/carrusel.js?t=<?=time()?>"></script>
 
 <?php endif; ?>
 
 <?php if(isset($noHayProductos) && $noHayProductos): ?>
 
-    <h2 style="color: gray">Aún no hay productos en esta categoría...</h2>
+    <h2 style="color: gray" class="mqAdminTitulo">Aún no hay productos en esta categoría...</h2>
 
     <h1 style="font-size: 500%">:(</h1>
 
 <?php elseif(isset($bdVacia) && $bdVacia): ?>
 
-    <h2 style="color: rgb(180, 180, 180)">¡Vaya! Parece que nuestra base de datos está vacía...</h2>
+    <h2 style="color: rgb(180, 180, 180)" class="mqAdminTitulo">¡Vaya! Parece que nuestra base de datos está vacía...</h2>
     <h1 style="font-size: 500%">:(</h1>
 
 <?php elseif(isset($hayProductosCatalogados) && !$hayProductosCatalogados): ?>
 
-    <h2 style="color: rgb(180, 180, 180)">¡Vaya! Todos nuestros productos están agotados...</h2>
+    <h2 style="color: rgb(180, 180, 180)" class="mqAdminTitulo">¡Vaya! Todos nuestros productos están agotados...</h2>
     <h1 style="font-size: 500%">:(</h1>
 
 <?php endif; ?>
@@ -175,7 +175,7 @@ if (isset($_GET['categoria'])) {
             </button>
         </a>
 
-        <h1>Pág. 
+        <h1><span class="mqAdminPag">Pág.</span>
             <form style="padding: 0px; background-color: unset; display: inline;" action="<?= BASE_URL ?>producto/recomendados&categoria=<?= $categoria->getId() ?>&pag=" method="GET">
                 <input type="number" name="pag" min="1" class="quantity-input" value="<?= $pag ?>" style="width: 60px; height: 40px; font-size: 30px; padding: 5px; margin: 0px;" required>
             </form>
@@ -199,7 +199,7 @@ if (isset($_GET['categoria'])) {
 
 <?php if (!empty($recomendados)): ?>
 
-    <table style="width:100%;">
+    <table style="width:100%;" class="tabla-recomendados">
 
         <?php 
 
@@ -216,7 +216,7 @@ if (isset($_GET['categoria'])) {
             $bg = $bgColors[$rowIndex % 2];
         ?>
 
-        <script src="<?=BASE_URL?>js/ajusteImagenesProductos.js"></script>
+        <script src="<?=BASE_URL?>js/ajusteImagenesProductos.js?t=<?=time()?>"></script>
 
         <tr style="background-color: <?= $bg ?>;">
 
@@ -272,7 +272,7 @@ if (isset($_GET['categoria'])) {
 
                     </div>
 
-                    <div style="width: 100%;">
+                    <div style="width: 100%;" class="boton-ver-producto">
                         <a href="<?= BASE_URL ?>producto/ver&id=<?= $producto->getId() ?>" class="boton">
                             <button style="margin-top: 20px;">Ver Producto</button>
                         </a>
@@ -325,7 +325,7 @@ if (isset($_GET['categoria'])) {
             </button>
         </a>
 
-        <h1>Pág. 
+        <h1><span class="mqAdminPag">Pág.</span>
             <form style="padding: 0px; background-color: unset; display: inline;" action="<?= BASE_URL ?>producto/recomendados&categoria=<?= $categoria->getId() ?>&pag=" method="GET">
                 <input type="number" name="pag" min="1" class="quantity-input" value="<?= $pag ?>" style="width: 60px; height: 40px; font-size: 30px; padding: 5px; margin: 0px;" required>
             </form>
@@ -347,4 +347,4 @@ if (isset($_GET['categoria'])) {
 
 <?php endif; ?>
 
-<script src="<?= BASE_URL ?>js/actualizarPaginacion.js"></script>
+<script src="<?= BASE_URL ?>js/actualizarPaginacion.js?t=<?=time()?>"></script>

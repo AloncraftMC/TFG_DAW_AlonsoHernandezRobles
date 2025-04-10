@@ -7,7 +7,7 @@
     
 ?>
 
-<h1 style="margin-bottom: 0px">Gestión de Usuario</h1>
+<h1 style="margin-bottom: 0px" class="mqAdminTitulo">Gestión de Usuario</h1>
 <h3><?=$_SESSION['identity']['nombre']?> <?=$_SESSION['identity']['apellidos']?></h3>
 
 <form method="post" action="<?=BASE_URL?>usuario/editar" enctype="multipart/form-data">
@@ -89,7 +89,7 @@
 
     </div>
 
-    <script src="<?=BASE_URL?>js/previsualizarColores.js"></script>
+    <script src="<?=BASE_URL?>js/previsualizarColores.js?t=<?=time()?>"></script>
 
     <div class="form-group">
 
@@ -115,7 +115,7 @@
         </div>
 
         <script>const src = '<?=BASE_URL?>assets/images/uploads/usuarios/<?=$usuario->getImagen()?>?t=0';</script>
-        <script src="<?=BASE_URL?>js/subirImagenEditar.js"></script>
+        <script src="<?=BASE_URL?>js/subirImagenEditar.js?t=<?=time()?>"></script>
         <script src="<?=BASE_URL?>js/validarFormularioEditar.js?t=<?=time()?>"></script>
         
     </div>
@@ -130,7 +130,7 @@
 
 <?php if(isset($_SESSION['gestion']) && $_SESSION['gestion'] == 'complete'): ?>
 
-    <strong class="green" id="complete">Datos editados correctamente.</strong>
+    <strong class="green mqAdminTitulo" id="complete">Datos editados correctamente.</strong>
 
 <?php elseif(isset($_SESSION['gestion']) && $_SESSION['gestion'] == 'nothing'): ?>
 

@@ -195,7 +195,7 @@
                     --color-1: ' . $color . ';
                 }
             </style>
-            <script src="' . BASE_URL . 'js/generarPaletaColores.js"></script>
+            <script src="' . BASE_URL . 'js/generarPaletaColores.js?t='.time().'></script>
             ';
 
         }

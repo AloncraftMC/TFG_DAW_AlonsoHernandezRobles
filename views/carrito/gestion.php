@@ -179,7 +179,7 @@
 
 <?php if(isset($_SESSION['carritoResultado']) && $_SESSION['carritoResultado'] == 'failed_stock'): ?>
 
-    <strong class="red" id="failed_stock">No tenemos el stock solicitado para este producto.</strong>
+    <strong class="red mqAdminTitulo" id="failed_stock">No tenemos el stock solicitado para este producto.</strong>
 
     <strong class="red" style="font-size: 95%; margin-top: 10px;">Stock disponible: <?=Producto::getById($_SESSION['idProductoNoMas'])->getStock()?> unidades.</strong>
     <strong style="font-size: 95%; margin-top: 10px;">
@@ -218,5 +218,5 @@
 <?php Utils::deleteSession('carritoResultado'); ?>
 <?php Utils::deleteSession('productoNoMas'); ?>
 
-<script src="<?=BASE_URL?>js/ajusteImagenesTabla.js"></script>
-<script src="<?=BASE_URL?>js/actualizarPaginacion.js"></script>
+<script src="<?=BASE_URL?>js/ajusteImagenesTabla.js?t=<?=time()?>"></script>
+<script src="<?=BASE_URL?>js/actualizarPaginacion.js?t=<?=time()?>"></script>

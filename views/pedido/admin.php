@@ -28,7 +28,7 @@
                 </button>
             </a>
 
-            <h1>Pág.
+            <h1><span class="mqAdminPag">Pág.</span>
                 <form style="padding: 0px; background-color: unset; display: inline;" action="<?= BASE_URL ?>pedido/admin" method="GET">
                     <input type="number" name="pag" min="1" max="<?= $totalPag ?>" class="quantity-input" value="<?= $_SESSION['pag'] ?>" style="width: 60px; height: 40px; font-size: 30px; padding: 5px; margin: 0px;" required>
                     <input type="submit" value="Ir" style="display: none;">
@@ -51,7 +51,7 @@
 
     </div>
 
-    <table>
+    <table class="tabla-pedidos">
 
         <tr>
             <th>ID</th>
@@ -71,8 +71,9 @@
 
                 <td><?=$pedido->getId()?></td>
 
-                <td>
+                <td class="num-productos">
 
+                    <span class="largo">
                     <?php
                     
                         $numProductos = 0;
@@ -85,6 +86,21 @@
                         echo $numProductos . ' producto' . (($numProductos > 1) ? 's' : '');
                     
                     ?>
+                    </span>
+                    <span class="corto">
+                    <?php
+                    
+                        $numProductos = 0;
+                        $lineas = LineaPedido::getByPedido($pedido->getId());
+
+                        foreach($lineas as $linea){
+                            $numProductos += $linea->getUnidades();
+                        }
+                        
+                        echo $numProductos;
+
+                    ?>
+                    </span>
 
                 </td>
 
@@ -174,7 +190,7 @@
                 </button>
             </a>
 
-            <h1>Pág.
+            <h1><span class="mqAdminPag">Pág.</span>
                 <form style="padding: 0px; background-color: unset; display: inline;" action="<?= BASE_URL ?>pedido/admin" method="GET">
                     <input type="number" name="pag" min="1" max="<?= $totalPag ?>" class="quantity-input" value="<?= $_SESSION['pag'] ?>" style="width: 60px; height: 40px; font-size: 30px; padding: 5px; margin: 0px;" required>
                     <input type="submit" value="Ir" style="display: none;">
@@ -199,4 +215,4 @@
 
 <?php endif; ?>
 
-<script src="<?=BASE_URL?>js/actualizarPaginacion.js"></script>
+<script src="<?=BASE_URL?>js/actualizarPaginacion.js?t=<?=time()?>"></script>

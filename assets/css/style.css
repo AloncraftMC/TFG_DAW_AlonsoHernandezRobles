@@ -459,6 +459,14 @@ form, .container {
 
 }
 
+.oscurecer{
+    transition: filter 0.2s;
+}
+
+.oscurecer:hover{
+    filter: brightness(0.5);
+}
+
 .container{
 
     width: 80%;
@@ -627,6 +635,13 @@ strong{
 /* TABLAS */
 
 .separador{
+    padding-left: 0.75px;
+    padding-right: 0.75px;
+    margin: 0 10px;
+    background-color: rgb(198, 198, 198);
+}
+
+.nuevoSeparador{
     padding-left: 0.75px;
     padding-right: 0.75px;
     margin: 0 10px;
@@ -1235,7 +1250,7 @@ table {
     border-radius: 10px;
     width: 300px;
     margin-left: 10px;
-    display: none; /* Escondemos el input por defecto */
+    /* display: none; /* Escondemos el input por defecto */
 }
 
 #searchInput:focus {
@@ -1244,17 +1259,12 @@ table {
 }
 
 #closeSearch {
-    display: none; /* Escondemos el botón de cerrar por defecto */
+    /* display: none; Escondemos el botón de cerrar por defecto */
     cursor: pointer;
     background: transparent;
     border: none;
-}
-
-#closeSearch {
     margin: 0px;
 }
-
-/* Botón de admin en móvil */
 
 #adminToggle{
     
@@ -1290,6 +1300,7 @@ table {
         display: none;
     }
 }
+
 
 /* Mostrar textos de los botones de admin en el header */
 
@@ -1375,6 +1386,17 @@ table {
         }
     }
 
+    .tabla-productos{
+        tr{
+            th:nth-child(4){
+                display: none;
+            }
+            td:nth-child(4){
+                display: none;
+            }
+        }
+    }
+
 }
 
 /* Ocultar texto del botón de logout en el header */
@@ -1409,21 +1431,70 @@ table {
         }
     }
 
+    .tabla-productos{
+        tr{
+            th:nth-child(3){
+                display: none;
+            }
+            td:nth-child(3){
+                display: none;
+            }
+        }
+    }
+
+    .tabla-pedidos{
+        tr{
+            th:nth-child(4){
+                display: none;
+            }
+            td:nth-child(4){
+                display: none;
+            }
+        }
+    }
+
 }
 
 /* Ocultar texto "Tienda de señales de Trafico" en el header */
 
 @media screen and (max-width: 1080px) {
     
-    #mqTiendaSeñalesTrafico{
-        display: none;
+    .tabla-productos{
+        tr{
+            th:nth-child(7){
+                display: none;
+            }
+            td:nth-child(7){
+                display: none;
+            }
+        }
+    }
+
+}
+
+@media screen and (max-width: 980px){
+
+    .tabla-usuarios{
+        tr{
+            th:nth-child(3){
+                display: none;
+            }
+            td:nth-child(3){
+                display: none;
+            }
+        }
+    }
+
+    .ver-producto{
+        display: flex;
+        flex-direction: column;
     }
 
 }
 
 /* Ajustar tabla carrito en móvil */
 
-@media screen and (min-width: 850px){
+@media screen and (min-width: 900px){
     .tabla-carrito {
         transition: transform 0.3s ease, margin-bottom 0.3s ease;
         transform: scale(1); 
@@ -1432,12 +1503,12 @@ table {
     }
 }
 
-@media screen and (max-width: 850px) {
+@media screen and (max-width: 900px) {
     .tabla-carrito {
         transition: transform 0.3s ease, margin-bottom 0.3s ease; 
         transform: scale(0.8);
         transform-origin: top center;
-        margin-bottom: -100px;
+        margin-bottom: -5%;
         thead{
             tr{
                 th:nth-child(4){
@@ -1449,6 +1520,111 @@ table {
             tr{
                 td:nth-child(4){
                     display: none;
+                }
+            }
+        }
+    }
+    .tabla-productos{
+        tr{
+            th:nth-child(8){
+                display: none;
+            }
+            td:nth-child(8){
+                display: none;
+            }
+        }
+    }
+    .tabla-usuarios{
+        tr{
+            th:nth-child(7){
+                display: none;
+            }
+            td:nth-child(7){
+                display: none;
+            }
+        }
+    }
+}
+
+.num-productos{
+    .corto{
+        display: none;
+    }
+}
+
+@media screen and (max-width: 800px) {
+    .tabla-productos{
+        tr{
+            th:nth-child(2){
+                display: none;
+            }
+            td:nth-child(2){
+                display: none;
+            }
+        }
+    }
+    .tabla-pedidos{
+        tr{
+            th:nth-child(6){
+                display: none;
+            }
+            td:nth-child(6){
+                display: none;
+            }
+        }
+    }
+    .num-productos{
+        .largo{
+            display: none;
+        }
+        .corto{
+            display: block;
+        }
+    }
+    .tabla-usuarios{
+        tr{
+            th:nth-child(2){
+                display: none;
+            }
+            td:nth-child(2){
+                display: none;
+            }
+        }
+    }
+    .tabla-mis-pedidos{
+        tr{
+            th:nth-child(2){
+                display: none;
+            }
+            td:nth-child(2){
+                display: none;
+            }
+        }
+    }
+    .no-se-encontraron{
+        margin: 0px 40px;
+        font-size: 100%;
+    }
+    .morir{
+        display: none;
+    }
+
+    .comentario{
+        .comentario-texto{
+            font-size: 100%;
+        }
+        .superior{
+            .izquierda{
+                img{
+                    min-width: 70px;
+                    min-height: 70px;
+                    max-width: 70px;
+                    max-height: 70px;
+                }
+                .nombre-y-puntuacion{
+                    h1, h2{
+                        font-size: 120%;
+                    }
                 }
             }
         }
@@ -1475,6 +1651,74 @@ table {
         }
     }
 
+    .tabla-pedidos{
+        tr{
+            th:nth-child(2){
+                display: none;
+            }
+            td:nth-child(2){
+                display: none;
+            }
+        }
+    }
+
+    .tabla-mis-pedidos{
+        tr{
+            td:nth-child(5){
+                span{
+                    font-size: 70%;
+                }
+            }
+        }
+    }
+
+}
+
+@media screen and (max-width: 700px){
+
+    .tabla-carrito {
+        transition: transform 0.3s ease, margin-bottom 0.3s ease; 
+        transform: scale(0.7);
+        transform-origin: top center;
+        margin-bottom: -10%;
+        thead{
+            tr{
+                th:nth-child(2){
+                    display: none;
+                }
+            }
+        }
+        tbody{
+            tr{
+                td:nth-child(2){
+                    display: none;
+                }
+            }
+        }
+    }
+
+    .tabla-productos{
+        tr{
+            th:nth-child(6){
+                display: none;
+            }
+            td:nth-child(6){
+                display: none;
+            }
+        }
+    }
+
+    .tabla-usuarios{
+        tr{
+            th:nth-child(5){
+                display: none;
+            }
+            td:nth-child(5){
+                display: none;
+            }
+        }
+    }
+
 }
 
 /* Ajustar footer en columna */
@@ -1495,22 +1739,78 @@ table {
         }
     }
 
-    .tabla-carrito {
-        transition: transform 0.3s ease, margin-bottom 0.3s ease; 
-        transform: scale(0.7);
+    .tabla-productos{
+        transition: transform 0.3s ease, margin-bottom 0.3s ease;
         transform-origin: top center;
-        margin-bottom: -150px;
-        thead{
-            tr{
-                th:nth-child(2){
-                    display: none;
-                }
+        transform: scale(0.8);
+        margin-bottom: -250px;
+    }
+
+    .tabla-pedidos{
+        tr{
+            th:nth-child(7){
+                display: none;
+            }
+            td:nth-child(7){
+                display: none;
             }
         }
-        tbody{
-            tr{
-                td:nth-child(2){
-                    display: none;
+    }
+
+    .tabla-usuarios{
+        tr{
+            th:nth-child(4){
+                display: none;
+            }
+            td:nth-child(4){
+                display: none;
+            }
+        }
+    }
+
+    .tabla-mis-pedidos{
+        tr{
+            th:nth-child(3){
+                display: none;
+            }
+            td:nth-child(3){
+                display: none;
+            }
+        }
+    }
+    .no-se-encontraron{
+        margin: 0px 20px;
+        font-size: 80%;
+    }
+
+    .final-pedido1, .final-pedido2{
+        transform: scale(0.9);
+    }
+
+    .ver-producto{
+        img{
+            transform: scale(0.85);
+            margin-top: -35px;
+            margin-bottom: -70px;
+        }
+    }
+
+    .comentario{
+        .superior{
+            .izquierda{
+                img{
+                    min-width: 50px;
+                    min-height: 50px;
+                    max-width: 50px;
+                    max-height: 50px;
+                }
+                .nombre-y-puntuacion{
+                    h2{
+                        font-size: 120%;
+                    }
+                    h1{
+                        font-size: 80%;
+                    }
                 }
             }
         }
@@ -1553,8 +1853,77 @@ table {
         font-size: 150%;
     }
 
-    .mqCategoriaAdminPag{
+    .mqAdminPag{
         display: none;
+    }
+
+    .tabla-carrito{
+        transition: transform 0.3s ease, margin-bottom 0.3s ease;
+        transform-origin: top center;
+        thead{
+            tr{
+                th:nth-child(5){
+                    display: none;
+                }
+            }
+        }
+        tbody{
+            tr{
+                td:nth-child(5){
+                    display: none;
+                }
+            }
+        }
+    }
+
+    .tabla-productos{
+        tr{
+            th:nth-child(5){
+                display: none;
+            }
+            td:nth-child(5){
+                display: none;
+            }
+        }
+    }
+
+    .tabla-pedidos{
+        tr{
+            th:nth-child(5){
+                display: none;
+            }
+            td:nth-child(5){
+                display: none;
+            }
+        }
+    }
+
+    .tabla-mis-pedidos{
+        tr{
+            th:nth-child(4){
+                display: none;
+            }
+            td:nth-child(4){
+                display: none;
+            }
+            td:nth-child(5){
+                span{
+                    font-size: 60%;
+                }
+            }
+        }
+    }
+
+    #searchInput{
+        width: 200px;
+    }
+
+    .filtrados-por{
+        font-size: 120%;
+    }
+
+    .final-pedido1, .final-pedido2{
+        transform: scale(0.8);
     }
 
 }
@@ -1566,6 +1935,13 @@ table {
         img{
             margin: 0px;
             max-width: 15px;
+        }
+    }
+
+    .final-pedido1{
+        h5{
+            max-width: 300px;
+            font-size: 60%;
         }
     }
 
@@ -1598,26 +1974,6 @@ table {
             }
         }
 
-    }
-
-    .tabla-carrito{
-        transition: transform 0.3s ease, margin-bottom 0.3s ease;
-        transform-origin: top center;
-        margin-bottom: -200px;
-        thead{
-            tr{
-                th:nth-child(5){
-                    display: none;
-                }
-            }
-        }
-        tbody{
-            tr{
-                td:nth-child(5){
-                    display: none;
-                }
-            }
-        }
     }
 
     .mqCarritoGestionTitulo{
@@ -1663,11 +2019,132 @@ table {
         }
 
         h1{
-            span{ /* mqCategoriaAdminPag */
+            span{ /* mqAdminPag */
                 display: none;
             }
         }
         
     }
 
+    .tabla-productos{
+        transition: transform 0.3s ease, margin-bottom 0.3s ease;
+        transform-origin: top center;
+        transform: scale(0.7);
+        margin-bottom: -400px;
+    }
+
+    .tabla-pedidos{
+        transition: transform 0.3s ease, margin-bottom 0.3s ease;
+        transform-origin: top center;
+        transform: scale(0.9);
+        margin-bottom: -20px;
+    }
+
+    .filtrados-por{
+        font-size: 100%;
+    }
+
+}
+
+/******************************************/
+
+/* Estilo base para escritorio (ya lo tienes) */
+
+/* Tablets (pantallas medianas) */
+@media screen and (max-width: 1350px) {
+  
+    /* Productos en 2 columnas */
+    .tabla-recomendados tr td {
+        width: 100% !important;
+        display: inline-block;
+        box-sizing: border-box;
+        display: block;
+    }
+    .boton-ver-producto{
+        a{
+            button{
+                width: 500px;
+            }
+        }
+    }
+
+}
+
+@media screen and (max-width: 700px){
+    #start,
+    #end{
+        display: none;
+    }
+    .boton-ver-producto{
+        a{
+            button{
+                width: 100%;
+            }
+        }
+    }
+    
+    .add-to-cart form{
+        input{
+            margin: 0px;
+        }
+        display: flex;
+        flex-direction: column;
+        gap: 0px;
+    }
+}
+
+/* Móviles (pantallas pequeñas) */
+@media screen and (max-width: 480px) {
+
+    #next,
+    #prev{
+        display: none;
+    }
+
+}
+
+/*******************************************/
+
+@media screen and (max-width: 1080px){
+    .ver-producto{
+        display: flex;
+        flex-direction: column;
+        img{
+            margin-bottom: -50px;
+        }
+    }
+    .comentario{
+        .superior{
+            .derecha{
+                display: none;
+            }
+        }
+    }
+}
+
+@media screen and (max-width: 500px){
+    .oscurecer{
+        margin-left: -20px;
+    }
+}
+
+@media screen and (max-width: 400px){
+    .ver-producto{
+        img{
+            transform: scale(0.7);
+            margin-top: -70px;
+            margin-bottom: -90px;
+        }
+    }
+    .comentario{
+        .superior{
+            .izquierda{
+                .nombre-y-puntuacion{
+                    h1{
+                        font-size: 80%;
+                    }
+                }
+            }
+        }
+    }
 }

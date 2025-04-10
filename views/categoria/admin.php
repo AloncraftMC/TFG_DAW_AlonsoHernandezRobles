@@ -29,7 +29,7 @@
                 </button>
             </a>
 
-            <h1><span class="mqCategoriaAdminPag">Pág.</span>
+            <h1><span class="mqAdminPag">Pág.</span>
                 <form style="padding: 0px; background-color: unset; display: inline;" action="<?= BASE_URL ?>categoria/admin" method="GET">
                     <input type="number" name="pag" min="1" max="<?= $totalPag ?>" class="quantity-input" value="<?= $_SESSION['pag'] ?>" style="width: 60px; height: 40px; font-size: 30px; padding: 5px; margin: 0px;" required>
                     <input type="submit" value="Ir" style="display: none;">
@@ -103,7 +103,7 @@
                 </button>
             </a>
 
-            <h1><span class="mqCategoriaAdminPag">Pág.</span>
+            <h1><span class="mqAdminPag">Pág.</span>
                 <form style="padding: 0px; background-color: unset; display: inline;" action="<?= BASE_URL ?>categoria/admin" method="GET">
                     <input type="number" name="pag" min="1" max="<?= $totalPag ?>" class="quantity-input" value="<?= $_SESSION['pag'] ?>" style="width: 60px; height: 40px; font-size: 30px; padding: 5px; margin: 0px;" required>
                     <input type="submit" value="Ir" style="display: none;">
@@ -128,4 +128,4 @@
 
 <?php endif; ?>
 
-<script src="<?=BASE_URL?>js/actualizarPaginacion.js"></script>
+<script src="<?=BASE_URL?>js/actualizarPaginacion.js?t=<?=time()?>"></script>
