@@ -1,4 +1,15 @@
-<!-- Si se pasa una categoría por GET se pone "Productos Filtrados" -->
+<?php
+    /**
+     * Vista de los productos recomendados. Es el HOME de toda la tienda.
+     * Primero, recuperamos todos los productos de la base de datos.
+     * Luego, si se pasa una categoría por GET, filtramos los productos por esa categoría.
+     * Si no se pasa ninguna categoría, mostramos tantos productos como PRODUCTS_PER_PAGE diga.
+     * Si no hay productos en la base de datos, mostramos un mensaje informativo.
+     * Si no hay productos en la categoría, mostramos un mensaje informativo.
+     * Si no hay productos catalogados, mostramos un mensaje informativo.
+     * Si hay productos, los mostramos en una tabla de 3 columnas en desktop y 1 columna en móvil.
+     */
+?>
 
 <?php
 use models\Categoria;

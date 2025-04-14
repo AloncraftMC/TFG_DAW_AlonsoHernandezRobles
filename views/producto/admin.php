@@ -1,4 +1,14 @@
 <?php
+    /**
+     * Vista de administración de productos.
+     * Si no hay productos, se muestra un mensaje informativo.
+     * Si no hay categorías, no se puede crear un producto y se muestra un mensaje informativo.
+     * Si hay productos, se muestran en una tabla con paginación.
+     * Cada producto tiene un botón para ver, editar y eliminar.
+     */
+?>
+
+<?php
     use helpers\Utils;
     use models\Categoria;
 ?>

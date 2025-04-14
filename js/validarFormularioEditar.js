@@ -1,3 +1,8 @@
+/**
+ * @file validarFormularioEditar.js
+ * @description Este archivo contiene la lógica para validar un formulario de edición.
+ */
+
 document.addEventListener('DOMContentLoaded', function() {
 
     const formulario = document.querySelector('form');

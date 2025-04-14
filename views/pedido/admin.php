@@ -1,4 +1,16 @@
 <?php
+    /**
+     * Vista de administración de pedidos.
+     * Si no hay pedidos, se muestra un mensaje.
+     * Si hay pedidos, se muestran en una tabla con paginación.
+     * Cada fila de la tabla tiene un botón para ver el pedido, otro para eliminarlo
+     * y otro para confirmar el pedido.
+     * Si el pedido está confirmado, se muestra un botón para enviarlo.
+     * Si el pedido está enviado, no se muestra nada.
+     */
+?>
+
+<?php
     use models\LineaPedido;
     use models\Pedido;
     use models\Usuario;

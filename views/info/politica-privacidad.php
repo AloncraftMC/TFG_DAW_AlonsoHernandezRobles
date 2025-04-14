@@ -1,3 +1,10 @@
+<?php
+    /**
+     * Vista de la política de privacidad.
+     * Hace uso del botón de aviso para advertir al usuario que el sitio web no es real.
+     */
+?>
+
 <h1 class="mqAdminTitulo">Política de Privacidad</h1>
 
 <div class="container modificado">

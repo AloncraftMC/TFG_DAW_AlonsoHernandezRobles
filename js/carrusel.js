@@ -1,3 +1,8 @@
+/**
+ * @file carrusel.js
+ * @description Maneja la lógica del carrusel de categorías en la página principal.
+ */
+
 document.addEventListener("DOMContentLoaded", function() {
             
     let carousel = document.getElementById("carousel");
@@ -66,13 +71,13 @@ document.addEventListener("DOMContentLoaded", function() {
     }
 
     start.addEventListener("click", function() {
-        carousel.style.scrollBehavior = "smooth"; // Habilitar animación de scroll
+        carousel.style.scrollBehavior = "smooth";   // Habilitar animación de scroll
         carousel.scrollLeft = 0;
     });
 
     prev.addEventListener("click", function() {
-        carousel.style.scrollBehavior = "smooth"; // Habilitar animación de scroll
-        carousel.scrollLeft -= 500; // Ajusta según el tamaño de los botones
+        carousel.style.scrollBehavior = "smooth";
+        carousel.scrollLeft -= 500;                 // Se ajusta según el tamaño de los botones
     });
 
     next.addEventListener("click", function() {

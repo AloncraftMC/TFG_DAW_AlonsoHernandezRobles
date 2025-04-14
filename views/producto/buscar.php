@@ -1,4 +1,12 @@
 <?php
+    /**
+     * Vista para la búsqueda de productos.
+     * Muestra los resultados de la búsqueda y permite la paginación.
+     * Si no se encuentran resultados, muestra un mensaje indicando que no se encontraron productos.
+     */
+?>
+
+<?php
     use models\Categoria;
     use models\Producto;
 

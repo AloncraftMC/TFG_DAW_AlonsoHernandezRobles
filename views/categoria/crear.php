@@ -1,3 +1,11 @@
+<?php
+    /**
+     * Vista para crear una nueva categoría.
+     * Muestra un formulario para ingresar el nombre de la categoría.
+     * Valida el nombre y muestra mensajes de error si es necesario.
+     */
+?>
+
 <?php use helpers\Utils; ?>
 
 <h1>Crear Categoría</h1>

@@ -139,7 +139,6 @@
         
     }else{  // Realmente este else no es necesario, pero quizá lo hace más claro el código
 
-        echo "Controlador no encontrado";
         (new ErrorController())->index();
 
     }
@@ -166,14 +165,12 @@
             
         }else{
 
-            echo "Acción no encontrada";
             (new ErrorController())->index();
 
         }
 
     }else{
 
-        echo "Controlador no encontrado";
         (new ErrorController())->index();
 
     }
@@ -195,7 +192,7 @@
                     --color-1: ' . $color . ';
                 }
             </style>
-            <script src="' . BASE_URL . 'js/generarPaletaColores.js?t='.time().'></script>
+            <script src="' . BASE_URL . 'js/generarPaletaColores.js?t='.time().'"></script>
             ';
 
         }

@@ -1,4 +1,13 @@
 <?php
+    /**
+     * Vista para ver un pedido específico.
+     * Muestra los detalles del pedido, incluyendo los productos y su coste total.
+     * También incluye un botón para ir a la ubicación aproximada en Google Maps.
+     * Si el usuario es admin, muestra el nombre del usuario que realizó el pedido.
+     */
+?>
+
+<?php
     use models\Producto;
     use models\Pedido;
     use models\LineaPedido;

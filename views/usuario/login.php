@@ -1,3 +1,10 @@
+<?php
+    /**
+     * Vista de inicio de sesión.
+     * Contiene el formulario con nombre, contraseña y un checkbox para recordar el usuario.
+     */
+?>
+
 <?php use helpers\Utils; ?>
 
 <h1>Iniciar Sesión</h1>

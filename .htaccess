@@ -11,4 +11,13 @@
     # Redirigir todas las peticiones al archivo index.php
     RewriteRule ^(.*)/(.*) index.php?controller=$1&action=$2
 
+    # Bloquear el acceso a archivos específicos
+    RewriteRule ^(.env|composer\.json|composer\.lock|config\.php|autoload\.php)$ - [R=404,L]
+    
+    # Bloquear el acceso a directorios y subdirectorios específicos
+    RewriteRule ^(vendor|views|models|logs|lib|helpers|database|controllers)/.*$ - [R=404,L]
+
+    # Deshabilitar listado de directorios
+    Options -Indexes
+
 </IfModule>

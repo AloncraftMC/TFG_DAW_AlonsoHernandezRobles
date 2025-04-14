@@ -1,3 +1,11 @@
+<?php
+    /**
+     * Vista de administración de usuarios.
+     * Muestra una tabla con los usuarios existentes y permite crear, editar y eliminar usuarios.
+     * También incluye paginación para navegar entre las páginas de usuarios.
+     */
+?>
+
 <h1 class="mqAdminTitulo">Administración de Usuarios</h1>
 
 <!-- Botón de creación de usuario -->

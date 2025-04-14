@@ -1,5 +1,21 @@
 <?php
 
+    /**
+     * Controlador de los usuarios.
+     * 
+     * Contiene los métodos:
+     * registrarse():       Requiere la vista de registrarse.
+     * guardar():           Guarda un usuario en la base de datos.
+     * login():             Requiere la vista de iniciar sesión.
+     * entrar():            Inicia sesión.
+     * salir():             Cierra sesión.
+     * gestion():           Requiere la vista de gestión de usuarios.
+     * editar():            Edita un usuario.
+     * eliminar():          Elimina un usuario.
+     * admin():             Requiere la vista de administración de usuarios.
+     * crear():             Requiere la vista de creación de usuarios.
+     */
+
     namespace controllers;
 
     use models\Usuario;
@@ -10,7 +26,9 @@
 
     class UsuarioController{
 
-        // Método para mostrar la vista de registrarse
+        /**
+         * Método para mostrar la vista de registrarse
+         */
 
         public function registrarse(): void{
 
@@ -23,7 +41,12 @@
         
         }
 
-        // Método para guardar un usuario en la base de datos
+        /**
+         * Método para guardar un usuario en la base de datos.
+         * 
+         * Recoge los datos del formulario y los valida. Si son correctos, guarda el usuario en la base de datos.
+         * Si no son correctos, redirige a la vista de registrarse con un mensaje de error.
+         */
 
         public function guardar(): void {
 
@@ -229,7 +252,9 @@
 
         }
 
-        // Método para mostrar la vista de iniciar sesión
+        /**
+         * Método para mostrar la vista de iniciar sesión.
+         */
 
         public function login(): void{
 
@@ -246,7 +271,11 @@
 
         }
 
-        // Método para iniciar sesión
+        /**
+         * Método para iniciar sesión. Si el usuario existe, se inicia sesión
+         * y se redirige a la página principal. Si el usuario marca la opción del "recuérdame",
+         * se guarda una cookie con el email durante 7 días.
+         */
 
         public function entrar(): void{
 
@@ -360,7 +389,9 @@
 
         }
 
-        // Método para cerrar sesión
+        /**
+         * Método para cerrar sesión 
+         */
 
         public function salir(): void{
             
@@ -381,9 +412,11 @@
 
         }
 
-        // Método para gestionar el usuario.
-        // Si no hay ninguna id en el GET, se requiere la vista de gestión del usuario. (gestion.php)
-        // Si hay una id en el GET, se muestra la vista de edición del usuario (acción de Admins). (editar.php)
+        /**
+         * Método para gestionar el usuario.
+         * Si no hay ninguna id en el GET, se requiere la vista de gestión del usuario. (gestion.php)
+         * Si hay una id en el GET, se muestra la vista de edición del usuario (acción de Admins). (editar.php)
+         */
 
         public function gestion(): void{
 
@@ -413,8 +446,10 @@
 
         }
 
-        // Método para editar el usuario.
-        // Al igual que el guardar, vamos a contemplar los casos del administrador y del propio usuario.
+        /**
+         * Método para editar el usuario.
+         * Al igual que el guardar, vamos a contemplar los casos del administrador y del propio usuario.
+         */
 
         public function editar(): void {
 
@@ -671,11 +706,20 @@
 
         }
 
-        // Método para eliminar un usuario.
-        // Si no hay id en el GET, se elimina el usuario con la sesión iniciada.
-        // Si hay id en el GET, se elimina el usuario con ese id.
-
-        // En el caso de que el propio admin elimine su cuenta, mediante la tabla, se le redirige a la página de inicio.
+        /**
+         * Método para eliminar un usuario.
+         * Si no hay id en el GET, se elimina el usuario con la sesión iniciada.
+         * Si hay id en el GET, se elimina el usuario con ese id (acción de Admins).
+         * En el caso de que el propio admin elimine su cuenta, mediante la tabla,
+         * se le redirige a la página de inicio.
+         * Obviamente tenemos que tener en cuenta la cascada, Si eliminas al usuario:
+         * - Se eliminarán todas las valoraciones del usuario.
+         * - Se eliminarán todos los pedidos del usuario y se enviará un correo por pedido al usuario de que
+         *   su pedido ha sido eliminado.
+         * Y también se enviará un correo al usuario de que su cuenta ha sido eliminada.
+         * 
+         * Nota: El código del proyecto es muy ineficiente a veces, este es simplemente un ejemplo de ello.
+         */
 
         public function eliminar(): void {
 
@@ -886,7 +930,10 @@
         
         }
 
-        // Método para mostrar la vista de administración de usuarios
+        /**
+         * Método para requerir la vista de adminsitración de usuarios mediante paginación.
+         * Requiere ser administrador.
+         */
 
         public function admin(): void {
             
@@ -919,7 +966,9 @@
 
         }
 
-        // Método para crear un usuario
+        /**
+         * Método para requerir la vista de creación de usuarios. Requiere ser administrador.
+         */
 
         public function crear(): void {
 

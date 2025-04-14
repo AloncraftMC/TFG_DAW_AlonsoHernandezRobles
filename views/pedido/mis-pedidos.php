@@ -1,4 +1,11 @@
 <?php
+    /**
+     * Vista de mis pedidos.
+     * Tiene un botón para ir a la ubicación aproximada en Google Maps por cada pedido.
+     */
+?>
+
+<?php
     use models\LineaPedido;
 ?>
 

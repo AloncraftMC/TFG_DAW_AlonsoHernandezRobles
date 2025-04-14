@@ -1,4 +1,12 @@
 <?php
+    /**
+     * Vista de gestión del carrito de la compra.
+     * Muestra los productos en el carrito, permite modificar cantidades y eliminar productos.
+     * También muestra el total del carrito y permite vaciarlo o proceder a la compra.
+     */
+?>
+
+<?php
     use helpers\Utils;
     use models\Producto;
 ?>

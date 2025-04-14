@@ -1,4 +1,14 @@
 <?php
+    /**
+     * Header de la aplicación.
+     * Contiene el logo, el título de la tienda, los botones de navegación y el carrito.
+     * También incluye el script para el menú de administración si el usuario es admin.
+     * Y el script para el popup de administración si es la primera vez que accede.
+     * También tiene el script para el buscador.
+     */
+?>
+
+<?php
     use helpers\Utils;
     use models\Pedido;
 ?>

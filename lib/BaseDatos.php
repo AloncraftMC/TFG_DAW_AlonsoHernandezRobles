@@ -1,5 +1,19 @@
 <?php
 
+    /**
+     * Clase para la conexión a la base de datos
+     * 
+     * Contiene los métodos:
+     * __construct():           Inicializa la conexión.
+     * ejecutar():              Ejecuta una consulta SQL.
+     * getSiguienteRegistro():  Obtiene el siguiente registro de la consulta.
+     * getRegistros():          Obtiene todos los registros de la consulta.
+     * getNumeroRegistros():    Obtiene el número de registros de la consulta.
+     * getUltimoId():           Obtiene el último ID insertado.
+     * cerrarConexion():        Cierra la conexión a la base de datos.
+     * __destruct():            Destructor de la clase.
+     */
+
     namespace lib;
 
     use PDO;
@@ -16,7 +30,9 @@
         private ?PDO $conexion;
         private ?PDOStatement $resultado;
 
-        // Constructor de la base de datos
+        /**
+         * Constructor de la clase BaseDatos.
+         */
 
         public function __construct(){
         
@@ -40,7 +56,9 @@
         
         }
 
-        // Método para ejecutar sentencias SQL con parámetros opcionales
+        /**
+         * Método para ejecutar una consulta SQL con parámetros opcionales para evitar inyecciones SQL.
+         */
 
         public function ejecutar(string $sql, array $parametros = []): void{
 

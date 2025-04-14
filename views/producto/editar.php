@@ -1,4 +1,11 @@
 <?php
+    /**
+     * Vista para editar un producto.
+     * Tiene los campos categoría, nombre, descripcion, precio, stock, oferta y una imagen.
+     */
+?>
+
+<?php
     use helpers\Utils;
     use models\Categoria;
 ?>

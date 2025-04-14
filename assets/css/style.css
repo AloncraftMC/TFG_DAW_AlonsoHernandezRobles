@@ -1399,6 +1399,25 @@ table {
 
 }
 
+@media screen and (max-width: 1350px) {
+  
+    /* Productos en 2 columnas */
+    .tabla-recomendados tr td {
+        width: 100% !important;
+        display: inline-block;
+        box-sizing: border-box;
+        display: block;
+    }
+    .boton-ver-producto{
+        a{
+            button{
+                width: 500px;
+            }
+        }
+    }
+
+}
+
 /* Ocultar texto del botón de logout en el header */
 
 @media screen and (max-width: 1300px) {
@@ -1465,6 +1484,21 @@ table {
                 display: none;
             }
             td:nth-child(7){
+                display: none;
+            }
+        }
+    }
+
+    .ver-producto{
+        display: flex;
+        flex-direction: column;
+        img{
+            margin-bottom: -50px;
+        }
+    }
+    .comentario{
+        .superior{
+            .derecha{
                 display: none;
             }
         }
@@ -1719,6 +1753,27 @@ table {
         }
     }
 
+    #start,
+    #end{
+        display: none;
+    }
+    .boton-ver-producto{
+        a{
+            button{
+                width: 100%;
+            }
+        }
+    }
+    
+    .add-to-cart form{
+        input{
+            margin: 0px;
+        }
+        display: flex;
+        flex-direction: column;
+        gap: 0px;
+    }
+
 }
 
 /* Ajustar footer en columna */
@@ -1926,6 +1981,19 @@ table {
         transform: scale(0.8);
     }
 
+    .oscurecer{
+        margin-left: -20px;
+    }
+
+}
+
+@media screen and (max-width: 480px) {
+
+    #next,
+    #prev{
+        display: none;
+    }
+
 }
 
 @media screen and (max-width: 420px) {
@@ -2044,88 +2112,6 @@ table {
         font-size: 100%;
     }
 
-}
-
-/******************************************/
-
-/* Estilo base para escritorio (ya lo tienes) */
-
-/* Tablets (pantallas medianas) */
-@media screen and (max-width: 1350px) {
-  
-    /* Productos en 2 columnas */
-    .tabla-recomendados tr td {
-        width: 100% !important;
-        display: inline-block;
-        box-sizing: border-box;
-        display: block;
-    }
-    .boton-ver-producto{
-        a{
-            button{
-                width: 500px;
-            }
-        }
-    }
-
-}
-
-@media screen and (max-width: 700px){
-    #start,
-    #end{
-        display: none;
-    }
-    .boton-ver-producto{
-        a{
-            button{
-                width: 100%;
-            }
-        }
-    }
-    
-    .add-to-cart form{
-        input{
-            margin: 0px;
-        }
-        display: flex;
-        flex-direction: column;
-        gap: 0px;
-    }
-}
-
-/* Móviles (pantallas pequeñas) */
-@media screen and (max-width: 480px) {
-
-    #next,
-    #prev{
-        display: none;
-    }
-
-}
-
-/*******************************************/
-
-@media screen and (max-width: 1080px){
-    .ver-producto{
-        display: flex;
-        flex-direction: column;
-        img{
-            margin-bottom: -50px;
-        }
-    }
-    .comentario{
-        .superior{
-            .derecha{
-                display: none;
-            }
-        }
-    }
-}
-
-@media screen and (max-width: 500px){
-    .oscurecer{
-        margin-left: -20px;
-    }
 }
 
 @media screen and (max-width: 400px){

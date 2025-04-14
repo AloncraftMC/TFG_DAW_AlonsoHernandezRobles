@@ -1,4 +1,8 @@
-<?php use helpers\Utils; ?>
+<?php
+    /**
+     * Vista de pedido listo.
+     */
+?>
 
 <h1 style="margin-bottom: 0px">¡Listo!</h1>
 

@@ -1,5 +1,17 @@
 <?php
 
+    /**
+     * Modelo de los pedidos de los usuarios.
+     * 
+     * Contiene los métodos:
+     * save():          Guarda un pedido en la base de datos.
+     * update():        Actualiza un pedido en la base de datos.
+     * delete():        Elimina un pedido de la base de datos.
+     * getById():       Devuelve un pedido de la base de datos por su id.
+     * getByUsuario():  Devuelve todos los pedidos de un usuario.
+     * getAll():        Devuelve todos los pedidos de la base de datos.
+     */
+
     namespace models;
 
     use lib\BaseDatos;

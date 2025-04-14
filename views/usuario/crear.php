@@ -1,3 +1,13 @@
+<?php
+    /**
+     * Vista para crear un nuevo usuario desde el panel de administración.
+     * Contiene un formulario para ingresar los datos del nuevo usuario.
+     * Se valida la información ingresada y se muestra un mensaje de error si es necesario.
+     * Tiene más campos que el formulario de registrarse, como rol y color.
+     * Se previsualiza la imagen seleccionada antes de enviarla y el color de la interfaz.
+     */
+?>
+
 <?php use helpers\Utils; ?>
 
 <h1>Crear Usuario</h1>

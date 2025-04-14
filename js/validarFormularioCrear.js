@@ -1,3 +1,8 @@
+/**
+ * @file validarFormularioCrear.js
+ * @description Este archivo contiene la lógica para validar un formulario de creación.
+ */
+
 document.addEventListener('DOMContentLoaded', function() {
 
     const formulario = document.querySelector('form');

@@ -1,5 +1,9 @@
 <?php
 
+    /**
+     * Autoloader para cargar las clases de los controladores.
+     */
+
     function controllers_autoload($classname){
         $classname = str_replace("\\", "/", $classname);
         $file = __DIR__ . '/' . $classname . '.php';

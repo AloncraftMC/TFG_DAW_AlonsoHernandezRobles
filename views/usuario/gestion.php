@@ -1,10 +1,17 @@
 <?php
-    
+    /**
+     * Vista de gestión de usuario.
+     * Esta vista es mostrada cuando el usuario quiere modificar su perfil.
+     * Puede personalizar su nombre, apellidos, email, contraseña, color y foto de perfil.
+     * También puede eliminar su cuenta.
+     */
+?>
+
+<?php    
     use helpers\Utils;
     use models\Usuario;
 
     $usuario = Usuario::getById($_SESSION['identity']['id']);
-    
 ?>
 
 <h1 style="margin-bottom: 0px" class="mqAdminTitulo">Gestión de Usuario</h1>

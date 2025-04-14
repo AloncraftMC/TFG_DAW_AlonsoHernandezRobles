@@ -1,6 +1,20 @@
 <?php
+    /**
+     * Vista del producto.
+     * Muestra la información del producto, la imagen y un botón para añadirlo al carrito con un
+     * número determinado de unidades.
+     * Si el número de unidades es mayor que el stock, se muestra un mensaje de error.
+     * Debajo, se muestran las valoraciones, con puntuaciones y comentarios de los usuarios en este producto,
+     * mediante paginación.
+     * Si el usuario ha comprado el producto y no lo ha valorado ya, se le permite valorar el producto.
+     * Si el usuario es propietario de la valoración, la puede eliminar.
+     * Si el usuario es admin, puede eliminar cualquier valoración.
+     * Si el usuario no ha comprado el producto, no puede valorar el producto.
+     */
+?>
+
+<?php
     use helpers\Utils;
-    use models\Producto;
     use models\Categoria;
     use models\Usuario;
     use models\Valoracion;

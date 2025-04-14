@@ -1,5 +1,20 @@
 <?php
 
+    /**
+     * Controlador de los productos.
+     * 
+     * Contiene los métodos:
+     * recomendados():      Requiere la vista de productos recomendados/filtrados.
+     * admin():             Requiere la vista de administración de productos.
+     * crear():             Requiere la vista de creación de productos.
+     * guardar():           Guarda un producto en la base de datos.
+     * editar():            Edita un producto en la base de datos.
+     * gestion():           Requiere la vista de edición de productos.
+     * eliminar():          Elimina un producto de la base de datos.
+     * ver():               Requiere la vista de un producto.
+     * buscar():            Busca productos y requiere la vista de búsqueda.
+     */
+
     namespace controllers;
 
     use helpers\Utils;
@@ -11,6 +26,10 @@
     use models\Valoracion;
 
     class ProductoController{
+
+        /**
+         * Método para requerir la vista de productos recomendados/filtrados mediante paginación.
+         */
 
         public function recomendados(){
 
@@ -43,6 +62,10 @@
             require_once 'views/producto/recomendados.php';
             
         }
+
+        /**
+         * Método para requerir la vista de administración de productos mediante paginación.
+         */
 
         public function admin(): void {
             
@@ -77,6 +100,11 @@
 
         }
 
+        /**
+         * Método para requerir la vista de creación de productos.
+         * Requiere que haya categorías creadas para poder crear un producto.
+         */
+
         public function crear(): void {
 
             Utils::isAdmin();
@@ -89,6 +117,10 @@
             require_once 'views/producto/crear.php';
 
         }
+
+        /**
+         * Método para guardar un producto en la base de datos.
+         */
 
         public function guardar(): void {
 
@@ -240,6 +272,10 @@
             }
 
         }
+
+        /**
+         * Método para editar un producto en la base de datos.
+         */
 
         public function editar(): void {
 
@@ -408,6 +444,10 @@
 
         }
 
+        /**
+         * Método para requerir la vista de edición de productos.
+         */
+
         public function gestion(): void {
 
             Utils::isAdmin();
@@ -435,6 +475,15 @@
             }
 
         }
+
+        /**
+         * Método para eliminar un producto de la base de datos. Requiere ser administrador.
+         * También aplica lo siguiente en forma de cascada: Si eliminas el producto:
+         * - Se eliminan todas las valoraciones de ese producto.
+         * - Se eliminan las líneas del pedido en las que figuran los mismos.
+         *      - Si el pedido queda sin líneas, se elimina el pedido y se notifica al usuario
+         *       por correo.
+         */
 
         public function eliminar(): void {
 
@@ -537,6 +586,10 @@
 
         }
 
+        /**
+         * Método para requerir la vista de un producto con sus valoraciones mediante paginación.
+         */
+
         public function ver(): void {
 
             if(!isset($_GET['id'])){
@@ -583,6 +636,10 @@
             require_once 'views/producto/ver.php';
 
         }
+
+        /**
+         * Método para buscar productos y requerir la vista de búsqueda mediante paginación.
+         */
 
         public function buscar(): void {
 

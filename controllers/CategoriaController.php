@@ -1,5 +1,17 @@
 <?php
 
+    /**
+     * Controlador de las categorías de los productos.
+     * 
+     * Contiene los métodos:
+     * admin():     Requiere la vista de administración de categorías.
+     * crear():     Requiere la vista de creación de categorías.
+     * guardar():   Valida y guarda una categoría en la base de datos.
+     * editar():    Valida y edita una categoría en la base de datos.
+     * gestion():   Requiere la vista de edición de categorías.
+     * eliminar():  Elimina una categoría de la base de datos.
+     */
+
     namespace controllers;
 
     use models\Categoria;
@@ -11,6 +23,11 @@
     use helpers\Utils;
 
     class CategoriaController{
+
+        /**
+         * Método para requerir la vista de administración de categorías mediante paginación.
+         * Si la página no es válida, se carga la más cercana al valor proporcionado.
+         */
 
         public function admin(): void {
             
@@ -45,12 +62,22 @@
 
         }
 
+        /**
+         * Método para requerir la vista de la creación de categorías. Requiere ser administrador.
+         */
+
         public function crear(): void {
 
             Utils::isAdmin();
             require_once 'views/categoria/crear.php';
 
         }
+
+        /**
+         * Método para guardar una categoría en la base de datos, validando el nombre y manteniéndolo en
+         * "caché" por si el usuario comete un error de escritura (que no debería, puesto que está
+         * también todo validado en el cliente). Requiere ser administrador.
+         */
 
         public function guardar(): void {
 
@@ -113,6 +140,12 @@
             
         }
 
+        /**
+         * Método para editar una categoría en la base de datos, validando el nombre y manteniéndolo en
+         * "caché" por si el usuario comete un error de escritura (que no debería, puesto que está
+         * también todo validado en el cliente). Requiere ser administrador.
+         */
+
         public function editar(): void {
 
             Utils::isAdmin();
@@ -169,6 +202,10 @@
 
         }
 
+        /**
+         * Método para requerir la vista de edición de categorías. Requiere ser administrador.
+         */
+
         public function gestion(): void {
 
             Utils::isAdmin();
@@ -198,6 +235,16 @@
             }
 
         }
+
+        /**
+         * Método para eliminar una categoría de la base de datos. Requiere ser administrador.
+         * También aplica lo siguiente en forma de cascada: Si eliminas la categoría
+         * - Se eliminan todos los productos de esa categoría.
+         *      - Por cada producto se eliminan todas sus valoraciones.
+         *      - Por cada producto se eliminan las líneas de pedido en las que figuran los mismos.
+         *          - Si el pedido queda sin líneas, se elimina el pedido y se notifica al usuario
+         *             por correo.
+         */
 
         public function eliminar(): void {
             

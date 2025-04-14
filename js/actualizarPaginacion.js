@@ -1,3 +1,8 @@
+/**
+ * @file actualizarPaginacion.js
+ * @description Script para reemplazar "?" por "&" en la URL de paginación
+ */
+
 document.addEventListener("DOMContentLoaded", function() {
 
     document.querySelectorAll('.paginacion form').forEach(function(form) {

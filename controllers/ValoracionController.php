@@ -1,5 +1,13 @@
 <?php
 
+    /**
+     * Controlador de las valoraciones de los usuarios en productos.
+     * 
+     * Contiene los métodos:
+     * guardar():      Guarda una valoración de un usuario en un producto en la base de datos.
+     * eliminar():     Elimina una valoración de un usuario en un producto de la base de datos.
+     */
+
     namespace controllers;
 
     use helpers\Utils;
@@ -8,6 +16,10 @@
     use models\Usuario;
 
     class ValoracionController{
+
+        /**
+         * Método para guardar una valoración de un usuario en un producto.
+         */
 
         public function guardar(){
 
@@ -76,6 +88,10 @@
             }
 
         }
+
+        /**
+         * Método para eliminar una valoración de un usuario en un producto.
+         */
 
         public function eliminar(){
 

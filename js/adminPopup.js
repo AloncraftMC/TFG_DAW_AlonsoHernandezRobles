@@ -1,3 +1,9 @@
+/**
+ * @file adminPopup.js
+ * @description Crea un popup que se muestra al cargar la página para advertir al usuario administrador
+ * sobre las consecuencias de eliminar categorías, productos, pedidos o usuarios.
+ */
+
 window.onload = function() {
 
     const overlay = document.createElement("div");

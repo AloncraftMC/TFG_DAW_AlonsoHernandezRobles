@@ -1,3 +1,12 @@
+<?php
+    /**
+     * Vista para la edición de un usuario por parte de un administrador.
+     * Se muestra un formulario con los datos del usuario a editar.
+     * Tiene el administrador la posibilidad de otorgar o quitar privilegios de administrador al usuario.
+     * También puede cambiar la imagen de perfil del usuario, entre otros.
+     */
+?>
+
 <?php use helpers\Utils; ?>
 
 <h1 style="margin-bottom: 0px">Editar Usuario</h1>

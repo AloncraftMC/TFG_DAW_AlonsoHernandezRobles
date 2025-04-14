@@ -1,5 +1,13 @@
+/**
+ * @file headerCombinado.js
+ * @description Este archivo contiene la lógica para manejar el menú de administración
+ * y el buscador en la barra de navegación.
+ */
+
 document.addEventListener('DOMContentLoaded', () => {
+
     // Elementos del menú de administración
+
     const botonAdmin = document.getElementById('adminToggle');
     const botonGestion = document.getElementById('mqGestion');
     const botonMisPedidos = document.getElementById('mqMisPedidos');
@@ -16,17 +24,21 @@ document.addEventListener('DOMContentLoaded', () => {
     let estadoPrevioBuscador = null;
 
     // Elementos del buscador
+
     const searchField = document.getElementById('searchInput');
     const searchButton = document.getElementById('buscar');
     const closeButton = document.getElementById('closeSearch');
     const titulo = document.getElementById('mqTiendaSeñalesTrafico');
 
     // Función para manejar el buscador
+
     const toggleSearchField = () => {
+
         const isSearchVisible = searchField.style.display === 'inline-block';
         const isLargeScreen = window.innerWidth > 1080;
         
         if (!isSearchVisible && !isLargeScreen) {
+
             // Guardar estado solo en móviles (≤1080px)
             estadoPrevioBuscador = {
                 botonesAdmin: [botonAdmin1, botonAdmin2, botonAdmin3, botonAdmin4].map(btn => btn ? btn.style.display : null),
@@ -45,7 +57,9 @@ document.addEventListener('DOMContentLoaded', () => {
             if (separador) separador.style.display = 'none';
             if (separadorNuevo) separadorNuevo.style.display = 'none';
             if (botonAdmin) botonAdmin.style.display = 'none';
+
         } else if (isSearchVisible && !isLargeScreen && estadoPrevioBuscador) {
+
             // Restaurar estado solo en móviles (≤1080px)
             [botonAdmin1, botonAdmin2, botonAdmin3, botonAdmin4].forEach((btn, i) => {
                 if (btn) btn.style.display = estadoPrevioBuscador.botonesAdmin[i];
@@ -58,6 +72,7 @@ document.addEventListener('DOMContentLoaded', () => {
             if (separador) separador.style.display = estadoPrevioBuscador.separador;
             if (separadorNuevo) separadorNuevo.style.display = estadoPrevioBuscador.separadorNuevo;
             if (botonAdmin) botonAdmin.style.display = estadoPrevioBuscador.adminToggle;
+
         }
         
         // Alternar visibilidad del buscador (siempre)
@@ -78,9 +93,9 @@ document.addEventListener('DOMContentLoaded', () => {
         
         // Enfocar el campo si se está mostrando
         if (!isSearchVisible) searchField.focus();
+
     };
 
-    // Resto del código permanece igual...
     const handleSearch = (event) => {
         if (event.key === 'Enter') {
             let query = searchField.value.trim();
@@ -167,4 +182,5 @@ document.addEventListener('DOMContentLoaded', () => {
     
     checkWindowSize();
     window.addEventListener('resize', checkWindowSize);
+    
 });

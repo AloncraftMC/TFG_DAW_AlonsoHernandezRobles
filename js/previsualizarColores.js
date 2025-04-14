@@ -1,3 +1,8 @@
+/**
+ * @file previsualizarColores.js
+ * @description Este script permite previsualizar los colores seleccionados en un input de tipo color.
+ */
+
 document.addEventListener("DOMContentLoaded", function () {
 
     const colorPicker = document.querySelector("input[name='color']");
@@ -30,11 +35,13 @@ document.addEventListener("DOMContentLoaded", function () {
         }
 
         // Función clamp para limitar valores
+
         function clamp(value, min, max) {
             return Math.max(min, Math.min(max, value));
         }
 
         // Convierte HEX a HSL
+
         function hexToHSL(hex) {
             let r = parseInt(hex.substring(1, 3), 16) / 255;
             let g = parseInt(hex.substring(3, 5), 16) / 255;
@@ -59,6 +66,7 @@ document.addEventListener("DOMContentLoaded", function () {
         }
 
         // Convierte HSL a HEX
+
         function hslToHex(h, s, l) {
             s /= 100;
             l /= 100;
@@ -85,6 +93,7 @@ document.addEventListener("DOMContentLoaded", function () {
         // Función para normalizar más el color base:
         // Forzamos la saturación a un rango entre 50% y 70%
         // y la luminancia a un rango entre 45% y 55%.
+
         function normalizarHSL(h, s, l) {
             s = clamp(s, 50, 70);
             l = clamp(l, 45, 55);
@@ -92,9 +101,13 @@ document.addEventListener("DOMContentLoaded", function () {
         }
 
         // Genera la paleta a partir del color base normalizado
+
         function generarPaleta(baseColor) {
+
             let hsl = hexToHSL(baseColor);
+
             // Normalizamos el color base para evitar extremos y mantener consistencia
+
             hsl = normalizarHSL(hsl.h, hsl.s, hsl.l);
 
             return {
@@ -109,15 +122,17 @@ document.addEventListener("DOMContentLoaded", function () {
                 color9: hslToHex(hsl.h, clamp(hsl.s * 0.6, 0, 100), clamp(hsl.l * 1.2, 0, 100)),  // Suave
                 color10: hslToHex(hsl.h, clamp(hsl.s * 1.3, 0, 100), clamp(hsl.l * 0.5, 0, 100)) // Nuevo color 10: más oscuro
             };
+
         }
 
         // Función que actualiza todas las variables de color en :root
+
         function actualizarColores() {
             
             let colorBase = getComputedStyle(document.documentElement).getPropertyValue('--color-1').trim();
 
             if (!colorBase || colorBase === '') {
-                console.warn("⚠️ No se encontró --color-1, usando #1864AF por defecto.");
+                window.alert("⚠️ No se encontró --color-1, usando #1864AF por defecto.");
                 colorBase = "#1864AF";
             }
 

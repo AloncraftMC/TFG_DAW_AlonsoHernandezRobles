@@ -1,3 +1,8 @@
+/**
+ * @file subirImagenEditar.js
+ * @description Este archivo contiene la carga de imágenes en un formulario de edición.
+ */
+
 document.querySelector('input[name="imagen"]').addEventListener('change', function () {
 
     const imagen = this.files[0];

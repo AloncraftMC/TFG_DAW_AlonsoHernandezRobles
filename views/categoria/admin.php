@@ -1,3 +1,11 @@
+<?php
+    /**
+     * Vista de administración de categorías.
+     * Usa paginación para mostrar las categorías en la base de datos.
+     * Permite crear, editar y eliminar categorías.
+     */
+?>
+
 <h1 class="mqAdminTitulo">Administración de Categorías</h1>
 
 <a href="<?=BASE_URL?>categoria/crear" style="text-decoration: none; margin: 10px">

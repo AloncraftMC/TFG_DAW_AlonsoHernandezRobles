@@ -1,3 +1,12 @@
+<?php
+    /**
+     * Vista para registrarse.
+     * Contiene un formulario para ingresar los datos.
+     * Se valida la información ingresada y se muestra un mensaje de error si es necesario.
+     * Se previsualiza la imagen seleccionada antes de enviarla.
+     */
+?>
+
 <?php use helpers\Utils; ?>
 
 <h1>Registrarse</h1>

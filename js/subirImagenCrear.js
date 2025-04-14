@@ -1,3 +1,8 @@
+/**
+ * @file subirImagenCrear.js
+ * @description Este archivo contiene la carga de imágenes en un formulario de creación.
+ */
+
 document.querySelector('input[name="imagen"]').addEventListener('change', function() {
 
     const imagen = this.files[0];

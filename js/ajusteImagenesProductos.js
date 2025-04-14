@@ -1,3 +1,8 @@
+/**
+ * @file ajusteImagenesProductos.js
+ * @description Ajusta las imágenes de productos en páginas de recomendados y derivadas.
+ */
+
 document.addEventListener("DOMContentLoaded", () => {
 
     document.querySelectorAll("img").forEach(img => {

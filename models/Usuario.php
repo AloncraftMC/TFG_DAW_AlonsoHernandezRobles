@@ -1,5 +1,19 @@
 <?php
 
+    /**
+     * Modelo de los usuarios.
+     * 
+     * Contiene los métodos:
+     * save():          Guarda un nuevo usuario en la base de datos.
+     * login():         Verifica las credenciales de un usuario y devuelve el objeto Usuario si son correctas.
+     * update():        Actualiza los datos de un usuario en la base de datos.
+     * delete():        Elimina un usuario de la base de datos.
+     * getById():       Devuelve un objeto Usuario a partir de su ID.
+     * getByEmail():    Devuelve un objeto Usuario a partir de su email.
+     * getAll():        Devuelve un array de objetos Usuario con todos los usuarios de la base de datos.
+     * getPosicion():   Devuelve la posición de un usuario en la tabla de usuarios.
+     */
+
     namespace models;
 
     use lib\BaseDatos;

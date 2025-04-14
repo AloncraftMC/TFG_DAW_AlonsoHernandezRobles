@@ -1,5 +1,18 @@
 <?php
 
+    /**
+     * Modelo de los productos.
+     * 
+     * Contiene los métodos:
+     * save():              Guarda un producto en la base de datos.
+     * update():            Actualiza un producto en la base de datos.
+     * delete():            Elimina un producto de la base de datos.
+     * getById():           Devuelve un producto por su id.
+     * getByCategoria():    Devuelve un array de productos por su id de categoría.
+     * getByQuery():        Devuelve un array de productos por su nombre o el de su categoría.
+     * getAll():            Devuelve un array de todos los productos.
+     */
+
     namespace models;
 
     use lib\BaseDatos;

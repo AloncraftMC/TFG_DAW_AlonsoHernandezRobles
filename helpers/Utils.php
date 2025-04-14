@@ -1,5 +1,23 @@
 <?php
 
+    /**
+     * Clase de Útiles.
+     * 
+     * Contiene los métodos:
+     * deleteSession():                 Elimina el slot proporcionado en la variable $_SESSION.
+     * isAdmin():                       Comprueba si el usuario es administrador.
+     * isIdentity():                    Comprueba si el usuario está identificado.
+     * statsCarrito():                  Devuelve datos del carrito.
+     * saveCookieCarrito():             Guarda la cookie del carrito.
+     * loadCookieCarrito():             Carga la cookie del carrito.
+     * deleteCookieCarrito():           Elimina la cookie del carrito.
+     * deleteCookieCarritoByEmail():    Elimina la cookie del carrito de un usuario en específico.
+     * loadRememberCookie():            Carga la cookie de "Recuérdame".
+     * usuarioPuedeValorarProducto():   Comprueba si el usuario puede valorar un producto.
+     * existenMasComprasDeProducto():   Comprueba si el usuario ha comprado más de una vez el mismo producto.
+     * enviarCorreo():                  Envía un correo electrónico utilizando PHPMailer.
+     */
+
     namespace helpers;
 
     use lib\BaseDatos;
@@ -11,7 +29,9 @@
 
     class Utils{
 
-        // Método para eliminar sesiones
+        /**
+         * Método para eliminar un slot de la variable $_SESSION.
+         */
 
         public static function deleteSession(string $nombre): void{
 
@@ -24,7 +44,10 @@
 
         }
 
-        // Método para comprobar si el usuario es administrador
+        /**
+         * Método para comprobar si el usuario es administrador.
+         * Redirige a la página principal si no lo es.
+         */
 
         public static function isAdmin(): void{
 
@@ -37,7 +60,10 @@
 
         }
 
-        // Método para comprobar si el usuario está identificado
+        /**
+         * Método para comprobar si el usuario está identificado.
+         * Redirige a la página principal si no lo está.
+         */
 
         public static function isIdentity(): void{
             
@@ -50,7 +76,10 @@
 
         }
 
-        // Método para mostrar estadísticas del carrito
+        /**
+         * Método para obtener estadísticas del carrito.
+         * Devuelve un array con el número de productos únicos, el total de unidades y el total a pagar.
+         */
 
         public static function statsCarrito(): array{
 
@@ -80,7 +109,9 @@
 
         }
 
-        // Método para guardar la cookie del carrito. La cookie se guardará durante 3 días.
+        /**
+         * Método para guardar la cookie del carrito del usuario actual. La cookie se guardará durante 3 días.
+         */
 
         public static function saveCookieCarrito(): void{
 
@@ -104,7 +135,9 @@
 
         }
 
-        // Método para cargar la cookie del carrito
+        /**
+         * Método para cargar la cookie del carrito del usuario actual.
+         */
 
         public static function loadCookieCarrito(): void{
 
@@ -124,7 +157,9 @@
         
         }        
 
-        // Método para eliminar la cookie del carrito
+        /**
+         * Método para eliminar la cookie del carrito del usuario actual.
+         */
 
         public static function deleteCookieCarrito(): void {
             
@@ -150,7 +185,10 @@
 
         }
 
-        // Método para eliminar la cookie del carrito de un usuario en específico
+        /**
+         * Método para eliminar la cookie del carrito de un usuario en específico.
+         * Se invoca al eliminar un usuario fuera de su sesión (administración).
+         */
 
         public static function deleteCookieCarritoByEmail($email): void {
             
@@ -174,7 +212,9 @@
 
         }
 
-        // Método para cargar la cookie de recordar al usuario
+        /**
+         * Método para cargar la cookie de "Recuérdame".
+         */
 
         public static function loadRememberCookie(): void{
 
@@ -204,7 +244,10 @@
 
         }
         
-        // Método para comprobar si el usuario puede valorar un producto
+        /**
+         * Método para comprobar si el usuario puede valorar un producto.
+         * Devuelve un booleano.
+         */
 
         public static function usuarioPuedeValorarProducto(int $usuarioId, int $productoId): bool{
 
@@ -251,7 +294,10 @@
 
         }
 
-        // Método para comprobar si el usuario ha comprado más de una vez el mismo producto
+        /**
+         * Método para comprobar si el usuario ha comprado más de una vez el mismo producto.
+         * Devuelve un booleano.
+         */
 
         public static function existenMasComprasDeProducto(int $productoId, int $usuarioId, int $pedidoExcluirId) : bool {
 
@@ -278,7 +324,19 @@
             
         }
         
-        // Método para enviar un correo
+        /**
+         * Método para enviar un correo electrónico.
+         * Utiliza la librería PHPMailer para enviar correos electrónicos a través de SMTP.
+         * Acepta:
+         *  - un objeto Usuario.
+         *  - el asunto del correo.
+         *  - la ruta del archivo HTML.
+         *  - un array de variables para reemplazar en el HTML,
+         *  - un array de imágenes para reemplazar en el HTML.
+         * Incluye por defecto la URL base y el año actual.
+         * Si se produce un error al enviar el correo, se registra en un archivo de log
+         * para su posterior revisión en el mantenimiento de la aplicación.
+         */
 
         public static function enviarCorreo(Usuario $usuario, string $asunto, string $html, array $variables = [], array $imagenes = []): void{
 

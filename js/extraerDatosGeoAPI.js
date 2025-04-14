@@ -1,4 +1,10 @@
+/**
+ * @file extraerDatosGeoAPI.js
+ * @description Script para extraer datos de la API GeoAPI y llenar los selectores de dirección.
+ */
+
 document.addEventListener("DOMContentLoaded", function () {
+
     const comunidadSelect = document.getElementById("comunidad");
     const provinciaSelect = document.getElementById("provincia");
     const municipioSelect = document.getElementById("municipio");
@@ -12,6 +18,7 @@ document.addEventListener("DOMContentLoaded", function () {
     const SANDBOX = 0;
 
     // Objeto para almacenar los códigos de cada nivel
+
     let codigosSeleccionados = {
         comunidad: {},
         provincia: {},
@@ -34,16 +41,20 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 
     function limpiarSelect(...selects) {
+
         selects.forEach(select => {
             select.innerHTML = '<option value="">Selecciona una opción</option>';
             select.disabled = true;
         });
+
         direccionInput.disabled = true;
         direccionInput.value = "";
+
     }
 
     function capitalizarTexto(texto) {
-        texto = texto.replace(/\*/g, ''); // Eliminar asteriscos
+
+        texto = texto.replace(/\*/g, '');       // Eliminar asteriscos
     
         const minusculas = ["de", "del", "y", "la", "el", "las", "los"];
         
@@ -67,14 +78,15 @@ document.addEventListener("DOMContentLoaded", function () {
             }
     
             return palabra;
+
         });
     
         return resultado.join('');
+
     }
     
-    
-
     // Cargar comunidades autónomas
+
     obtenerDatos(`https://apiv1.geoapi.es/comunidades?type=JSON&key=${API_KEY}&sandbox=${SANDBOX}`)
         .then(comunidades => {
             comunidades.forEach(comunidad => {
@@ -89,6 +101,7 @@ document.addEventListener("DOMContentLoaded", function () {
         });
 
     comunidadSelect.addEventListener("change", function () {
+
         let comunidadNombre = this.value;
         let comunidadId = codigosSeleccionados.comunidad[comunidadNombre];
 
@@ -109,9 +122,11 @@ document.addEventListener("DOMContentLoaded", function () {
                     provinciaSelect.disabled = false;
                 });
         }
+
     });
 
     provinciaSelect.addEventListener("change", function () {
+
         let provinciaNombre = this.value;
         let provinciaId = codigosSeleccionados.provincia[provinciaNombre];
 
@@ -132,9 +147,11 @@ document.addEventListener("DOMContentLoaded", function () {
                     municipioSelect.disabled = false;
                 });
         }
+
     });
 
     municipioSelect.addEventListener("change", function () {
+
         let municipioNombre = this.value;
         let municipioId = codigosSeleccionados.municipio[municipioNombre];
         let provinciaId = codigosSeleccionados.provincia[provinciaSelect.value];
@@ -156,9 +173,11 @@ document.addEventListener("DOMContentLoaded", function () {
                     poblacionSelect.disabled = false;
                 });
         }
+
     });
 
     poblacionSelect.addEventListener("change", function () {
+
         let poblacionNombre = this.value;
         let provinciaId = codigosSeleccionados.provincia[provinciaSelect.value];
         let municipioId = codigosSeleccionados.municipio[municipioSelect.value];
@@ -180,14 +199,15 @@ document.addEventListener("DOMContentLoaded", function () {
                     nucleoSelect.disabled = false;
                 });
         }
+
     });
     
-
     nucleoSelect.addEventListener("change", function () {
+
         let provinciaId = codigosSeleccionados.provincia[provinciaSelect.value];
         let municipioId = codigosSeleccionados.municipio[municipioSelect.value];
         let nucleoNombre = nucleoSelect.value;
-        let nucleoId = codigosSeleccionados.nucleo[nucleoNombre]; // Obtener el código real del núcleo
+        let nucleoId = codigosSeleccionados.nucleo[nucleoNombre];   // Obtener el código real del núcleo
         
         if (nucleoId) {
             obtenerDatos(`https://apiv1.geoapi.es/cps?CPRO=${provinciaId}&CMUM=${municipioId}&type=JSON&key=${API_KEY}&sandbox=${SANDBOX}`)
@@ -202,14 +222,16 @@ document.addEventListener("DOMContentLoaded", function () {
                     codigoPostalSelect.disabled = false;
                 });
         }
+
     });
 
     codigoPostalSelect.addEventListener("change", function () {
+
         let codigoPostalId = this.value;
         let provinciaId = codigosSeleccionados.provincia[provinciaSelect.value];
         let municipioId = codigosSeleccionados.municipio[municipioSelect.value];
         let nucleoNombre = nucleoSelect.value;
-        let nucleoId = codigosSeleccionados.nucleo[nucleoNombre]; // Obtener el código del núcleo
+        let nucleoId = codigosSeleccionados.nucleo[nucleoNombre];   // Obtener el código del núcleo
     
         limpiarSelect(calleSelect);
     
@@ -229,13 +251,14 @@ document.addEventListener("DOMContentLoaded", function () {
                         });
                         calleSelect.disabled = false;
                     } else {
-                        console.warn("No se encontraron calles para este código postal.");
+                        window.alert("No se encontraron calles para este código postal.");
                     }
                 })
-                .catch(error => console.error("Error cargando calles:", error));
+                .catch(error => window.alert("Error cargando calles:", error));
         } else {
-            console.warn("No se pudo obtener el código del núcleo o el código postal es inválido.");
+            window.alert("No se pudo obtener el código del núcleo o el código postal es inválido.");
         }
+        
     });
     
     calleSelect.addEventListener("change", function () {

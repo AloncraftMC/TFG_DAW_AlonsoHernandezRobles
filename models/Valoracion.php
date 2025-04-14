@@ -1,5 +1,17 @@
 <?php
 
+    /**
+     * Modelo de las valoraciones de usuarios en los productos.
+     * 
+     * Contiene los métodos:
+     * save():                      Guarda una valoración en la base de datos.
+     * delete():                    Elimina una valoración de la base de datos.
+     * getById():                   Devuelve una valoración por su ID.
+     * getByUsuario():              Devuelve todas las valoraciones de un usuario.
+     * getByProducto():             Devuelve todas las valoraciones de un producto.
+     * getByProductoAndUsuario():   Devuelve la valoración de un usuario en un producto.
+     */
+
     namespace models;
 
     use lib\BaseDatos;
@@ -75,25 +87,6 @@
                 ':puntuacion' => $this->puntuacion,
                 ':comentario' => $this->comentario,
                 ':fecha' => $this->fecha
-            ]);
-
-            $output = $baseDatos->getNumeroRegistros() == 1;
-            
-            $baseDatos->cerrarConexion();
-
-            return $output;
-
-        }
-
-        public function update(): bool {
-
-            $baseDatos = new BaseDatos();
-
-            $baseDatos->ejecutar("UPDATE valoraciones SET puntuacion = :puntuacion, comentario = :comentario, fecha = :fecha WHERE id = :id", [
-                ':puntuacion' => $this->puntuacion,
-                ':comentario' => $this->comentario,
-                ':fecha' => $this->fecha,
-                ':id' => $this->id
             ]);
 
             $output = $baseDatos->getNumeroRegistros() == 1;

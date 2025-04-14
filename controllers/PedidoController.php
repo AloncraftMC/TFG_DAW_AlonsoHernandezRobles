@@ -1,15 +1,35 @@
 <?php
 
+    /**
+     * Controlador de los pedidos de los usuarios.
+     * 
+     * Contiene los métodos:
+     * admin():         Requiere la vista de administración de pedidos.
+     * crear():         Requiere la vista de creación de pedidos.
+     * hacer():         Hace un pedido y redirige a PayPal.
+     * listo():         Requiere la vista de pedido listo.
+     * ver():           Requiere la vista de un pedido.
+     * misPedidos():    Requiere la vista de los pedidos del usuario.
+     * confirmar():     Confirma un pedido.
+     * enviar():        Envía un pedido.
+     * eliminar():      Elimina un pedido en la base de datos.
+     */
+
     namespace controllers;
 
+    use Exception;
     use helpers\Utils;
     use models\Pedido;
     use models\LineaPedido;
-    use models\Producto;
     use models\Usuario;
     use models\Valoracion;
 
     class PedidoController{
+
+        /**
+         * Método para requerir la vista de administración de pedidos mediante paginación.
+         * Si la página no es válida, se carga la más cercana al valor proporcionado.
+         */
 
         public function admin(){ // ✔
 
@@ -44,6 +64,11 @@
 
         }
 
+        /**
+         * Método para requerir la vista de la creación de pedidos.
+         * Requiere ser tener productos en el carrito.
+         */
+
         public function crear(){ // ✔
             
             Utils::isIdentity();
@@ -55,6 +80,11 @@
 
             require_once 'views/pedido/crear.php';
         }
+
+        /**
+         * Método para hacer un pedido. Valida todos los campos del formulario de creación de pedidos y
+         * redirige a la página de PayPal para realizar el pago.
+         */
 
         public function hacer(){
 
@@ -82,6 +112,7 @@
                 $hora = date('H:i:s');
 
                 $_SESSION['form_data'] = [
+                    'usuarioId' => $usuarioId,
                     'comunidad' => $comunidad,
                     'provincia' => $provincia,
                     'municipio' => $municipio,
@@ -89,7 +120,11 @@
                     'nucleo' => $nucleo,
                     'codigoPostal' => $codigoPostal,
                     'calle' => $calle,
-                    'direccion' => $direccion
+                    'direccion' => $direccion,
+                    'coste' => $coste,
+                    'estado' => $estado,
+                    'fecha' => $fecha,
+                    'hora' => $hora,
                 ];
                 
                 if($comunidad && $provincia && $municipio && $poblacion && $nucleo && $codigoPostal && $calle && $direccion){
@@ -153,82 +188,56 @@
                     // Unificamos la dirección completa en una sola variable
 
                     $direccion = $calle . ' ' . $direccion;
-
-                    $pedido = new Pedido();
-
-                    $pedido->setUsuarioId($usuarioId);
-                    $pedido->setComunidad($comunidad);
-                    $pedido->setProvincia($provincia);
-                    $pedido->setMunicipio($municipio);
-                    $pedido->setPoblacion($poblacion);
-                    $pedido->setNucleo($nucleo);
-                    $pedido->setCodigoPostal($codigoPostal);
-                    $pedido->setDireccion($direccion);
-                    $pedido->setCoste($coste);
-                    $pedido->setEstado($estado);
-                    $pedido->setFecha($fecha);
-                    $pedido->setHora($hora);
                     
-                    if ($pedido->save()) {
+                    ///////////////////////////////////////////////////////
 
-                        // AQUI PayPal
+                    $client = new \GuzzleHttp\Client();
+                    $auth = base64_encode(PAYPAL_CLIENT_ID . ':' . PAYPAL_SECRET);
 
-                        Utils::deleteSession('form_data');
-
-                        // Ahora creamos las líneas de pedido y las guardamos en la base de datos
-
-                        foreach($_SESSION['carrito'] as $elemento){
-
-                            $producto = Producto::getById($elemento['id_producto']);
-                            $unidades = $elemento['unidades'];
-
-                            $linea = new LineaPedido();
-
-                            $linea->setPedidoId($pedido->getId());
-                            $linea->setProductoId($producto->getId());
-                            $linea->setUnidades($unidades);
-                            
-                            $linea->save();
-                            
-                            // Actualizamos el stock del producto en la base de datos
-
-                            $producto = Producto::getById($producto->getId());
-                            
-                            $producto->setStock($producto->getStock() - $unidades);
-                            $producto->update();
-
-                        }
-
-                        $_SESSION['create'] = 'complete';
-                        $_SESSION['pedido'] = $pedido->getId();
-
-                        $usuario = Usuario::getById($pedido->getUsuarioId());
-
-                        Utils::enviarCorreo($usuario, "Pedido realizado", BASE_URL . "mails/pedido/hacer.html", [
-                            'ID' => $pedido->getId(),
-                            'USERNAME' => $usuario->getNombre(),
-                            'PRODUCTOS' => Utils::statsCarrito()['totalCount'],
-                            'FECHA' => $pedido->getFecha(),
-                            'HORA' => $pedido->getHora(),
-                            'QUERY' => urlencode('C. '.$pedido->getDireccion().' '.$pedido->getCodigoPostal().' '.$pedido->getMunicipio().' '.$pedido->getProvincia()),
-                            'DIRECCION' => $pedido->getDireccion().', '.$pedido->getPoblacion().' ('.$pedido->getCodigoPostal().') - '.$pedido->getProvincia(),
-                            'COSTE' => $pedido->getCoste(),
+                    try {
+                        $response = $client->post('https://api-m.paypal.com/v2/checkout/orders', [
+                            'headers' => [
+                                'Authorization' => 'Basic ' . $auth,
+                                'Content-Type'  => 'application/json',
+                            ],
+                            'json' => [
+                                'intent' => 'CAPTURE',
+                                'purchase_units' => [[
+                                    'amount' => [
+                                        'currency_code' => 'EUR',
+                                        'value' => $coste
+                                    ]
+                                ]],
+                                'application_context' => [
+                                    'return_url' => BASE_URL . 'paypal/exito',
+                                    'cancel_url' => BASE_URL . 'paypal/cancelar'
+                                ]
+                            ]
                         ]);
 
-                        Utils::deleteSession('carrito');
-                        Utils::deleteCookieCarrito();
-                        
-                        header("Location:" . BASE_URL . "pedido/listo");
+                        $data = json_decode($response->getBody(), true);
+
+                        if (isset($data['links'])) {
+                            foreach ($data['links'] as $link) {
+                                if ($link['rel'] == 'approve') {
+                                    header('Location: ' . $link['href']);
+                                    exit;
+                                }
+                            }
+                        }
+
+                        $_SESSION['create'] = 'failed';
+                        header("Location:" . BASE_URL . "pedido/crear#failed");
                         exit;
-                    
-                    }else{
                         
+                    } catch (Exception $e) {
+
                         $_SESSION['create'] = 'failed';
                         header("Location:" . BASE_URL . "pedido/crear#failed");
                         exit;
 
                     }
-
+                    
                 } else {
                     
                     $_SESSION['create'] = 'failed';
@@ -249,6 +258,11 @@
 
         }
 
+        /**
+         * Método para requerir la vista de pedido listo.
+         * Se llama después de guardar un pedido y volver de la página de PayPal.
+         */
+
         public function listo(){ // ✔
 
             Utils::isIdentity();
@@ -263,6 +277,11 @@
             require_once 'views/pedido/listo.php';
         
         }
+
+        /**
+         * Método para requerir la vista de un pedido mediante paginación.
+         * Requiere ser el usuario que ha hecho el pedido o ser admin.
+         */
 
         public function ver(){
 
@@ -311,6 +330,10 @@
 
         }
 
+        /**
+         * Método para requerir la vista de los pedidos del usuario mediante paginación.
+         */
+
         public function misPedidos(){
 
             Utils::isIdentity();
@@ -348,6 +371,12 @@
             require_once 'views/pedido/mis-pedidos.php';
         
         }
+
+        /**
+         * Método para confirmar un pedido.
+         * Requiere ser admin y que el pedido esté en estado "Pendiente".
+         * Envía un correo al usuario con los datos del pedido.
+         */
 
         public function confirmar(){
 
@@ -393,6 +422,12 @@
 
         }
 
+        /**
+         * Método para enviar un pedido.
+         * Requiere ser admin y que el pedido esté en estado "Confirmado".
+         * Envía un correo al usuario con los datos del pedido.
+         */
+
         public function enviar(){
 
             Utils::isAdmin();
@@ -436,6 +471,14 @@
             exit;
 
         }
+
+        /**
+         * Método para eliminar un pedido de la base de datos. Requiere ser administrador.
+         * También aplica lo siguiente en forma de cascada: Si eliminas el pedido:
+         * - Se eliminan todas las valoraciones de los productos asociados al pedido, teniendo en cuenta que:
+         *      - sólo se eliminan si el producto no figura en ningún otro pedido del mismo usuario.
+         * Se envía un correo al usuario con los datos del pedido y la razón de la eliminación.
+         */
 
         public function eliminar(){
             

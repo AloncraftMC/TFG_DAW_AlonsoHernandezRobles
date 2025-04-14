@@ -1,5 +1,15 @@
 <?php
 
+    /**
+     * Modelo de las líneas de los pedidos.
+     * 
+     * Contiene los métodos:
+     * save():          Guarda una línea de pedido en la base de datos.
+     * delete():        Elimina una línea de pedido de la base de datos.
+     * getByPedido():   Devuelve todas las líneas de un pedido de la base de datos por su id.
+     * getByProducto(): Devuelve todas las líneas de un producto de la base de datos por su id.
+     */
+
     namespace models;
 
     use lib\BaseDatos;

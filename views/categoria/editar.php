@@ -1,3 +1,11 @@
+<?php
+    /**
+     * Vista para editar una categoría.
+     * Muestra un formulario con el nombre de la categoría y un botón para guardar los cambios.
+     * Si se produce un error, se muestra un mensaje de error.
+     */
+?>
+
 <?php use helpers\Utils; ?>
 
 <h1 style="margin-bottom: 0px">Editar Categoría</h1>

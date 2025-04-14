@@ -1,5 +1,17 @@
 <?php
 
+    /**
+     * Modelo de las categorías de los productos.
+     * 
+     * Contiene los métodos:
+     * save():      Guarda una categoría en la base de datos.
+     * update():    Actualiza una categoría en la base de datos.
+     * delete():    Elimina una categoría de la base de datos.
+     * getById():   Devuelve una categoría de la base de datos por su id.
+     * getAll():    Devuelve todas las categorías de la base de datos.
+     * getLastId(): Devuelve el último id de la tabla categorías.
+     */
+
     namespace models;
 
     use lib\BaseDatos;
@@ -154,7 +166,8 @@
             
         }
 
-        /* Método auxiliar */
+        /* Método auxiliar (realmente no hubiera hecho falta si hubiera sabido con más profundidad
+        lo que estaba haciendo en ese momento) */
 
         public static function getLastId(): int {
 

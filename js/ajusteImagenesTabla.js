@@ -1,3 +1,9 @@
+/**
+ * @file ajusteImagenesTabla.js
+ * @description Ajusta las imágenes de productos en tablas. Aparece sobre todo en pedidos
+ * y administración de productos.
+ */
+
 document.addEventListener("DOMContentLoaded", () => {
 
     document.querySelectorAll("img").forEach(img => {
