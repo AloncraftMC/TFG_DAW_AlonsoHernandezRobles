@@ -1,6 +1,6 @@
 /**
  * @file extraerDatosGeoAPI.js
- * @description Script para extraer datos de la API GeoAPI y llenar los selectores de dirección.
+ * @description Script para extraer datos de la API GeoAPI España y llenar los selectores de dirección.
  */
 
 document.addEventListener("DOMContentLoaded", function () {

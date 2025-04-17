@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 11-04-2025 a las 17:11:43
+-- Tiempo de generación: 15-04-2025 a las 15:48:52
 -- Versión del servidor: 10.4.28-MariaDB
 -- Versión de PHP: 8.0.28
 
@@ -81,13 +81,13 @@ CREATE TABLE `lineas_pedidos` (
 CREATE TABLE `pedidos` (
   `id` int(255) NOT NULL,
   `usuario_id` int(255) NOT NULL,
-  `comunidad` varchar(255) NOT NULL,
+  `comunidad` varchar(255) DEFAULT NULL,
   `provincia` varchar(100) NOT NULL,
-  `municipio` varchar(255) NOT NULL,
-  `poblacion` varchar(255) NOT NULL,
-  `nucleo` varchar(255) NOT NULL,
-  `codigo_postal` varchar(10) NOT NULL,
-  `direccion` varchar(255) NOT NULL,
+  `municipio` varchar(255) DEFAULT NULL,
+  `poblacion` varchar(255) DEFAULT NULL,
+  `nucleo` varchar(255) DEFAULT NULL,
+  `codigo_postal` varchar(10) DEFAULT NULL,
+  `direccion` varchar(255) DEFAULT NULL,
   `coste` float(200,2) NOT NULL,
   `estado` varchar(20) NOT NULL,
   `fecha` date DEFAULT NULL,
@@ -582,9 +582,9 @@ CREATE TABLE `usuarios` (
 INSERT INTO `usuarios` (`id`, `nombre`, `apellidos`, `email`, `password`, `rol`, `imagen`, `color`) VALUES
 (1, 'Admin', 'Admin', 'admin@admin.com', '$2y$04$vEcnurG9V5x9fPJIYw2zfeTBFdEnueZi2UcYyBOK1ghjl9EE2hkFW', 'admin', '1.png', '#000000'),
 (2, 'Alonso', 'Hernández Robles', 'alonso.ensibemol@gmail.com', '$2y$04$J/Q5vwYYc0FrlfDf1haToOUJZ/bzw.zYOY64gCri.k9Jhbqj.ofdG', 'user', '2.png', '#ff00ff'),
-(3, 'Pablo', 'Sánchez Martín', 'pablosanchez8080@gmail.com', '$2y$12$nQh4Q9obkSzsVU0nB6M.HOTF7U2JdICvpeapQq51d2mAYE0NSJTPu', 'user', '11.png', '#000000'),
-(4, 'Zapi', 'Pipo', 'samueluca2004@gmail.com', '$2y$12$Cb76UFcb1NVIOxCBCQk/KOVZm7nNgX2IkTrhrYZ2FWNhVg1734u2e', 'user', '12.jpg', '#cc00b1'),
-(5, 'David', 'Vílchez Martínez', 'davidvzm@gmail.com', '$2y$12$OqqxP6HS877DYPU73Fk7uOmojc17JkcVl4zDzfPbZihobbraEVtsW', 'user', '13.JPG', '#ff0000');
+(3, 'Pablo', 'Sánchez Martín', 'pablosanchez8080@gmail.com', '$2y$12$nQh4Q9obkSzsVU0nB6M.HOTF7U2JdICvpeapQq51d2mAYE0NSJTPu', 'user', '3.png', '#000000'),
+(4, 'Zapi', 'Pipo', 'samueluca2004@gmail.com', '$2y$12$Cb76UFcb1NVIOxCBCQk/KOVZm7nNgX2IkTrhrYZ2FWNhVg1734u2e', 'user', '4.jpg', '#cc00b1'),
+(5, 'David', 'Vílchez Martínez', 'davidvzm@gmail.com', '$2y$12$OqqxP6HS877DYPU73Fk7uOmojc17JkcVl4zDzfPbZihobbraEVtsW', 'user', '5.JPG', '#ff0000');
 
 -- --------------------------------------------------------
 
@@ -645,7 +645,7 @@ ALTER TABLE `usuarios`
 --
 ALTER TABLE `valoraciones`
   ADD PRIMARY KEY (`id`),
-  ADD UNIQUE KEY `uq_usuario_producto` (`usuario_id`,`producto_id`),
+  ADD UNIQUE KEY `unique_usuario_producto` (`usuario_id`,`producto_id`),
   ADD KEY `producto_id` (`producto_id`);
 
 --

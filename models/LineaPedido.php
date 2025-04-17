@@ -51,7 +51,7 @@
             $this->productoId = $productoId;
         }
 
-        public function setUnidades(string $unidades): void{
+        public function setUnidades(int $unidades): void{
             $this->unidades = $unidades;
         }
 

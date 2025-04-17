@@ -25,7 +25,7 @@
          * la cual tiene un script de JS que reemplaza el "?" por "&" y ya funciona correctamente.
          * Guarda el pedido en la base de datos y envía un correo al usuario con los detalles del pedido.
          */
-
+        
         public function exito() {
             
             Utils::isIdentity();

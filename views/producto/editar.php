@@ -134,7 +134,6 @@
 
         <script>const src = '<?=BASE_URL?>assets/images/uploads/productos/<?=$producto->getImagen()?>?t=0';</script>
         <script src="<?=BASE_URL?>js/subirImagenEditar.js?t=<?=time()?>"></script>
-        <script src="<?=BASE_URL?>js/validarFormularioEditar.js?t=<?=time()?>"></script>
 
     </div>
 

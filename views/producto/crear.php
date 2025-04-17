@@ -124,7 +124,6 @@
         </div>
 
         <script src="<?=BASE_URL?>js/subirImagenCrear.js?t=<?=time()?>"></script>
-        <script src="<?=BASE_URL?>js/validarFormularioCrear.js?t=<?=time()?>"></script>
 
     </div>
 

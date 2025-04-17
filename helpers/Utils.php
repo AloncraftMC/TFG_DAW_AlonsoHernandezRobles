@@ -190,7 +190,7 @@
          * Se invoca al eliminar un usuario fuera de su sesión (administración).
          */
 
-        public static function deleteCookieCarritoByEmail($email): void {
+        public static function deleteCookieCarritoByEmail(string $email): void {
             
             if(isset($_COOKIE['carrito'])){
 

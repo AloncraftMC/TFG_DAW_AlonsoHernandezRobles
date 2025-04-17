@@ -232,6 +232,16 @@
                         
                     } catch (Exception $e) {
 
+                        echo "Error al enviar el correo: " . $e->getMessage();
+                        
+                        $ruta = __DIR__ . '/../logs/error.log';
+                    
+                        if(!file_exists(dirname($ruta))) mkdir(dirname($ruta), 0777, true);
+                    
+                        $contenido = date('Y-m-d H:i:s') . ' - Error al crear el pedido | Exception: ' . $e->getMessage() . "\n";
+                    
+                        file_put_contents($ruta, $contenido, FILE_APPEND | LOCK_EX);
+
                         $_SESSION['create'] = 'failed';
                         header("Location:" . BASE_URL . "pedido/crear#failed");
                         exit;
